@@ -6,15 +6,43 @@ import { FileText, Send, CheckCircle } from 'lucide-react';
 
 export default function QuoteForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [formData, setFormData] = useState({ name: '', email: '', service: '', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    // Simulate API call
-    setTimeout(() => {
+    
+    try {
+      const response = await fetch('/api/quotes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (!response.ok) throw new Error('Error al generar la cotización');
+      
+      // Descargar el PDF devuelto por la API
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Cotizacion_AXTECH_${formData.name.replace(/\s+/g, '_')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+      
       setStatus('success');
-      // In real app, we will send data to Supabase/API here
-    }, 1500);
+      setFormData({ name: '', email: '', service: '', message: '' }); // Reset
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un error al generar la cotización. Inténtelo de nuevo.");
+      setStatus('idle');
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   if (status === 'success') {
@@ -27,9 +55,9 @@ export default function QuoteForm() {
         <div className="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mb-6">
           <CheckCircle className="w-10 h-10 text-accent" />
         </div>
-        <h3 className="text-3xl font-bold mb-4">¡Cotización Solicitada!</h3>
+        <h3 className="text-3xl font-bold mb-4">¡Cotización Descargada!</h3>
         <p className="text-gray-400 max-w-md mx-auto mb-8">
-          Hemos recibido tu solicitud. Nuestro equipo técnico evaluará tus requerimientos y te enviaremos la cotización formal muy pronto.
+          Hemos recibido tu solicitud y tu PDF se ha descargado automáticamente. Nuestro equipo técnico evaluará tus requerimientos y se pondrá en contacto pronto.
         </p>
         <button 
           onClick={() => setStatus('idle')}
@@ -51,7 +79,7 @@ export default function QuoteForm() {
         </div>
         <div>
           <h2 className="text-2xl font-bold">Solicitar Cotización</h2>
-          <p className="text-sm text-gray-400">Completa los datos y te enviaremos un PDF formal.</p>
+          <p className="text-sm text-gray-400">Completa los datos y recibirás un PDF formal al instante.</p>
         </div>
       </div>
 
@@ -61,6 +89,9 @@ export default function QuoteForm() {
             <label className="text-sm font-medium text-gray-300">Nombre Completo / Empresa *</label>
             <input 
               required 
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               type="text" 
               placeholder="Ej. AXTECH CORP" 
               className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition"
@@ -70,6 +101,9 @@ export default function QuoteForm() {
             <label className="text-sm font-medium text-gray-300">Correo Electrónico *</label>
             <input 
               required 
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               type="email" 
               placeholder="ventas@empresa.com" 
               className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition"
@@ -81,15 +115,17 @@ export default function QuoteForm() {
           <label className="text-sm font-medium text-gray-300">Servicio de Interés *</label>
           <select 
             required 
-            defaultValue=""
+            name="service"
+            value={formData.service}
+            onChange={handleChange}
             className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition appearance-none"
           >
             <option value="" disabled>Seleccione un servicio...</option>
-            <option value="Soporte Técnico">Soporte Técnico Especializado</option>
-            <option value="Redes">Redes y Conectividad</option>
-            <option value="Servidores">Servidores e Infraestructura</option>
+            <option value="Soporte Técnico Especializado">Soporte Técnico Especializado</option>
+            <option value="Redes y Conectividad">Redes y Conectividad</option>
+            <option value="Servidores e Infraestructura">Servidores e Infraestructura</option>
             <option value="Ciberseguridad">Ciberseguridad</option>
-            <option value="CCTV">CCTV y Control de Accesos</option>
+            <option value="CCTV y Accesos">CCTV y Control de Accesos</option>
           </select>
         </div>
 
@@ -97,6 +133,9 @@ export default function QuoteForm() {
           <label className="text-sm font-medium text-gray-300">Detalles del Requerimiento *</label>
           <textarea 
             required 
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
             rows={4} 
             placeholder="Describa brevemente lo que necesita..." 
             className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition resize-none"
@@ -111,11 +150,11 @@ export default function QuoteForm() {
           {status === 'submitting' ? (
             <span className="flex items-center gap-2">
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Procesando...
+              Procesando y Generando PDF...
             </span>
           ) : (
             <>
-              Generar Cotización
+              Generar y Descargar Cotización
               <Send className="w-4 h-4" />
             </>
           )}

@@ -9,39 +9,44 @@ import QuoteForm from '@/components/QuoteForm';
 export default function Home() {
   const services = [
     {
+      title: 'Soporte Técnico Especializado en Computadoras',
+      description: 'Nuestro servicio combina diagnóstico profesional, herramientas tecnológicas y personal especializado.',
+      icon: <Laptop className="w-10 h-10 text-white" />,
+      colSpan: 'col-span-1 md:col-span-2',
+      bg: 'bg-gradient-to-br from-primary/90 to-primary/40',
+      slug: 'soporte-tecnico'
+    },
+    {
+      title: 'Redes y Conectividad',
+      description: 'Diseñamos, implementamos y optimizamos infraestructuras de red seguras, eficientes y escalables.',
+      icon: <Network className="w-10 h-10 text-black" />,
+      colSpan: 'col-span-1 md:col-span-2',
+      bg: 'bg-gradient-to-br from-accent/90 to-accent/40',
+      slug: 'redes-telecomunicaciones'
+    },
+    {
       title: 'Infraestructura de Servidores',
       description: 'Arquitectura, virtualización y respaldo de datos empresariales.',
-      icon: <Server className="w-8 h-8 text-white" />,
-      colSpan: 'col-span-1 md:col-span-2',
-      bg: 'bg-gradient-to-br from-primary/80 to-primary/20'
+      icon: <Server className="w-8 h-8 text-primary" />,
+      colSpan: 'col-span-1',
+      bg: 'glass-panel hover:bg-white/5',
+      slug: 'servidores'
     },
     {
       title: 'Ciberseguridad',
       description: 'Protección perimetral y análisis de vulnerabilidades.',
-      icon: <ShieldCheck className="w-8 h-8 text-primary" />,
+      icon: <ShieldCheck className="w-8 h-8 text-accent" />,
       colSpan: 'col-span-1',
-      bg: 'glass-panel hover:bg-white/5'
+      bg: 'glass-panel hover:bg-white/5',
+      slug: 'ciberseguridad'
     },
     {
-      title: 'Redes LAN/Wi-Fi',
-      description: 'Diseño e implementación de conectividad de alto rendimiento.',
-      icon: <Network className="w-8 h-8 text-accent" />,
-      colSpan: 'col-span-1',
-      bg: 'glass-panel hover:bg-white/5'
-    },
-    {
-      title: 'CCTV y Accesos',
-      description: 'Monitoreo remoto y biometría avanzada.',
-      icon: <Settings className="w-8 h-8 text-white" />,
+      title: 'Cámaras de Seguridad y Control de Accesos',
+      description: 'Sistemas integrales de videovigilancia diseñados para proteger instalaciones.',
+      icon: <Settings className="w-8 h-8 text-primary" />,
       colSpan: 'col-span-1 md:col-span-2',
-      bg: 'bg-gradient-to-br from-accent/80 to-accent/20'
-    },
-    {
-      title: 'Soporte Especializado',
-      description: 'Mantenimiento preventivo y correctivo de hardware.',
-      icon: <Laptop className="w-8 h-8 text-primary" />,
-      colSpan: 'col-span-1 md:col-span-3',
-      bg: 'glass-panel hover:bg-white/5'
+      bg: 'glass-panel hover:bg-white/5',
+      slug: 'cctv'
     }
   ];
 
@@ -102,7 +107,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-lg md:text-xl text-gray-400 mb-10 font-light max-w-lg leading-relaxed"
             >
-              Redefinimos la infraestructura, seguridad y conectividad corporativa. Operando con precisión absoluta en CDMX y Estado de México.
+              Innovación, ingeniería y tecnología para impulsar el crecimiento de tu empresa.
             </motion.p>
             
             <motion.div 
@@ -147,11 +152,100 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust Section */}
+      {/* Quiénes Somos Section */}
+      <section className="py-24 px-6 relative bg-[#050505] border-t border-white/5" id="nosotros">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Quiénes <span className="text-primary">Somos</span></h2>
+            <div className="space-y-6 text-gray-400 leading-relaxed text-lg">
+              <p>
+                En <strong className="text-white">GRUPO AXTECH</strong> somos una empresa enfocada en el desarrollo, integración e implementación de soluciones tecnológicas que impulsan la eficiencia, innovación y crecimiento de las organizaciones.
+              </p>
+              <p>
+                Contamos con un equipo de profesionales especializados en tecnología e ingeniería, comprometidos con ofrecer soluciones integrales y personalizadas.
+              </p>
+              <p>
+                En Ingeniería Especializada en Soluciones Tecnológicas creemos que la tecnología debe ser una herramienta estratégica para el crecimiento. Por ello, nos enfocamos en crear soluciones prácticas, eficientes y escalables.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="glass-panel p-8 rounded-3xl border-t border-primary/30">
+              <h3 className="text-xl font-bold mb-4 text-white">Nuestra Misión</h3>
+              <p className="text-sm text-gray-400">Brindar soluciones tecnológicas innovadoras y eficientes mediante ingeniería especializada, ayudando a las organizaciones a mejorar sus procesos, productividad y competitividad.</p>
+            </div>
+            <div className="glass-panel p-8 rounded-3xl border-t border-accent/30">
+              <h3 className="text-xl font-bold mb-4 text-white">Nuestra Visión</h3>
+              <p className="text-sm text-gray-400">Ser una empresa referente en ingeniería tecnológica, reconocida por la calidad de nuestras soluciones, la innovación constante y la confianza que generamos en nuestros clientes.</p>
+            </div>
+            <div className="glass-panel p-8 rounded-3xl sm:col-span-2">
+              <h3 className="text-xl font-bold mb-4 text-white text-center">Nuestros Valores</h3>
+              <ul className="flex flex-wrap justify-center gap-4 text-sm text-gray-300 font-semibold">
+                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Innovación tecnológica</li>
+                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Calidad y profesionalismo</li>
+                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Compromiso con el cliente</li>
+                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Integridad y confianza</li>
+                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Mejora continua</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Bento Grid Services Section */}
+      <section id="soluciones" className="py-24 px-6 relative z-20 bg-background border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Ecosistema de <span className="text-primary">Soluciones</span></h2>
+            <p className="text-gray-400 text-lg max-w-2xl">Diseñamos arquitecturas tecnológicas escalables y robustas. Explora nuestros servicios clave.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {services.map((service, idx) => (
+              <Link href={`/servicios/${service.slug}`} key={idx} className={`${service.colSpan} block`}>
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className={`h-full ${service.bg} p-8 md:p-10 rounded-[2rem] border border-white/10 transition-all duration-300 cursor-pointer overflow-hidden relative group hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-1`}
+                >
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
+                  <div className="relative z-10 flex flex-col h-full justify-between">
+                    <div className="mb-8">
+                      {service.icon}
+                    </div>
+                    <div>
+                      <h3 className={`text-2xl md:text-3xl font-bold mb-3 tracking-tight ${service.bg.includes('accent') ? 'text-black' : 'text-white'}`}>{service.title}</h3>
+                      <p className={`${service.bg.includes('accent') ? 'text-black/70' : 'text-white/70'} text-sm md:text-base font-medium max-w-md`}>{service.description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quote Form Section */}
+      <section className="py-24 px-6 relative tech-grid border-t border-white/5" id="cotizacion">
+        <div className="absolute inset-0 bg-primary/5"></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Inicia tu <span className="text-accent">Proyecto</span></h2>
+            <p className="text-gray-400">Automatiza la cotización de tu requerimiento técnico al instante.</p>
+          </div>
+          <QuoteForm />
+        </div>
+      </section>
+
+      {/* Trust Section (Moved to Bottom) */}
       <section className="py-12 px-6 border-y border-white/10 bg-gradient-to-b from-white/5 to-transparent relative">
         <div className="absolute inset-0 bg-primary/10 blur-[100px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <p className="text-sm text-gray-300 font-bold tracking-widest uppercase mb-10">Empresas que confían en nuestra tecnología</p>
+          <p className="text-sm text-gray-300 font-bold tracking-widest uppercase mb-10">Empresas que confían en nuestros servicios</p>
           <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
             <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
               <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-cyan-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
@@ -173,49 +267,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bento Grid Services Section */}
-      <section id="soluciones" className="py-24 px-6 relative z-20 bg-background border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Ecosistema de <span className="text-primary">Soluciones</span></h2>
-            <p className="text-gray-400 text-lg max-w-2xl">Diseñamos arquitecturas tecnológicas escalables y robustas. Explora nuestros servicios clave.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {services.map((service, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className={`${service.bg} ${service.colSpan} p-8 md:p-10 rounded-[2rem] border border-white/10 transition-all duration-300 cursor-pointer overflow-hidden relative group`}
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-                <div className="relative z-10">
-                  <div className="mb-8">
-                    {service.icon}
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight">{service.title}</h3>
-                  <p className="text-white/70 text-sm md:text-base font-medium max-w-md">{service.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quote Form Section */}
-      <section className="py-24 px-6 relative tech-grid border-t border-white/5" id="cotizacion">
-        <div className="absolute inset-0 bg-primary/5"></div>
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Inicia tu <span className="text-accent">Proyecto</span></h2>
-            <p className="text-gray-400">Automatiza la cotización de tu requerimiento técnico al instante.</p>
-          </div>
-          <QuoteForm />
-        </div>
-      </section>
 
 
 
@@ -245,7 +296,7 @@ export default function Home() {
             <h4 className="text-white font-bold mb-6 tracking-wide">Contacto Directo</h4>
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-center gap-2">
-                <span className="text-accent">W:</span> 55 1348 5574
+                <span className="text-accent">W/Tel:</span> 55 1348 5574
               </li>
               <li className="flex items-center gap-2 break-all">
                 <span className="text-accent">E:</span> ventas@grupo-axtech.com
