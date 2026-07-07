@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Server, ShieldCheck, Network, Settings, Laptop, ArrowRight, Cpu, ChevronRight } from 'lucide-react';
+import { Server, ShieldCheck, Network, Settings, Laptop, ArrowRight, Cpu, ChevronRight, MonitorSmartphone, Wifi, Database, Lock, Video, Phone, Mail } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import QuoteForm from '@/components/QuoteForm';
@@ -9,62 +9,63 @@ import QuoteForm from '@/components/QuoteForm';
 export default function Home() {
   const services = [
     {
-      title: 'Soporte Técnico Especializado en Computadoras',
-      description: 'Nuestro servicio combina diagnóstico profesional, herramientas tecnológicas y personal especializado.',
-      icon: <Laptop className="w-10 h-10 text-white" />,
+      title: 'Soporte Técnico',
+      description: 'Diagnóstico profesional, mantenimiento y resolución eficiente de problemas.',
+      icon: <div className="p-4 bg-white/20 backdrop-blur-md rounded-2xl inline-block shadow-lg"><MonitorSmartphone className="w-10 h-10 text-gray-900 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" /></div>,
       colSpan: 'col-span-1 md:col-span-2',
-      bg: 'bg-gradient-to-br from-primary/90 to-primary/40',
+      bg: 'bg-gradient-to-br from-primary via-[#0a4aa3] to-background hover:shadow-[0_0_40px_rgba(15,98,209,0.3)]',
       slug: 'soporte-tecnico'
     },
     {
       title: 'Redes y Conectividad',
-      description: 'Diseñamos, implementamos y optimizamos infraestructuras de red seguras, eficientes y escalables.',
-      icon: <Network className="w-10 h-10 text-black" />,
+      description: 'Implementación de infraestructuras de red seguras, eficientes y de alta disponibilidad.',
+      icon: <div className="p-4 bg-black/20 backdrop-blur-md rounded-2xl inline-block shadow-lg"><Wifi className="w-10 h-10 text-black drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]" /></div>,
       colSpan: 'col-span-1 md:col-span-2',
-      bg: 'bg-gradient-to-br from-accent/90 to-accent/40',
+      bg: 'bg-gradient-to-br from-accent via-[#c78f0f] to-[#5a4205] hover:shadow-[0_0_40px_rgba(253,182,20,0.3)]',
       slug: 'redes-telecomunicaciones'
     },
     {
-      title: 'Infraestructura de Servidores',
-      description: 'Arquitectura, virtualización y respaldo de datos empresariales.',
-      icon: <Server className="w-8 h-8 text-primary" />,
+      title: 'Servidores',
+      description: 'Arquitectura, virtualización y respaldo.',
+      icon: <div className="p-4 bg-primary/20 backdrop-blur-md rounded-2xl inline-block"><Database className="w-8 h-8 text-primary drop-shadow-[0_0_10px_rgba(15,98,209,0.8)]" /></div>,
       colSpan: 'col-span-1',
-      bg: 'glass-panel hover:bg-white/5',
+      bg: 'glass-panel hover:bg-gray-100 border border-primary/20 hover:border-primary/50',
       slug: 'servidores'
     },
     {
       title: 'Ciberseguridad',
-      description: 'Protección perimetral y análisis de vulnerabilidades.',
-      icon: <ShieldCheck className="w-8 h-8 text-accent" />,
+      description: 'Protección perimetral y mitigación de riesgos.',
+      icon: <div className="p-4 bg-accent/20 backdrop-blur-md rounded-2xl inline-block"><Lock className="w-8 h-8 text-accent drop-shadow-[0_0_10px_rgba(253,182,20,0.8)]" /></div>,
       colSpan: 'col-span-1',
-      bg: 'glass-panel hover:bg-white/5',
+      bg: 'glass-panel hover:bg-gray-100 border border-accent/20 hover:border-accent/50',
       slug: 'ciberseguridad'
     },
     {
-      title: 'Cámaras de Seguridad y Control de Accesos',
-      description: 'Sistemas integrales de videovigilancia diseñados para proteger instalaciones.',
-      icon: <Settings className="w-8 h-8 text-primary" />,
+      title: 'CCTV y Accesos',
+      description: 'Videovigilancia inteligente e integral.',
+      icon: <div className="p-4 bg-green-500/20 backdrop-blur-md rounded-2xl inline-block"><Video className="w-8 h-8 text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]" /></div>,
       colSpan: 'col-span-1 md:col-span-2',
-      bg: 'glass-panel hover:bg-white/5',
+      bg: 'glass-panel hover:bg-gray-100 border border-green-500/20 hover:border-green-500/50',
       slug: 'cctv'
     }
   ];
 
   return (
     <main className="min-h-screen bg-background selection:bg-primary/30">
-      {/* Floating Navbar */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl bg-white/90 backdrop-blur-2xl border border-gray-200/50 rounded-full z-50 px-6 py-3 flex justify-between items-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-        <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform">
-          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain" priority />
+      {/* Tech Navbar */}
+      <nav className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-xl border-b border-gray-200/50 z-50 px-6 py-4 flex justify-between items-center transition-all">
+        <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
+          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={140} height={40} className="object-contain bg-white px-3 py-1 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.1)]" priority />
         </div>
-        <div className="hidden md:flex gap-8 font-semibold text-sm text-gray-700">
-          <Link href="#inicio" className="hover:text-primary transition-colors">Inicio</Link>
-          <Link href="#soluciones" className="hover:text-primary transition-colors">Soluciones</Link>
-          <Link href="#cotizacion" className="hover:text-primary transition-colors">Cotización</Link>
+        <div className="hidden md:flex gap-10 font-medium text-sm text-gray-700">
+          <Link href="#inicio" className="hover:text-primary  transition-all">INICIO</Link>
+          <Link href="#soluciones" className="hover:text-primary  transition-all">SERVICIOS</Link>
+          <Link href="#nosotros" className="hover:text-primary  transition-all">NOSOTROS</Link>
+          <Link href="#contacto" className="hover:text-primary  transition-all">CONTACTO</Link>
         </div>
         <Link 
           href="#cotizacion" 
-          className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
+          className="bg-primary hover:bg-primary-hover text-gray-900 px-6 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
         >
           Iniciar Proyecto
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -72,40 +73,44 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section id="inicio" className="relative min-h-screen pt-40 pb-20 px-6 lg:min-h-[90vh] flex items-center overflow-hidden tech-grid">
-        {/* Glow Effects */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[100px]"></div>
-
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+      <section className="relative pt-32 pb-20 px-6 min-h-[90vh] flex items-center justify-center overflow-hidden" id="inicio">
+        {/* Cinematic Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image src="/hero-bg.png" alt="AXTECH Technology" fill className="object-cover opacity-30 mix-blend-luminosity" priority />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90"></div>
+        </div>
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-[128px] z-0"></div>
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/20 rounded-full blur-[128px] z-0"></div>
+        
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* Left Content */}
           <div className="text-left">
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-100 backdrop-blur-md mb-8"
             >
               <Cpu className="w-4 h-4 text-accent" />
-              <span className="text-xs font-mono text-gray-300 tracking-wider uppercase">Ingeniería de Nueva Generación</span>
+              <span className="text-xs font-mono text-gray-700 tracking-wider uppercase">Ingeniería de Nueva Generación</span>
             </motion.div>
             
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 text-white leading-[1.1]"
+              className="text-5xl md:text-6xl font-extrabold tracking-tighter mb-6 text-gray-900 leading-[1.1]"
             >
-              Arquitectura <br/>
-              <span className="text-gradient-brand font-black">Tecnológica</span><br/>
-              para el Futuro.
+              Ingeniería <br/>
+              <span className="text-gradient-brand font-black">Especializada</span><br/>
+              en Soluciones Tecnológicas.
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg md:text-xl text-gray-400 mb-10 font-light max-w-lg leading-relaxed"
+              className="text-lg md:text-xl text-gray-600 mb-10 font-light max-w-lg leading-relaxed"
             >
               Innovación, ingeniería y tecnología para impulsar el crecimiento de tu empresa.
             </motion.p>
@@ -116,7 +121,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-wrap gap-4"
             >
-              <Link href="#cotizacion" className="px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-xl font-bold flex items-center gap-3 transition-all hover:shadow-[0_0_30px_rgba(15,98,209,0.5)]">
+              <Link href="#cotizacion" className="px-8 py-4 bg-primary hover:bg-primary-hover text-gray-900 rounded-xl font-bold flex items-center gap-3 transition-all hover:shadow-[0_0_30px_rgba(15,98,209,0.5)]">
                 Cotizar Solución
                 <ArrowRight className="w-5 h-5" />
               </Link>
@@ -132,74 +137,32 @@ export default function Home() {
           >
             <div className="col-span-2 glass-panel p-8 rounded-3xl border-t border-white/20">
               <div className="flex justify-between items-start mb-6">
-                <Network className="w-10 h-10 text-primary" />
-                <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded">Sistema Activo</span>
+                <Laptop className="w-10 h-10 text-primary" />
+                <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded">Soporte Continuo</span>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Conectividad 99.9%</h3>
-              <p className="text-gray-400 text-sm">Redes optimizadas para latencia cero.</p>
+              <h3 className="text-2xl font-bold mb-2">Soporte Técnico Especializado</h3>
+              <p className="text-gray-600 text-sm">Diagnóstico profesional y mantenimiento.</p>
             </div>
             <div className="glass-panel p-6 rounded-3xl bg-accent/10 border-accent/20">
               <ShieldCheck className="w-8 h-8 text-accent mb-4" />
-              <h3 className="font-bold text-lg">Seguridad</h3>
-              <p className="text-xs text-gray-400 mt-1">Protección 24/7</p>
+              <h3 className="font-bold text-lg">Ciberseguridad</h3>
+              <p className="text-xs text-gray-600 mt-1">Vulnerabilidades y Malware</p>
             </div>
-            <div className="glass-panel p-6 rounded-3xl">
-              <Server className="w-8 h-8 text-gray-300 mb-4" />
-              <h3 className="font-bold text-lg">Servidores</h3>
-              <p className="text-xs text-gray-400 mt-1">Alta disponibilidad</p>
+            <div className="glass-panel p-6 rounded-3xl border-t border-white/10">
+              <Settings className="w-8 h-8 text-gray-700 mb-4" />
+              <h3 className="font-bold text-lg">CCTV / Accesos</h3>
+              <p className="text-xs text-gray-600 mt-1">Videovigilancia 24/7</p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Quiénes Somos Section */}
-      <section className="py-24 px-6 relative bg-[#050505] border-t border-white/5" id="nosotros">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Quiénes <span className="text-primary">Somos</span></h2>
-            <div className="space-y-6 text-gray-400 leading-relaxed text-lg">
-              <p>
-                En <strong className="text-white">GRUPO AXTECH</strong> somos una empresa enfocada en el desarrollo, integración e implementación de soluciones tecnológicas que impulsan la eficiencia, innovación y crecimiento de las organizaciones.
-              </p>
-              <p>
-                Contamos con un equipo de profesionales especializados en tecnología e ingeniería, comprometidos con ofrecer soluciones integrales y personalizadas.
-              </p>
-              <p>
-                En Ingeniería Especializada en Soluciones Tecnológicas creemos que la tecnología debe ser una herramienta estratégica para el crecimiento. Por ello, nos enfocamos en crear soluciones prácticas, eficientes y escalables.
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="glass-panel p-8 rounded-3xl border-t border-primary/30">
-              <h3 className="text-xl font-bold mb-4 text-white">Nuestra Misión</h3>
-              <p className="text-sm text-gray-400">Brindar soluciones tecnológicas innovadoras y eficientes mediante ingeniería especializada, ayudando a las organizaciones a mejorar sus procesos, productividad y competitividad.</p>
-            </div>
-            <div className="glass-panel p-8 rounded-3xl border-t border-accent/30">
-              <h3 className="text-xl font-bold mb-4 text-white">Nuestra Visión</h3>
-              <p className="text-sm text-gray-400">Ser una empresa referente en ingeniería tecnológica, reconocida por la calidad de nuestras soluciones, la innovación constante y la confianza que generamos en nuestros clientes.</p>
-            </div>
-            <div className="glass-panel p-8 rounded-3xl sm:col-span-2">
-              <h3 className="text-xl font-bold mb-4 text-white text-center">Nuestros Valores</h3>
-              <ul className="flex flex-wrap justify-center gap-4 text-sm text-gray-300 font-semibold">
-                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Innovación tecnológica</li>
-                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Calidad y profesionalismo</li>
-                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Compromiso con el cliente</li>
-                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Integridad y confianza</li>
-                <li className="bg-white/5 px-4 py-2 rounded-full border border-white/10">Mejora continua</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
       {/* Bento Grid Services Section */}
       <section id="soluciones" className="py-24 px-6 relative z-20 bg-background border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Ecosistema de <span className="text-primary">Soluciones</span></h2>
-            <p className="text-gray-400 text-lg max-w-2xl">Diseñamos arquitecturas tecnológicas escalables y robustas. Explora nuestros servicios clave.</p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">Nuestros <span className="text-primary">Servicios</span></h2>
+            <p className="text-gray-600 text-lg max-w-2xl">Soluciones profesionales adaptadas a las necesidades de nuestros clientes. Nos enfocamos en brindar calidad, eficiencia y un servicio confiable.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -218,13 +181,58 @@ export default function Home() {
                       {service.icon}
                     </div>
                     <div>
-                      <h3 className={`text-2xl md:text-3xl font-bold mb-3 tracking-tight ${service.bg.includes('accent') ? 'text-black' : 'text-white'}`}>{service.title}</h3>
-                      <p className={`${service.bg.includes('accent') ? 'text-black/70' : 'text-white/70'} text-sm md:text-base font-medium max-w-md`}>{service.description}</p>
+                      <h3 className={`text-2xl md:text-3xl font-bold mb-3 tracking-tight ${service.bg.includes('accent') ? 'text-black' : 'text-gray-900'}`}>{service.title}</h3>
+                      <p className={`${service.bg.includes('accent') ? 'text-black/70' : 'text-gray-900/70'} text-sm md:text-base font-medium max-w-md`}>{service.description}</p>
                     </div>
                   </div>
                 </motion.div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quiénes Somos Section */}
+      <section className="py-24 px-6 relative bg-gray-50 border-t border-white/5 overflow-hidden" id="nosotros">
+        <div className="absolute right-0 top-0 w-1/2 h-full opacity-20 pointer-events-none z-0">
+          <Image src="/cybersecurity.png" alt="Cybersecurity" fill className="object-cover object-right mix-blend-screen mask-image-l-to-r" />
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-50 to-transparent"></div>
+        </div>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Quiénes <span className="text-primary">Somos</span></h2>
+            <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
+              <p>
+                En <strong className="text-gray-900">GRUPO AXTECH</strong> somos una empresa enfocada en el desarrollo, integración e implementación de soluciones tecnológicas que impulsan la eficiencia, innovación y crecimiento de las organizaciones.
+              </p>
+              <p>
+                Contamos con un equipo de profesionales especializados en tecnología e ingeniería, comprometidos con ofrecer soluciones integrales y personalizadas.
+              </p>
+              <p>
+                En Ingeniería Especializada en Soluciones Tecnológicas creemos que la tecnología debe ser una herramienta estratégica para el crecimiento. Por ello, nos enfocamos en crear soluciones prácticas, eficientes y escalables.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="glass-panel p-8 rounded-3xl border-t border-primary/30 bg-[#0a0a0a]/80 backdrop-blur-md">
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Nuestra Misión</h3>
+              <p className="text-sm text-gray-600">Brindar soluciones tecnológicas innovadoras y eficientes mediante ingeniería especializada, ayudando a las organizaciones a mejorar sus procesos, productividad y competitividad.</p>
+            </div>
+            <div className="glass-panel p-8 rounded-3xl border-t border-accent/30 bg-[#0a0a0a]/80 backdrop-blur-md">
+              <h3 className="text-xl font-bold mb-4 text-gray-900">Nuestra Visión</h3>
+              <p className="text-sm text-gray-600">Ser una empresa referente en ingeniería tecnológica, reconocida por la calidad de nuestras soluciones, la innovación constante y la confianza que generamos en nuestros clientes.</p>
+            </div>
+            <div className="glass-panel p-8 rounded-3xl sm:col-span-2 bg-[#0a0a0a]/80 backdrop-blur-md">
+              <h3 className="text-xl font-bold mb-4 text-gray-900 text-center">Nuestros Valores</h3>
+              <ul className="flex flex-wrap justify-center gap-4 text-sm text-gray-700 font-semibold">
+                <li className="bg-gray-100 px-4 py-2 rounded-full border border-white/10">Innovación tecnológica</li>
+                <li className="bg-gray-100 px-4 py-2 rounded-full border border-white/10">Calidad y profesionalismo</li>
+                <li className="bg-gray-100 px-4 py-2 rounded-full border border-white/10">Compromiso con el cliente</li>
+                <li className="bg-gray-100 px-4 py-2 rounded-full border border-white/10">Integridad y confianza</li>
+                <li className="bg-gray-100 px-4 py-2 rounded-full border border-white/10">Mejora continua</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -235,33 +243,33 @@ export default function Home() {
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Inicia tu <span className="text-accent">Proyecto</span></h2>
-            <p className="text-gray-400">Automatiza la cotización de tu requerimiento técnico al instante.</p>
+            <p className="text-gray-600">Automatiza la cotización de tu requerimiento técnico al instante.</p>
           </div>
           <QuoteForm />
         </div>
       </section>
 
       {/* Trust Section (Moved to Bottom) */}
-      <section className="py-12 px-6 border-y border-white/10 bg-gradient-to-b from-white/5 to-transparent relative">
+      <section className="py-12 px-6 border-y border-white/10 bg-gradient-to-b from-gray-100 to-transparent relative">
         <div className="absolute inset-0 bg-primary/10 blur-[100px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <p className="text-sm text-gray-300 font-bold tracking-widest uppercase mb-10">Empresas que confían en nuestros servicios</p>
+          <p className="text-sm text-gray-700 font-bold tracking-widest uppercase mb-10">Empresas que confían en nuestros servicios</p>
           <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
             <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
               <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-cyan-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-              <span className="text-2xl font-bold tracking-tight text-white">METROLOGÍA FROMI</span>
+              <span className="text-2xl font-bold tracking-tight text-gray-900">METROLOGIA FROMI</span>
             </div>
             <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
               <div className="w-8 h-8 rounded-full border-4 border-accent shadow-[0_0_15px_rgba(253,182,20,0.5)]"></div>
-              <span className="text-2xl font-bold tracking-widest text-white">TENSOS</span>
+              <span className="text-2xl font-bold tracking-widest text-gray-900">TENSOS</span>
             </div>
             <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
               <div className="w-8 h-8 rotate-45 bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-              <span className="text-2xl font-bold tracking-tighter text-white">TORDO TECH</span>
+              <span className="text-2xl font-bold tracking-tighter text-gray-900">TORDO TECNOLOGIAS</span>
             </div>
             <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
               <div className="w-10 h-3 bg-green-500 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.5)]"></div>
-              <span className="text-2xl font-black italic text-white">SDPN</span>
+              <span className="text-2xl font-black italic text-gray-900">SDPN INGENIERIA</span>
             </div>
           </div>
         </div>
@@ -286,34 +294,29 @@ export default function Home() {
             <h4 className="text-white font-bold mb-6 tracking-wide">Enlaces Rápidos</h4>
             <ul className="space-y-3 text-sm text-gray-400">
               <li><Link href="#inicio" className="hover:text-primary transition-colors">Inicio</Link></li>
-              <li><Link href="#soluciones" className="hover:text-primary transition-colors">Soluciones IT</Link></li>
-              <li><Link href="#cotizacion" className="hover:text-primary transition-colors">Solicitar Cotización</Link></li>
-              <li><Link href="/orden-servicio" className="hover:text-primary transition-colors">Orden de Servicio</Link></li>
+              <li><Link href="#soluciones" className="hover:text-primary transition-colors">Servicios</Link></li>
             </ul>
           </div>
 
-          <div>
+          <div id="contacto">
             <h4 className="text-white font-bold mb-6 tracking-wide">Contacto Directo</h4>
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-center gap-2">
-                <span className="text-accent">W/Tel:</span> 55 1348 5574
+                <Phone className="w-4 h-4 text-accent" /> 55 1348 5574
               </li>
               <li className="flex items-center gap-2 break-all">
-                <span className="text-accent">E:</span> ventas@grupo-axtech.com
-              </li>
-              <li className="flex items-center gap-2 break-all">
-                <span className="text-accent">E:</span> ventas@axtech-ingenieria.com
+                <Mail className="w-4 h-4 text-accent" /> ventas@grupo-axtech.com
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-bold mb-6 tracking-wide">Redes y Legales</h4>
+            <h4 className="text-white font-bold mb-6 tracking-wide">Redes Sociales</h4>
             <ul className="space-y-3 text-sm text-gray-400">
               <li><a href="#" className="hover:text-primary transition-colors">Facebook: AXTECH INGENIERIA</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">TikTok: AXTECH INGENIERIA</a></li>
-              <li className="pt-4"><a href="#" className="text-xs underline hover:text-white transition-colors">Aviso de Privacidad</a></li>
-              <li><a href="#" className="text-xs underline hover:text-white transition-colors">Términos y Condiciones</a></li>
+              <li className="pt-4"><a href="#" className="text-xs underline hover:text-primary transition-colors">Aviso de Privacidad</a></li>
+              <li><a href="#" className="text-xs underline hover:text-primary transition-colors">Términos y Condiciones</a></li>
             </ul>
           </div>
         </div>

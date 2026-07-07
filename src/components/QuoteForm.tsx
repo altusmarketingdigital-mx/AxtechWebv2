@@ -61,7 +61,7 @@ export default function QuoteForm() {
         </p>
         <button 
           onClick={() => setStatus('idle')}
-          className="px-6 py-3 bg-primary hover:bg-primary-hover text-white rounded-full font-medium transition"
+          className="px-6 py-3 bg-primary hover:bg-primary-hover text-gray-900 rounded-full font-medium transition"
         >
           Enviar otra solicitud
         </button>
@@ -86,7 +86,7 @@ export default function QuoteForm() {
       <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-300">Nombre Completo / Empresa *</label>
+            <label className="text-sm font-medium text-gray-700">Nombre Completo / Empresa *</label>
             <input 
               required 
               name="name"
@@ -94,11 +94,11 @@ export default function QuoteForm() {
               onChange={handleChange}
               type="text" 
               placeholder="Ej. AXTECH CORP" 
-              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-primary transition"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-300">Correo Electrónico *</label>
+            <label className="text-sm font-medium text-gray-700">Correo Electrónico *</label>
             <input 
               required 
               name="email"
@@ -106,31 +106,31 @@ export default function QuoteForm() {
               onChange={handleChange}
               type="email" 
               placeholder="ventas@empresa.com" 
-              className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition"
+              className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-primary transition"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Servicio de Interés *</label>
+          <label className="text-sm font-medium text-gray-700">Servicio de Interés *</label>
           <select 
             required 
             name="service"
             value={formData.service}
             onChange={handleChange}
-            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition appearance-none"
+            className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-primary transition appearance-none"
           >
             <option value="" disabled>Seleccione un servicio...</option>
-            <option value="Soporte Técnico Especializado">Soporte Técnico Especializado</option>
+            <option value="Soporte Técnico Especializado en Computadoras">Soporte Técnico Especializado en Computadoras</option>
             <option value="Redes y Conectividad">Redes y Conectividad</option>
-            <option value="Servidores e Infraestructura">Servidores e Infraestructura</option>
+            <option value="Infraestructura de Servidores">Infraestructura de Servidores</option>
             <option value="Ciberseguridad">Ciberseguridad</option>
-            <option value="CCTV y Accesos">CCTV y Control de Accesos</option>
+            <option value="Cámaras de Seguridad y Control de Accesos">Cámaras de Seguridad y Control de Accesos</option>
           </select>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-300">Detalles del Requerimiento *</label>
+          <label className="text-sm font-medium text-gray-700">Detalles del Requerimiento *</label>
           <textarea 
             required 
             name="message"
@@ -138,7 +138,7 @@ export default function QuoteForm() {
             onChange={handleChange}
             rows={4} 
             placeholder="Describa brevemente lo que necesita..." 
-            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition resize-none"
+            className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-primary transition resize-none"
           ></textarea>
         </div>
 
@@ -150,11 +150,11 @@ export default function QuoteForm() {
           {status === 'submitting' ? (
             <span className="flex items-center gap-2">
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Procesando y Generando PDF...
+              Enviando...
             </span>
           ) : (
             <>
-              Generar y Descargar Cotización
+              Enviar
               <Send className="w-4 h-4" />
             </>
           )}

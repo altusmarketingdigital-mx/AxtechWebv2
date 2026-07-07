@@ -19,9 +19,10 @@ model Quote {
 
 model ServiceOrder {
   id          String   @id @default(cuid())
+  technician  String
   clientName  String
-  phone       String
-  device      String
-  issue       String
+  serviceType String
+  serviceDate String
+  report      String
   createdAt   DateTime @default(now())
 }
