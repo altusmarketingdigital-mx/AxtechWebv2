@@ -95,7 +95,7 @@ export default function SoporteTecnicoPage() {
             className="relative"
           >
             <div className="aspect-square rounded-[3rem] p-8 relative overflow-hidden shadow-2xl border border-gray-200">
-              <Image src="/it-support.png" alt="Soporte Técnico Especializado" fill className="object-cover" priority />
+              <Image src="/soporte-tecnico-bg.jpg" alt="Soporte Técnico Especializado" fill className="object-cover" priority />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
             </div>
           </motion.div>
