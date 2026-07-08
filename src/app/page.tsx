@@ -283,18 +283,16 @@ export default function Home() {
         <div className="absolute inset-0 bg-primary/10 blur-[100px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <p className="text-sm text-gray-700 font-bold tracking-widest uppercase mb-10">Empresas que confían en nuestros servicios</p>
-          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20">
-            <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
-              <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-cyan-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-              <span className="text-2xl font-bold tracking-tight text-gray-900">METROLOGIA FROMI</span>
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20">
+            <div className="flex items-center hover:scale-110 transition-transform cursor-default">
+              <Image src="/fromi.webp" alt="METROLOGIA FROMI" width={180} height={50} className="object-contain max-h-[60px] w-auto drop-shadow-md" />
             </div>
             <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
               <div className="w-8 h-8 rounded-full border-4 border-accent shadow-[0_0_15px_rgba(253,182,20,0.5)]"></div>
               <span className="text-2xl font-bold tracking-widest text-gray-900">TENSOS</span>
             </div>
-            <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
-              <div className="w-8 h-8 rotate-45 bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-              <span className="text-2xl font-bold tracking-tighter text-gray-900">TORDO TECNOLOGIAS</span>
+            <div className="flex items-center hover:scale-110 transition-transform cursor-default">
+              <Image src="/tordo-logo.png" alt="TORDO TECNOLOGÍAS" width={160} height={60} className="object-contain max-h-[70px] w-auto drop-shadow-md" />
             </div>
             <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
               <div className="w-10 h-3 bg-green-500 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.5)]"></div>
