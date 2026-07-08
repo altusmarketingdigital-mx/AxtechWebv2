@@ -9,44 +9,63 @@ import QuoteForm from '@/components/QuoteForm';
 export default function Home() {
   const services = [
     {
-      title: 'Soporte Técnico',
-      description: 'Diagnóstico profesional, mantenimiento y resolución eficiente de problemas.',
+      title: 'Soporte Técnico Especializado en Computadoras',
+      features: [
+        'Diagnóstico avanzado de equipos de cómputo',
+        'Mantenimiento preventivo y correctivo',
+        'Optimización del rendimiento',
+        'Instalación y configuración de sistemas',
+        'Seguridad informática'
+      ],
       icon: <div className="p-4 bg-white/20 backdrop-blur-md rounded-2xl inline-block shadow-lg"><MonitorSmartphone className="w-10 h-10 text-gray-900 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" /></div>,
       colSpan: 'col-span-1 md:col-span-2',
-      bg: 'bg-gradient-to-br from-primary via-[#0a4aa3] to-background hover:shadow-[0_0_40px_rgba(15,98,209,0.3)]',
+      bg: 'bg-gradient-to-br from-primary via-[#0a4aa3] to-[#04265a] hover:shadow-[0_0_40px_rgba(15,98,209,0.3)]',
       slug: 'soporte-tecnico'
     },
     {
-      title: 'Redes y Conectividad',
-      description: 'Implementación de infraestructuras de red seguras, eficientes y de alta disponibilidad.',
+      title: 'Redes y Telecomunicaciones',
+      features: [
+        'Diagnóstico y solución de fallas de red',
+        'Diseño e instalación de redes empresariales',
+        'Configuración de routers y switches',
+        'Optimización de redes inalámbricas',
+        'Seguridad de red',
+        'Integración de dispositivos y sistemas'
+      ],
       icon: <div className="p-4 bg-black/20 backdrop-blur-md rounded-2xl inline-block shadow-lg"><Wifi className="w-10 h-10 text-black drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]" /></div>,
       colSpan: 'col-span-1 md:col-span-2',
       bg: 'bg-gradient-to-br from-accent via-[#c78f0f] to-[#5a4205] hover:shadow-[0_0_40px_rgba(253,182,20,0.3)]',
       slug: 'redes-telecomunicaciones'
     },
     {
-      title: 'Servidores',
-      description: 'Arquitectura, virtualización y respaldo.',
-      icon: <div className="p-4 bg-primary/20 backdrop-blur-md rounded-2xl inline-block"><Database className="w-8 h-8 text-primary drop-shadow-[0_0_10px_rgba(15,98,209,0.8)]" /></div>,
-      colSpan: 'col-span-1',
-      bg: 'glass-panel hover:bg-gray-100 border border-primary/20 hover:border-primary/50',
-      slug: 'servidores'
-    },
-    {
-      title: 'Ciberseguridad',
-      description: 'Protección perimetral y mitigación de riesgos.',
-      icon: <div className="p-4 bg-accent/20 backdrop-blur-md rounded-2xl inline-block"><Lock className="w-8 h-8 text-accent drop-shadow-[0_0_10px_rgba(253,182,20,0.8)]" /></div>,
-      colSpan: 'col-span-1',
-      bg: 'glass-panel hover:bg-gray-100 border border-accent/20 hover:border-accent/50',
-      slug: 'ciberseguridad'
-    },
-    {
-      title: 'CCTV y Accesos',
-      description: 'Videovigilancia inteligente e integral.',
-      icon: <div className="p-4 bg-green-500/20 backdrop-blur-md rounded-2xl inline-block"><Video className="w-8 h-8 text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]" /></div>,
+      title: 'Cámaras de Seguridad y Control de Accesos',
+      features: [
+        'Instalación de cámaras de seguridad',
+        'Monitoreo remoto',
+        'Sistemas de grabación y almacenamiento',
+        'Control de accesos',
+        'Automatización de accesos',
+        'Administración y supervisión de accesos'
+      ],
+      icon: <div className="p-4 bg-green-500/10 backdrop-blur-md rounded-2xl inline-block shadow-lg"><Video className="w-10 h-10 text-green-700 drop-shadow-[0_0_15px_rgba(34,197,94,0.3)]" /></div>,
       colSpan: 'col-span-1 md:col-span-2',
-      bg: 'glass-panel hover:bg-gray-100 border border-green-500/20 hover:border-green-500/50',
+      bg: 'bg-white hover:bg-gray-50 border border-green-500/30 hover:border-green-500 shadow-sm',
       slug: 'cctv'
+    },
+    {
+      title: 'Servidores e Infraestructura',
+      features: [
+        'Instalación y configuración de servidores',
+        'Servidor de archivos',
+        'Servidores virtuales',
+        'Seguridad y respaldo de información',
+        'Administración y mantenimiento de servidores',
+        'Integración con redes empresariales'
+      ],
+      icon: <div className="p-4 bg-primary/10 backdrop-blur-md rounded-2xl inline-block shadow-lg"><Database className="w-10 h-10 text-primary drop-shadow-[0_0_15px_rgba(15,98,209,0.3)]" /></div>,
+      colSpan: 'col-span-1 md:col-span-2',
+      bg: 'bg-white hover:bg-gray-50 border border-primary/30 hover:border-primary shadow-sm',
+      slug: 'servidores'
     }
   ];
 
@@ -169,8 +188,15 @@ export default function Home() {
                       {service.icon}
                     </div>
                     <div>
-                      <h3 className={`text-2xl md:text-3xl font-bold mb-3 tracking-tight ${service.bg.includes('accent') ? 'text-black' : 'text-gray-900'}`}>{service.title}</h3>
-                      <p className={`${service.bg.includes('accent') ? 'text-black/70' : 'text-gray-900/70'} text-sm md:text-base font-medium max-w-md`}>{service.description}</p>
+                      <h3 className={`text-2xl md:text-3xl font-bold mb-4 tracking-tight ${service.bg.includes('accent') ? 'text-black' : (service.bg.includes('primary') ? 'text-white' : 'text-gray-900')}`}>{service.title}</h3>
+                      <ul className="space-y-2">
+                        {service.features.map((feature, fIdx) => (
+                          <li key={fIdx} className={`flex items-start gap-2 ${service.bg.includes('accent') ? 'text-black/80' : (service.bg.includes('primary') ? 'text-white/80' : 'text-gray-600')} text-sm md:text-base font-medium`}>
+                            <div className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${service.bg.includes('accent') ? 'bg-black/60' : 'bg-primary'}`}></div>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </motion.div>
