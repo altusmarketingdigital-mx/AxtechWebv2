@@ -53,19 +53,19 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background selection:bg-primary/30">
       {/* Tech Navbar */}
-      <nav className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-xl border-b border-gray-200/50 z-50 px-6 py-4 flex justify-between items-center transition-all">
+      <nav className="fixed top-0 left-0 w-full bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-gray-800 z-50 px-6 py-4 flex justify-between items-center transition-all">
         <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
-          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={140} height={40} className="object-contain bg-white px-3 py-1 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.1)]" priority />
+          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={200} height={55} className="object-contain" priority />
         </div>
-        <div className="hidden md:flex gap-10 font-medium text-sm text-gray-700">
-          <Link href="#inicio" className="hover:text-primary  transition-all">INICIO</Link>
-          <Link href="#soluciones" className="hover:text-primary  transition-all">SERVICIOS</Link>
-          <Link href="#nosotros" className="hover:text-primary  transition-all">NOSOTROS</Link>
-          <Link href="#contacto" className="hover:text-primary  transition-all">CONTACTO</Link>
+        <div className="hidden md:flex gap-10 font-medium text-sm text-gray-300">
+          <Link href="#inicio" className="hover:text-white transition-all">INICIO</Link>
+          <Link href="#soluciones" className="hover:text-white transition-all">SOLUCIONES</Link>
+          <Link href="#nosotros" className="hover:text-white transition-all">NOSOTROS</Link>
+          <Link href="#contacto" className="hover:text-white transition-all">CONTACTO</Link>
         </div>
         <Link 
           href="#cotizacion" 
-          className="bg-primary hover:bg-primary-hover text-gray-900 px-6 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
+          className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
         >
           Iniciar Proyecto
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -85,16 +85,6 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* Left Content */}
           <div className="text-left">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-100 backdrop-blur-md mb-8"
-            >
-              <Cpu className="w-4 h-4 text-accent" />
-              <span className="text-xs font-mono text-gray-700 tracking-wider uppercase">Ingeniería de Nueva Generación</span>
-            </motion.div>
-            
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -121,38 +111,36 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-wrap gap-4"
             >
-              <Link href="#cotizacion" className="px-8 py-4 bg-primary hover:bg-primary-hover text-gray-900 rounded-xl font-bold flex items-center gap-3 transition-all hover:shadow-[0_0_30px_rgba(15,98,209,0.5)]">
+              <Link href="#cotizacion" className="px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-xl font-bold flex items-center gap-3 transition-all hover:shadow-[0_0_30px_rgba(15,98,209,0.5)]">
                 Cotizar Solución
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </motion.div>
           </div>
 
-          {/* Right Visual (Bento Preview) */}
+          {/* Right Visual */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="hidden lg:grid grid-cols-2 gap-4 relative"
+            className="hidden lg:block relative"
           >
-            <div className="col-span-2 glass-panel p-8 rounded-3xl border-t border-white/20">
-              <div className="flex justify-between items-start mb-6">
-                <Laptop className="w-10 h-10 text-primary" />
-                <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded">Soporte Continuo</span>
+            <Link href="/servicios/soporte-tecnico" className="block group">
+              <div className="glass-panel p-8 md:p-10 rounded-[2rem] border-t border-primary/20 hover:border-primary/50 transition-all hover:-translate-y-2 hover:shadow-2xl bg-white shadow-xl">
+                <div className="flex justify-between items-start mb-6">
+                  <Laptop className="w-12 h-12 text-primary group-hover:scale-110 transition-transform" />
+                  <span className="text-primary text-xs font-bold bg-primary/10 px-3 py-1.5 rounded-full uppercase tracking-wider">Ver Detalles</span>
+                </div>
+                <h3 className="text-3xl font-bold mb-5 text-gray-900 group-hover:text-primary transition-colors">Soporte Técnico Reparación</h3>
+                <ul className="space-y-4 text-gray-600 font-medium">
+                  <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-primary shrink-0"></div>Diagnóstico avanzado de equipos de cómputo</li>
+                  <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-primary shrink-0"></div>Mantenimiento preventivo y correctivo</li>
+                  <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-primary shrink-0"></div>Optimización del rendimiento</li>
+                  <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-primary shrink-0"></div>Instalación y configuración de sistemas</li>
+                  <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-primary shrink-0"></div>Seguridad informática</li>
+                </ul>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Soporte Técnico Especializado</h3>
-              <p className="text-gray-600 text-sm">Diagnóstico profesional y mantenimiento.</p>
-            </div>
-            <div className="glass-panel p-6 rounded-3xl bg-accent/10 border-accent/20">
-              <ShieldCheck className="w-8 h-8 text-accent mb-4" />
-              <h3 className="font-bold text-lg">Ciberseguridad</h3>
-              <p className="text-xs text-gray-600 mt-1">Vulnerabilidades y Malware</p>
-            </div>
-            <div className="glass-panel p-6 rounded-3xl border-t border-white/10">
-              <Settings className="w-8 h-8 text-gray-700 mb-4" />
-              <h3 className="font-bold text-lg">CCTV / Accesos</h3>
-              <p className="text-xs text-gray-600 mt-1">Videovigilancia 24/7</p>
-            </div>
+            </Link>
           </motion.div>
         </div>
       </section>
