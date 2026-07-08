@@ -285,11 +285,10 @@ export default function Home() {
           <p className="text-sm text-gray-700 font-bold tracking-widest uppercase mb-10">Empresas que confían en nuestros servicios</p>
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20">
             <div className="flex items-center hover:scale-110 transition-transform cursor-default">
-              <Image src="/fromi.webp" alt="METROLOGIA FROMI" width={180} height={50} className="object-contain max-h-[60px] w-auto drop-shadow-md" />
+              <Image src="/fromi-logo.png" alt="METROLOGIA FROMI" width={100} height={100} className="object-contain max-h-[80px] w-auto drop-shadow-md rounded-full" />
             </div>
-            <div className="flex items-center gap-3 hover:scale-110 transition-transform cursor-default">
-              <div className="w-8 h-8 rounded-full border-4 border-accent shadow-[0_0_15px_rgba(253,182,20,0.5)]"></div>
-              <span className="text-2xl font-bold tracking-widest text-gray-900">TENSOS</span>
+            <div className="flex items-center hover:scale-110 transition-transform cursor-default">
+              <Image src="/tensos-logo.png" alt="TENSOS" width={180} height={60} className="object-contain max-h-[70px] w-auto drop-shadow-md" />
             </div>
             <div className="flex items-center hover:scale-110 transition-transform cursor-default">
               <Image src="/tordo-logo.png" alt="TORDO TECNOLOGÍAS" width={160} height={60} className="object-contain max-h-[70px] w-auto drop-shadow-md" />
