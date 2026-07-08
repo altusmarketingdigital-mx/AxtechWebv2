@@ -87,9 +87,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background selection:bg-primary/30">
       {/* Tech Navbar */}
-      <nav className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 z-50 px-6 py-4 flex justify-between items-center transition-all shadow-sm">
+      <nav className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 z-50 px-6 py-2 flex justify-between items-center transition-all shadow-sm">
         <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
-          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={200} height={55} className="object-contain" priority />
+          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain" priority />
         </div>
         <div className="hidden md:flex gap-10 font-medium text-sm text-gray-600">
           <Link href="#inicio" className="hover:text-primary transition-all">INICIO</Link>
@@ -107,7 +107,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 min-h-[90vh] flex items-center justify-center overflow-hidden" id="inicio">
+      <section className="relative pt-40 pb-20 px-6 min-h-[90vh] flex items-center justify-center overflow-hidden" id="inicio">
         {/* Cinematic Background Image */}
         <div className="absolute inset-0 z-0">
           <Image src="/hero-bg.png" alt="AXTECH Technology" fill className="object-cover opacity-30 mix-blend-luminosity" priority />
