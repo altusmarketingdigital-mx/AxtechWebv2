@@ -331,7 +331,7 @@ export default function Home() {
                 <Phone className="w-4 h-4 text-accent" /> 55 1348 5574
               </li>
               <li className="flex items-center gap-2 break-all">
-                <Mail className="w-4 h-4 text-accent" /> ventas@grupo-axtech.com
+                <Mail className="w-4 h-4 text-accent" /> ventas@axtech-ingenieria.com
               </li>
             </ul>
           </div>
