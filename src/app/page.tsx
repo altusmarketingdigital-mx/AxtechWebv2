@@ -66,6 +66,21 @@ export default function Home() {
       colSpan: 'col-span-1 md:col-span-2',
       bg: 'bg-white hover:bg-gray-50 border border-primary/30 hover:border-primary shadow-sm',
       slug: 'servidores'
+    },
+    {
+      title: 'Ciberseguridad',
+      features: [
+        'Evaluación de vulnerabilidades',
+        'Implementación de seguridad informática',
+        'Protección contra virus y malware',
+        'Seguridad de redes',
+        'Respaldo y recuperación de información',
+        'Monitoreo y supervisión de seguridad'
+      ],
+      icon: <div className="p-4 bg-red-500/10 backdrop-blur-md rounded-2xl inline-block shadow-lg"><ShieldCheck className="w-10 h-10 text-red-600 drop-shadow-[0_0_15px_rgba(220,38,38,0.3)]" /></div>,
+      colSpan: 'col-span-1 md:col-span-2 md:col-start-2',
+      bg: 'bg-white hover:bg-gray-50 border border-red-500/30 hover:border-red-500 shadow-sm',
+      slug: 'ciberseguridad'
     }
   ];
 
