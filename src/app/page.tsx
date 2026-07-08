@@ -87,15 +87,15 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background selection:bg-primary/30">
       {/* Tech Navbar */}
-      <nav className="fixed top-0 left-0 w-full bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-gray-800 z-50 px-6 py-4 flex justify-between items-center transition-all">
+      <nav className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 z-50 px-6 py-4 flex justify-between items-center transition-all shadow-sm">
         <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
           <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={200} height={55} className="object-contain" priority />
         </div>
-        <div className="hidden md:flex gap-10 font-medium text-sm text-gray-300">
-          <Link href="#inicio" className="hover:text-white transition-all">INICIO</Link>
-          <Link href="#soluciones" className="hover:text-white transition-all">SOLUCIONES</Link>
-          <Link href="#nosotros" className="hover:text-white transition-all">NOSOTROS</Link>
-          <Link href="#contacto" className="hover:text-white transition-all">CONTACTO</Link>
+        <div className="hidden md:flex gap-10 font-medium text-sm text-gray-600">
+          <Link href="#inicio" className="hover:text-primary transition-all">INICIO</Link>
+          <Link href="#soluciones" className="hover:text-primary transition-all">SOLUCIONES</Link>
+          <Link href="#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
+          <Link href="#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
         </div>
         <Link 
           href="#cotizacion" 
