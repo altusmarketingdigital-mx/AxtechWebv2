@@ -203,10 +203,10 @@ export default function Home() {
                       {service.icon}
                     </div>
                     <div>
-                      <h3 className={`text-2xl md:text-3xl font-bold mb-4 tracking-tight ${service.bg.includes('accent') ? 'text-black' : (service.bg.includes('primary') ? 'text-white' : 'text-gray-900')}`}>{service.title}</h3>
+                      <h3 className={`text-2xl md:text-3xl font-bold mb-4 tracking-tight ${service.bg.includes('accent') ? 'text-black' : (service.bg.includes('from-primary') ? 'text-white' : 'text-gray-900')}`}>{service.title}</h3>
                       <ul className="space-y-2">
                         {service.features.map((feature, fIdx) => (
-                          <li key={fIdx} className={`flex items-start gap-2 ${service.bg.includes('accent') ? 'text-black/80' : (service.bg.includes('primary') ? 'text-white/80' : 'text-gray-600')} text-sm md:text-base font-medium`}>
+                          <li key={fIdx} className={`flex items-start gap-2 ${service.bg.includes('accent') ? 'text-black/80' : (service.bg.includes('from-primary') ? 'text-white/80' : 'text-gray-600')} text-sm md:text-base font-medium`}>
                             <div className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${service.bg.includes('accent') ? 'bg-black/60' : 'bg-primary'}`}></div>
                             {feature}
                           </li>
