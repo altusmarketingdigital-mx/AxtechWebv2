@@ -3,12 +3,11 @@
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { OrderStatus } from "@prisma/client"
 import { sendOrderNotification } from "@/lib/notifications"
 
 export async function updateServiceOrder(formData: FormData) {
   const id = formData.get("id") as string
-  const status = formData.get("status") as OrderStatus
+  const status = formData.get("status") as any
   const diagnosis = formData.get("diagnosis") as string
   const repairNotes = formData.get("repairNotes") as string
   const costQuoteRaw = formData.get("costQuote") as string

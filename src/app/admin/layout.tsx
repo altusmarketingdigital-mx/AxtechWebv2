@@ -3,17 +3,20 @@ import Link from "next/link";
 import { 
   LayoutDashboard, 
   Wrench, 
-  ShoppingCart, 
-  Users, 
-  Settings, 
+  ShoppingCart,
+  Package,
   LogOut 
 } from "lucide-react";
+import { logout } from "@/app/actions/authActions";
+import { getSession } from "@/lib/session";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getSession();
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -35,17 +38,27 @@ export default function AdminLayout({
             <ShoppingCart size={20} />
             <span>Ventas & POS</span>
           </Link>
-          <Link href="/admin/usuarios" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
-            <Users size={20} />
-            <span>Usuarios</span>
+          <Link href="/admin/inventario" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
+            <Package size={20} />
+            <span>Inventario</span>
           </Link>
         </nav>
         
-        <div className="p-4 border-t border-slate-700">
-          <button className="flex items-center space-x-3 p-3 w-full rounded-lg hover:bg-red-600 transition-colors">
-            <LogOut size={20} />
-            <span>Cerrar Sesión</span>
-          </button>
+        <div className="p-4 border-t border-slate-700 space-y-3">
+          {session && (
+            <p className="text-xs text-slate-400 px-3 truncate">
+              Sesión: <span className="text-white font-medium">{session.userId}</span>
+            </p>
+          )}
+          <form action={logout}>
+            <button 
+              type="submit"
+              className="flex items-center space-x-3 p-3 w-full rounded-lg hover:bg-red-600 transition-colors text-left"
+            >
+              <LogOut size={20} />
+              <span>Cerrar Sesión</span>
+            </button>
+          </form>
         </div>
       </aside>
 

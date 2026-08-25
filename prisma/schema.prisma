@@ -3,26 +3,21 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 // ---------------------------------------------------------
 // USERS & ROLES
 // ---------------------------------------------------------
-enum Role {
-  ADMIN
-  TECHNICIAN
-  CUSTOMER
-}
-
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
   phone     String?
-  role      Role     @default(CUSTOMER)
+  password  String?
+  role      String   @default("customer") // admin | technician | customer
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -169,14 +164,4 @@ model SaleItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float // Price at the time of sale
-}
-
-// Keep the old quote model for contact form if used
-model Quote {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  service   String
-  message   String
-  createdAt DateTime @default(now())
 }
