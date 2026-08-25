@@ -4,6 +4,7 @@ import StoreCatalog from "@/components/StoreCatalog"
 import Link from "next/link"
 import Image from "next/image"
 import { ShoppingBag, ChevronRight, Phone, Mail, ShieldCheck, Truck, Wrench, ArrowRight, Zap, RefreshCw, CreditCard, Sparkles, CheckCircle2 } from "lucide-react"
+import FooterTrustBanner from "@/components/FooterTrustBanner"
 
 export default async function StorePage() {
   const products = await prisma.product.findMany({
@@ -169,8 +170,12 @@ export default async function StorePage() {
       </section>
 
       {/* Corporate Footer */}
-      <footer className="bg-[#02040a] pt-20 pb-10 px-6 border-t border-white/10 relative overflow-hidden text-gray-300">
+      <footer className="bg-[#02040a] pt-16 pb-10 px-6 border-t border-white/10 relative overflow-hidden text-gray-300">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
+        
+        {/* Garantía y Confianza Banner */}
+        <FooterTrustBanner />
+
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 relative z-10">
           
           <div className="space-y-6">
