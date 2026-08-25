@@ -73,13 +73,21 @@ export default function Home() {
           <Link href="#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
           <Link href="#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
         </div>
-        <Link 
-          href="#cotizacion" 
-          className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
-        >
-          Iniciar Proyecto
-          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/login"
+            className="border border-gray-300 text-gray-700 hover:border-primary hover:text-primary px-5 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2"
+          >
+            Acceso Admin
+          </Link>
+          <Link 
+            href="#cotizacion" 
+            className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
+          >
+            Iniciar Proyecto
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
       </nav>
 
       {/* Hero Section */}
