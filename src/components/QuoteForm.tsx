@@ -56,7 +56,7 @@ export default function QuoteForm() {
           <CheckCircle className="w-10 h-10 text-accent" />
         </div>
         <h3 className="text-3xl font-bold mb-4">¡Cotización Descargada!</h3>
-        <p className="text-gray-400 max-w-md mx-auto mb-8">
+        <p className="text-gray-300 max-w-md mx-auto mb-8">
           Hemos recibido tu solicitud y tu PDF se ha descargado automáticamente. Nuestro equipo técnico evaluará tus requerimientos y se pondrá en contacto pronto.
         </p>
         <button 
@@ -79,7 +79,7 @@ export default function QuoteForm() {
         </div>
         <div>
           <h2 className="text-2xl font-bold">Solicitar Cotización</h2>
-          <p className="text-sm text-gray-400">Completa los datos y recibirás un PDF formal al instante.</p>
+          <p className="text-sm text-gray-300">Completa los datos y recibirás un PDF formal al instante.</p>
         </div>
       </div>
 

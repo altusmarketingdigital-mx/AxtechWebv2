@@ -1,10 +1,12 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Laptop, Network, Server, ShieldCheck, Settings, CheckCircle2 } from 'lucide-react';
 import QuoteForm from '@/components/QuoteForm';
 import { use } from 'react';
+import Image from 'next/image';
 
 const serviceData: Record<string, any> = {
   'soporte-tecnico': {
@@ -31,7 +33,7 @@ const serviceData: Record<string, any> = {
   },
   'redes-telecomunicaciones': {
     title: 'Redes y Conectividad',
-    description: 'En GRUPO AXTECH diseñamos, implementamos y optimizamos infraestructuras de red seguras, eficientes y escalables, que permiten a las empresas mantener una conectividad confiable y un flujo continuo de información.',
+    description: 'En AXTECH INGENIERIA diseñamos, implementamos y optimizamos infraestructuras de red seguras, eficientes y escalables, que permiten a las empresas mantener una conectividad confiable y un flujo continuo de información.',
     extraDescription: 'Nuestro equipo especializado analiza las necesidades de cada organización para desarrollar soluciones de red adaptadas a su operación, garantizando estabilidad, seguridad y alto rendimiento en los sistemas de comunicación y transferencia de datos. Implementamos tecnologías modernas que facilitan la integración de equipos, servidores, dispositivos móviles y plataformas digitales dentro de una red segura y eficiente.',
     icon: <Network className="w-16 h-16 text-accent" />,
     image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
@@ -54,7 +56,7 @@ const serviceData: Record<string, any> = {
   },
   'servidores': {
     title: 'Servidores e Infraestructura',
-    description: 'En GRUPO AXTECH ofrecemos servicios profesionales de implementación, administración y mantenimiento de servidores, diseñados para garantizar el almacenamiento seguro de la información, el funcionamiento eficiente de los sistemas empresariales y la continuidad operativa de las organizaciones.',
+    description: 'En AXTECH INGENIERIA ofrecemos servicios profesionales de implementación, administración y mantenimiento de servidores, diseñados para garantizar el almacenamiento seguro de la información, el funcionamiento eficiente de los sistemas empresariales y la continuidad operativa de las organizaciones.',
     extraDescription: 'Nuestros especialistas en infraestructura tecnológica analizan las necesidades de cada empresa para diseñar soluciones de servidores confiables, escalables y seguras. Implementamos tecnologías modernas que permiten centralizar información, mejorar el rendimiento de las aplicaciones y optimizar la gestión de los recursos tecnológicos. Trabajamos con servidores físicos y virtuales que facilitan la administración de datos, aplicaciones y sistemas dentro de un entorno seguro y estable.',
     icon: <Server className="w-16 h-16 text-primary" />,
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
@@ -102,7 +104,7 @@ const serviceData: Record<string, any> = {
   },
   'cctv': {
     title: 'Cámaras de Seguridad y Control de Accesos',
-    description: 'En Ingeniería Especializada en Soluciones Tecnológicas ofrecemos soluciones integrales de videovigilancia y control de accesos, diseñadas para proteger instalaciones, supervisar actividades y fortalecer la seguridad de empresas, oficinas y hogares.',
+    description: 'En AXTECH INGENIERIA ofrecemos soluciones integrales de videovigilancia y control de accesos, diseñadas para proteger instalaciones, supervisar actividades y fortalecer la seguridad de empresas, oficinas y hogares.',
     extraDescription: 'Implementamos sistemas modernos de seguridad que permiten monitorear en tiempo real las instalaciones, registrar eventos importantes y controlar el acceso de personas a áreas específicas, brindando mayor tranquilidad y control operativo. Nuestros especialistas realizan el análisis de cada espacio para diseñar soluciones personalizadas que integren cámaras de alta definición, sistemas de grabación y herramientas de control de acceso que garanticen seguridad, eficiencia y facilidad de gestión.',
     icon: <Settings className="w-16 h-16 text-primary" />,
     image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
@@ -130,83 +132,134 @@ export default function ServicePage({ params }: { params: Promise<{ slug: string
   const data = serviceData[slug];
 
   if (!data) {
-    return <div className="min-h-screen flex items-center justify-center text-white">Servicio no encontrado</div>;
+    return <div className="min-h-screen flex items-center justify-center text-gray-900">Servicio no encontrado</div>;
   }
 
   return (
-    <main className="min-h-screen bg-background pt-32 pb-20 px-6 tech-grid">
-      <div className="max-w-6xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-12">
-          <ArrowLeft className="w-4 h-4" /> Volver al Inicio
+    <main className="min-h-screen bg-gray-50 selection:bg-primary/30 pb-20">
+      
+      {/* Navbar simplificado */}
+      <nav className="w-full bg-white border-gray-200 shadow-sm backdrop-blur-md border-b px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <Link href="/" className="hover:scale-105 transition-transform">
+          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={140} height={40} className="object-contain" priority />
         </Link>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+        <Link href="/" className="text-gray-700 hover:text-gray-900 flex items-center gap-2 text-sm font-bold transition-colors">
+          <ArrowLeft className="w-4 h-4" />
+          Volver al Inicio
+        </Link>
+      </nav>
+
+      {/* Hero Service */}
+      <section className="relative pt-20 pb-16 px-6 overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${data.color} to-transparent flex items-center justify-center mb-8 border border-white/10`}>
-              {data.icon}
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">{data.title}</h1>
-            <p className="text-lg text-gray-300 leading-relaxed mb-6">{data.description}</p>
-            <p className="text-base text-gray-400 leading-relaxed mb-10">{data.extraDescription}</p>
-            
-            <a href="#cotizar" className="inline-flex items-center gap-3 px-8 py-4 bg-primary hover:bg-primary-hover text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-primary/30">
-              Solicitar Cotización de este Servicio
-              <ArrowRight className="w-5 h-5" />
-            </a>
-          </div>
-          
-          <div className="relative">
-            <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full"></div>
-            <div 
-              className="relative h-full min-h-[400px] w-full rounded-[2rem] overflow-hidden border border-white/10 bg-black/50"
-              style={{ backgroundImage: `url(${data.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-5xl font-black tracking-tighter mb-6 leading-[1.1]"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24 border-t border-white/10 pt-16">
-          <div>
-            <h3 className="text-2xl font-bold mb-8 text-accent">Servicios Incluidos</h3>
-            <div className="space-y-6">
-              {data.servicesIncluded.map((item: any, idx: number) => (
-                <div key={idx} className="flex gap-4">
-                  <div className="mt-1">
-                    <CheckCircle2 className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white mb-1">{item.name}</h4>
-                    <p className="text-sm text-gray-400">{item.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+              Servicios Especializados en <br />
+              <span className="text-gray-800 font-medium text-3xl md:text-4xl">{data.title}</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-gray-800 text-lg leading-relaxed mb-4 max-w-lg"
+            >
+              {data.description}
+            </motion.p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-gray-800 text-lg leading-relaxed mb-8 max-w-lg"
+            >
+              {data.extraDescription}
+            </motion.p>
           </div>
           
-          <div>
-            <h3 className="text-2xl font-bold mb-8 text-accent">Beneficios</h3>
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-              <ul className="space-y-4">
-                {data.benefits.map((benefit: string, idx: number) => (
-                  <li key={idx} className="flex items-center gap-3 text-gray-300">
-                    <div className="w-2 h-2 rounded-full bg-accent"></div>
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className="relative"
+          >
+            <div className="aspect-square rounded-[3rem] p-8 relative overflow-hidden shadow-2xl border border-gray-200">
+              <div 
+                className="absolute inset-0 bg-cover bg-center" 
+                style={{ backgroundImage: `url(${data.image})` }}
+              ></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
             </div>
-          </div>
+          </motion.div>
         </div>
+      </section>
 
-        <div id="cotizar" className="max-w-4xl mx-auto border-t border-white/10 pt-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">¿Necesitas {data.title}?</h2>
-            <p className="text-gray-400">Llena el formulario y un especialista te contactará.</p>
+      {/* Características del Servicio */}
+      <section className="py-20 px-6 bg-white border-y border-gray-200 relative">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Servicios <span className="text-primary">Especializados</span></h2>
           </div>
-          <QuoteForm />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {data.servicesIncluded.map((item: any, idx: number) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="glass-panel p-8 rounded-3xl border border-gray-200 hover:bg-white shadow-sm transition-all group hover:-translate-y-1"
+              >
+                <div className="mb-6 p-4 bg-white border border-gray-100 shadow-sm rounded-2xl inline-block group-hover:scale-110 transition-transform text-primary">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{item.name}</h3>
+                <p className="text-gray-800 text-sm leading-relaxed">{item.detail}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
+      </section>
+
+      {/* Beneficios */}
+      <section className="py-20 px-6 max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-12">Nuestros Beneficios</h2>
+        <div className="space-y-6">
+          {data.benefits.map((benefit: string, idx: number) => {
+            const colors = ['border-primary text-primary bg-primary/20', 'border-accent text-accent bg-accent/20', 'border-green-500 text-green-500 bg-green-500/20'];
+            const colorIndex = idx % colors.length;
+            const borderClass = colors[colorIndex].split(' ')[0];
+            const textClass = colors[colorIndex].split(' ')[1];
+            const bgClass = colors[colorIndex].split(' ')[2];
+            
+            return (
+              <div key={idx} className={`flex items-start gap-6 glass-panel p-6 rounded-3xl border-l-4 ${borderClass}`}>
+                <div className={`w-12 h-12 rounded-full ${bgClass} flex items-center justify-center font-black ${textClass} shrink-0`}>
+                  {idx + 1}
+                </div>
+                <div className="flex items-center">
+                  <h4 className="text-xl font-bold m-0 mt-3">{benefit}</h4>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Cotizar */}
+      <div id="cotizar" className="max-w-4xl mx-auto border-t border-gray-200 pt-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">¿Necesitas {data.title}?</h2>
+          <p className="text-gray-600">Llena el formulario y un especialista te contactará.</p>
+        </div>
+        <QuoteForm />
       </div>
+
     </main>
   );
 }

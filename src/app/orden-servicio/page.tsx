@@ -65,7 +65,7 @@ export default function OrdenServicio() {
         <div className="glass-panel p-10 rounded-3xl text-center max-w-md w-full border border-green-500/30">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6" />
           <h2 className="text-2xl font-bold mb-2">Orden Generada y PDF Descargado</h2>
-          <p className="text-gray-400 mb-6">La orden de servicio técnico ha sido registrada en la base de datos y tu PDF está listo.</p>
+          <p className="text-gray-300 mb-6">La orden de servicio técnico ha sido registrada en la base de datos y tu PDF está listo.</p>
           <button 
             onClick={() => setSuccess(false)}
             className="w-full bg-primary hover:bg-primary-hover text-white py-3 rounded-xl font-bold transition-all"
@@ -79,7 +79,7 @@ export default function OrdenServicio() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 py-20 relative">
-      <Link href="/" className="absolute top-6 left-6 text-gray-400 hover:text-white flex items-center gap-2 transition-colors">
+      <Link href="/" className="absolute top-6 left-6 text-gray-300 hover:text-white flex items-center gap-2 transition-colors">
         <ArrowLeft className="w-5 h-5" /> Volver al Inicio
       </Link>
       
@@ -89,7 +89,7 @@ export default function OrdenServicio() {
             <FileText className="w-8 h-8 text-accent" />
           </div>
           <h1 className="text-4xl font-bold tracking-tight mb-2">Orden de <span className="text-accent">Servicio Técnico</span></h1>
-          <p className="text-gray-400">Portal interno para registro de mantenimientos, instalaciones y soporte AXTECH.</p>
+          <p className="text-gray-300">Portal interno para registro de mantenimientos, instalaciones y soporte AXTECH.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="glass-panel p-8 md:p-10 rounded-3xl border border-white/10 space-y-6 shadow-2xl relative overflow-hidden">
@@ -99,12 +99,12 @@ export default function OrdenServicio() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-300 ml-1">Técnico Asignado</label>
-              <input name="technician" value={formData.technician} onChange={handleChange} required type="text" placeholder="Ej. Roberto Martínez" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all placeholder:text-gray-600" />
+              <input name="technician" value={formData.technician} onChange={handleChange} required type="text" placeholder="Ej. Roberto Martínez" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all placeholder:text-gray-800" />
             </div>
             
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-300 ml-1">Cliente / Empresa</label>
-              <input name="clientName" value={formData.clientName} onChange={handleChange} required type="text" placeholder="Ej. Corporativo XYZ" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all placeholder:text-gray-600" />
+              <input name="clientName" value={formData.clientName} onChange={handleChange} required type="text" placeholder="Ej. Corporativo XYZ" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all placeholder:text-gray-800" />
             </div>
 
             <div className="space-y-2">
@@ -125,7 +125,7 @@ export default function OrdenServicio() {
 
             <div className="space-y-2 md:col-span-2">
               <label className="text-sm font-semibold text-gray-300 ml-1">Reporte Técnico (Descripción del Trabajo)</label>
-              <textarea name="report" value={formData.report} onChange={handleChange} required rows={4} placeholder="Describe detalladamente los hallazgos, reparaciones realizadas y piezas utilizadas..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none placeholder:text-gray-600"></textarea>
+              <textarea name="report" value={formData.report} onChange={handleChange} required rows={4} placeholder="Describe detalladamente los hallazgos, reparaciones realizadas y piezas utilizadas..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none placeholder:text-gray-800"></textarea>
             </div>
           </div>
 

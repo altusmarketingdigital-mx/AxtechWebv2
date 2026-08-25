@@ -53,13 +53,7 @@ export default function SoporteTecnicoPage() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-primary text-xs font-bold tracking-widest uppercase mb-6"
-            >
-              Servicio Estrella
-            </motion.div>
+
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -67,25 +61,17 @@ export default function SoporteTecnicoPage() {
               className="text-4xl md:text-5xl font-black tracking-tighter mb-6 leading-[1.1]"
             >
               Servicios de Soporte Técnico Especializado en <br />
-              <span className="text-gray-600 font-medium text-3xl md:text-4xl">Reparación de Computadoras</span>
+              <span className="text-gray-800 font-medium text-3xl md:text-4xl">Reparación de Computadoras</span>
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-gray-600 text-lg leading-relaxed mb-8 max-w-lg"
+              className="text-gray-800 text-lg leading-relaxed mb-8 max-w-lg"
             >
               Brindamos servicios especializados de diagnóstico, mantenimiento y reparación para equipos de cómputo, respaldados por personal técnico altamente calificado y procesos estandarizados. Nuestro compromiso es garantizar la disponibilidad, el rendimiento y la confiabilidad de su infraestructura tecnológica, proporcionando soluciones eficientes para usuarios particulares, empresas e instituciones.
             </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <Link href="/#cotizacion" className="px-8 py-4 bg-primary hover:bg-primary-hover text-gray-900 rounded-xl font-bold transition-all hover:shadow-[0_0_25px_rgba(15,98,209,0.5)] inline-block">
-                Solicitar Diagnóstico
-              </Link>
-            </motion.div>
+
           </div>
           
           <motion.div 
@@ -123,7 +109,7 @@ export default function SoporteTecnicoPage() {
                   {item.icono}
                 </div>
                 <h3 className="text-xl font-bold mb-3">{item.titulo}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{item.descripcion}</p>
+                <p className="text-gray-800 text-sm leading-relaxed">{item.descripcion}</p>
               </motion.div>
             ))}
           </div>
@@ -138,36 +124,27 @@ export default function SoporteTecnicoPage() {
             <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center font-black text-primary shrink-0">1</div>
             <div>
               <h4 className="text-xl font-bold mb-2">Recepción y Diagnóstico</h4>
-              <p className="text-gray-600 text-sm leading-relaxed">Iniciamos el proceso con la recepción y el registro técnico del equipo, documentando su estado físico y funcional. Posteriormente, realizamos un diagnóstico integral mediante herramientas especializadas para identificar con precisión el origen de la falla y establecer la solución más adecuada.</p>
+              <p className="text-gray-800 text-sm leading-relaxed">Iniciamos el proceso con la recepción y el registro técnico del equipo, documentando su estado físico y funcional. Posteriormente, realizamos un diagnóstico integral mediante herramientas especializadas para identificar con precisión el origen de la falla y establecer la solución más adecuada.</p>
             </div>
           </div>
           <div className="flex items-start gap-6 glass-panel p-6 rounded-3xl border-l-4 border-accent">
             <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center font-black text-accent shrink-0">2</div>
             <div>
               <h4 className="text-xl font-bold mb-2">Análisis Técnico y Autorización</h4>
-              <p className="text-gray-600 text-sm leading-relaxed">Con base en los resultados del diagnóstico, elaboramos una propuesta de servicio que incluye el detalle de las acciones correctivas, las refacciones requeridas, el tiempo estimado de ejecución y el costo correspondiente. El proceso de reparación inicia únicamente después de contar con la autorización del cliente, garantizando transparencia y confianza en cada etapa.</p>
+              <p className="text-gray-800 text-sm leading-relaxed">Con base en los resultados del diagnóstico, elaboramos una propuesta de servicio que incluye el detalle de las acciones correctivas, las refacciones requeridas, el tiempo estimado de ejecución y el costo correspondiente. El proceso de reparación inicia únicamente después de contar con la autorización del cliente, garantizando transparencia y confianza en cada etapa.</p>
             </div>
           </div>
           <div className="flex items-start gap-6 glass-panel p-6 rounded-3xl border-l-4 border-green-500">
             <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center font-black text-green-500 shrink-0">3</div>
             <div>
               <h4 className="text-xl font-bold mb-2">Reparación, Verificación y Entrega</h4>
-              <p className="text-gray-600 text-sm leading-relaxed">La reparación es ejecutada por personal técnico calificado, siguiendo procedimientos estandarizados y aplicando estrictos controles de calidad. Antes de la entrega, el equipo es sometido a pruebas funcionales para verificar su óptimo desempeño. Finalmente, se entrega completamente operativo, con la documentación del servicio realizado y la garantía correspondiente.</p>
+              <p className="text-gray-800 text-sm leading-relaxed">La reparación es ejecutada por personal técnico calificado, siguiendo procedimientos estandarizados y aplicando estrictos controles de calidad. Antes de la entrega, el equipo es sometido a pruebas funcionales para verificar su óptimo desempeño. Finalmente, se entrega completamente operativo, con la documentación del servicio realizado y la garantía correspondiente.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Compromiso y CTA Final */}
-      <section className="py-10 px-6">
-        <div className="max-w-5xl mx-auto glass-panel p-10 md:p-16 rounded-[3rem] text-center bg-gradient-to-br from-primary/10 to-accent/10 border border-white/20">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Nuestro Compromiso</h2>
-          <p className="text-gray-700 mb-8 max-w-2xl mx-auto leading-relaxed">Proporcionamos soluciones confiables y eficientes que permiten a nuestros clientes mantener equipos seguros, funcionales y preparados para sus necesidades operativas.</p>
-          <Link href="/#cotizacion" className="px-8 py-4 bg-white text-black rounded-xl font-bold transition-all hover:scale-105 inline-block shadow-lg">
-            Quiero una Cotización Formal
-          </Link>
-        </div>
-      </section>
+
 
     </main>
   );
