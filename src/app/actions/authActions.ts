@@ -8,17 +8,31 @@ import { createSession, deleteSession } from '@/lib/session'
 type AuthState = { error: string } | undefined
 
 export async function login(prevState: AuthState, formData: FormData): Promise<AuthState> {
-  const email = formData.get('email') as string
+  const rawEmail = formData.get('email') as string
   const password = formData.get('password') as string
 
-  if (!email || !password) {
+  if (!rawEmail || !password) {
     return { error: 'Correo y contraseña son requeridos' }
   }
 
+  const email = rawEmail.toLowerCase().trim()
   let role: string
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } })
+    let user = await prisma.user.findUnique({ where: { email } })
+
+    // Si es el usuario admin por defecto y no existe en la BD, crearlo automáticamente
+    if (!user && email === 'admin@axtech.mx' && password === 'Axtech2024!') {
+      const hashedPassword = await bcrypt.hash('Axtech2024!', 12)
+      user = await prisma.user.create({
+        data: {
+          email: 'admin@axtech.mx',
+          password: hashedPassword,
+          name: 'Administrador',
+          role: 'admin',
+        },
+      })
+    }
 
     if (!user || !user.password) {
       return { error: 'Credenciales incorrectas' }
@@ -31,7 +45,8 @@ export async function login(prevState: AuthState, formData: FormData): Promise<A
 
     role = user.role
     await createSession(user.id, user.role)
-  } catch {
+  } catch (error) {
+    console.error('Error during login:', error)
     return { error: 'Error del servidor, intenta más tarde' }
   }
 
