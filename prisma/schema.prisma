@@ -3,11 +3,174 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
+// ---------------------------------------------------------
+// USERS & ROLES
+// ---------------------------------------------------------
+enum Role {
+  ADMIN
+  TECHNICIAN
+  CUSTOMER
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  phone     String?
+  role      Role     @default(CUSTOMER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  serviceOrdersAsClient ServiceOrder[] @relation("ClientOrders")
+  serviceOrdersAsTech   ServiceOrder[] @relation("TechOrders")
+  sales                 Sale[]
+  cart                  Cart?
+}
+
+// ---------------------------------------------------------
+// MODULE: TECHNICAL SERVICE
+// ---------------------------------------------------------
+enum OrderStatus {
+  RECEIVED
+  DIAGNOSING
+  WAITING_APPROVAL
+  REPAIRING
+  READY
+  DELIVERED
+  CANCELLED
+}
+
+model ServiceOrder {
+  id     String      @id @default(cuid())
+  folio  String      @unique // e.g. ORD-0001
+  status OrderStatus @default(RECEIVED)
+
+  // Device info
+  deviceType String
+  brand      String
+  model      String
+  serialNum  String?
+  issueDesc  String // Reported by client
+
+  // Diagnosis & Repair
+  diagnosis   String?
+  repairNotes String?
+  costQuote   Float? // Estimated cost
+
+  // Client & Tech relations
+  clientId String?
+  client   User?   @relation("ClientOrders", fields: [clientId], references: [id])
+
+  // For anonymous clients not registered in the system yet
+  clientName  String?
+  clientPhone String?
+  clientEmail String?
+
+  technicianId String?
+  technician   User?   @relation("TechOrders", fields: [technicianId], references: [id])
+
+  serviceDate DateTime? // Expected delivery or service date
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  payments Payment[]
+}
+
+// Support for payments/advances on service orders
+model Payment {
+  id             String       @id @default(cuid())
+  amount         Float
+  method         String // CASH, CARD, TRANSFER
+  serviceOrderId String
+  serviceOrder   ServiceOrder @relation(fields: [serviceOrderId], references: [id])
+  createdAt      DateTime     @default(now())
+}
+
+// ---------------------------------------------------------
+// MODULE: E-COMMERCE & POS
+// ---------------------------------------------------------
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  products Product[]
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  sku         String  @unique
+  name        String
+  description String?
+  price       Float
+  stock       Int     @default(0)
+  imageUrl    String?
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  cartItems CartItem[]
+  saleItems SaleItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cartId    String
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(1)
+}
+
+enum SaleType {
+  POS // In-store purchase
+  ONLINE // E-commerce purchase
+}
+
+model Sale {
+  id    String   @id @default(cuid())
+  folio String   @unique
+  type  SaleType
+  total Float
+
+  // For registered users
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  // For anonymous POS sales
+  clientName String?
+
+  items     SaleItem[]
+  createdAt DateTime   @default(now())
+}
+
+model SaleItem {
+  id        String  @id @default(cuid())
+  saleId    String
+  sale      Sale    @relation(fields: [saleId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float // Price at the time of sale
+}
+
+// Keep the old quote model for contact form if used
 model Quote {
   id        String   @id @default(cuid())
   name      String
@@ -15,14 +178,4 @@ model Quote {
   service   String
   message   String
   createdAt DateTime @default(now())
-}
-
-model ServiceOrder {
-  id          String   @id @default(cuid())
-  technician  String
-  clientName  String
-  serviceType String
-  serviceDate String
-  report      String
-  createdAt   DateTime @default(now())
 }
