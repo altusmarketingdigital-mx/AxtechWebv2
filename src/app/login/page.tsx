@@ -3,6 +3,7 @@
 import { useActionState } from 'react'
 import { login } from '@/app/actions/authActions'
 import { Lock, Mail, LogIn, Shield } from 'lucide-react'
+import Link from 'next/link'
 
 export default function LoginPage() {
   const [state, action, pending] = useActionState(login, undefined)
@@ -77,16 +78,23 @@ export default function LoginPage() {
           </form>
 
           {/* Divider */}
-          <div className="mt-6 pt-6 border-t border-gray-100 text-center space-y-2">
-            <p className="text-sm text-gray-500">¿No tienes cuenta? Contáctanos para registrarte.</p>
-            <a
-              href="https://wa.me/525513485574"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block text-sm font-medium text-green-600 hover:text-green-700 transition"
-            >
-              📱 Solicitar acceso por WhatsApp
-            </a>
+          <div className="mt-6 pt-6 border-t border-gray-100 text-center space-y-3">
+            <p className="text-sm text-gray-600">
+              ¿No tienes una cuenta?{' '}
+              <Link href="/registro" className="font-bold text-blue-600 hover:text-blue-700">
+                Regístrate aquí
+              </Link>
+            </p>
+            <div className="pt-2">
+              <a
+                href="https://wa.me/525513485574"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-xs font-medium text-green-600 hover:text-green-700 transition"
+              >
+                📱 ¿Dudas? Contáctanos por WhatsApp
+              </a>
+            </div>
           </div>
         </div>
 

@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
 import { createSession, deleteSession } from '@/lib/session'
 
-type AuthState = { error: string } | undefined
+type AuthState = { error?: string; success?: boolean } | undefined
 
 export async function login(prevState: AuthState, formData: FormData): Promise<AuthState> {
   const rawEmail = formData.get('email') as string
@@ -56,6 +56,68 @@ export async function login(prevState: AuthState, formData: FormData): Promise<A
   } else {
     redirect('/mi-cuenta')
   }
+}
+
+export async function register(prevState: AuthState, formData: FormData): Promise<AuthState> {
+  const name = (formData.get('name') as string)?.trim()
+  const rawEmail = formData.get('email') as string
+  const phone = (formData.get('phone') as string)?.trim()
+  const password = formData.get('password') as string
+  const confirmPassword = formData.get('confirmPassword') as string
+
+  if (!name || !rawEmail || !password) {
+    return { error: 'Nombre, correo y contraseña son obligatorios' }
+  }
+
+  if (password.length < 6) {
+    return { error: 'La contraseña debe tener al menos 6 caracteres' }
+  }
+
+  if (password !== confirmPassword) {
+    return { error: 'Las contraseñas no coinciden' }
+  }
+
+  const email = rawEmail.toLowerCase().trim()
+
+  try {
+    const existingUser = await prisma.user.findUnique({ where: { email } })
+    if (existingUser) {
+      return { error: 'Ya existe una cuenta registrada con este correo electrónico' }
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12)
+
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        phone: phone || null,
+        password: hashedPassword,
+        role: 'customer',
+      },
+    })
+
+    // Asociar órdenes de servicio previas que se hayan registrado con el mismo correo/teléfono
+    await prisma.serviceOrder.updateMany({
+      where: {
+        clientId: null,
+        OR: [
+          { clientEmail: email },
+          ...(phone ? [{ clientPhone: phone }] : []),
+        ],
+      },
+      data: {
+        clientId: newUser.id,
+      },
+    })
+
+    await createSession(newUser.id, newUser.role)
+  } catch (error) {
+    console.error('Error during registration:', error)
+    return { error: 'Ocurrió un error al crear la cuenta. Intenta de nuevo.' }
+  }
+
+  redirect('/mi-cuenta')
 }
 
 export async function logout() {

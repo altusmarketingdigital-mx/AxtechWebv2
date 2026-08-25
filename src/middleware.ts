@@ -26,8 +26,8 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  // Si ya tiene sesión e intenta ir al login, redirigir según rol
-  if (path === '/login' && session) {
+  // Si ya tiene sesión e intenta ir al login o registro, redirigir según rol
+  if ((path === '/login' || path === '/registro') && session) {
     const role = session.role as string
     if (role === 'admin' || role === 'technician') {
       return NextResponse.redirect(new URL('/admin', req.nextUrl))
