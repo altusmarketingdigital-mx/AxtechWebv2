@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma"
 import StoreCatalog from "@/components/StoreCatalog"
 import Link from "next/link"
 import Image from "next/image"
-import { ShoppingBag, ChevronRight, Phone, Mail, ShieldCheck, Truck, Wrench, ArrowLeft } from "lucide-react"
+import { ShoppingBag, ChevronRight, Phone, Mail, ShieldCheck, Truck, Wrench, ArrowRight, Zap, RefreshCw, CreditCard, Sparkles, CheckCircle2 } from "lucide-react"
 
 export default async function StorePage() {
   const products = await prisma.product.findMany({
@@ -14,9 +14,9 @@ export default async function StorePage() {
   })
 
   return (
-    <main className="min-h-screen bg-gray-50 selection:bg-primary/30">
+    <main className="min-h-screen bg-[#f8fafc] selection:bg-blue-600/30">
       
-      {/* Tech Navbar (Exact same corporate structure) */}
+      {/* Tech Navbar */}
       <nav className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 z-50 px-6 py-2 flex justify-between items-center transition-all shadow-sm">
         <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
           <Link href="/">
@@ -26,7 +26,7 @@ export default async function StorePage() {
         <div className="hidden md:flex gap-8 font-medium text-sm text-gray-800 items-center">
           <Link href="/" className="hover:text-primary transition-all">INICIO</Link>
           <Link href="/#soluciones" className="hover:text-primary transition-all">SOLUCIONES</Link>
-          <Link href="/tienda" className="text-blue-600 font-bold transition-all flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-200 shadow-sm">
+          <Link href="/tienda" className="text-blue-600 font-bold transition-all flex items-center gap-1.5 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200 shadow-sm">
             <ShoppingBag className="w-4 h-4 text-blue-600" />
             TIENDA ONLINE
           </Link>
@@ -45,123 +45,144 @@ export default async function StorePage() {
           </Link>
           <Link 
             href="/tienda/carrito" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 shadow-md shadow-blue-600/20"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 shadow-md shadow-blue-600/25"
           >
             <ShoppingBag className="w-4 h-4" />
-            Carrito
+            Ver Carrito
           </Link>
         </div>
       </nav>
 
-      {/* Store Hero Banner (Matching the corporate dark hero aesthetic) */}
-      <section className="relative pt-36 pb-20 px-6 bg-gradient-to-b from-[#02040a] via-[#04122e] to-slate-900 text-white overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
-        <div className="absolute bottom-0 -left-20 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+      {/* Modern Store Hero Banner */}
+      <section className="relative pt-36 pb-20 px-6 bg-gradient-to-br from-[#02040a] via-[#071738] to-[#040e24] text-white overflow-hidden">
+        {/* Ambient Glows */}
+        <div className="absolute top-1/4 right-10 w-[550px] h-[550px] bg-blue-600/15 rounded-full blur-[160px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-8">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-300 font-semibold text-xs mb-4 uppercase tracking-wider">
-                <ShoppingBag className="w-4 h-4" />
-                Catálogo Oficial AXTECH
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left Header Info */}
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-300 font-semibold text-xs uppercase tracking-wider backdrop-blur-md">
+                <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                Catálogo Digital de Hardware y Refacciones
               </div>
-              <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
-                Tienda en Línea & <span className="text-blue-400">Refacciones</span>
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08]">
+                Tienda Oficial <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-300">
+                  AXTECH INGENIERÍA
+                </span>
               </h1>
-              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
-                Adquiere componentes de alta durabilidad, equipos de cómputo, refacciones originales y accesorios con garantía técnica directa.
+              
+              <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl">
+                Componentes originales, discos SSD, memorias RAM, kits CCTV y equipo de red con <strong>garantía por escrito</strong>, soporte técnico y factura fiscal.
               </p>
+
+              <div className="pt-2 flex flex-wrap gap-4 items-center">
+                <a
+                  href="#catalogo"
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-7 py-3.5 rounded-2xl text-sm transition-all shadow-xl shadow-blue-600/30 flex items-center gap-2 hover:scale-105"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  Explorar Catálogo
+                </a>
+                <Link
+                  href="/estado-reparacion"
+                  className="border border-white/20 hover:border-white/40 hover:bg-white/5 text-gray-200 font-semibold px-6 py-3.5 rounded-2xl text-sm transition flex items-center gap-2"
+                >
+                  Rastrear Reparación
+                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                </Link>
+              </div>
             </div>
 
-            {/* Quick Benefits Pills */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 shrink-0">
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex items-center gap-3">
-                <Truck className="w-5 h-5 text-blue-400 shrink-0" />
-                <div>
-                  <p className="text-xs font-bold text-white">Envíos Rápidos</p>
-                  <p className="text-[10px] text-gray-400">Entrega asegurada</p>
+            {/* Right Interactive Stats Showcase */}
+            <div className="lg:col-span-5">
+              <div className="bg-white/[0.07] border border-white/10 backdrop-blur-2xl rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <span className="text-sm font-extrabold uppercase tracking-wider text-blue-300">Garantía y Confianza</span>
+                  <span className="text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full font-bold border border-emerald-500/30 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Tienda Activa
+                  </span>
                 </div>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex items-center gap-3">
-                <ShieldCheck className="w-5 h-5 text-green-400 shrink-0" />
-                <div>
-                  <p className="text-xs font-bold text-white">Garantía Real</p>
-                  <p className="text-[10px] text-gray-400">Soporte directo</p>
-                </div>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex items-center gap-3">
-                <Wrench className="w-5 h-5 text-yellow-400 shrink-0" />
-                <div>
-                  <p className="text-xs font-bold text-white">Asesoría TI</p>
-                  <p className="text-[10px] text-gray-400">Atención técnica</p>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <Truck className="w-6 h-6 text-blue-400 mb-2" />
+                    <p className="text-lg font-black text-white">Envíos Rápidos</p>
+                    <p className="text-xs text-gray-400 mt-0.5">A todo México con empaque seguro</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <ShieldCheck className="w-6 h-6 text-emerald-400 mb-2" />
+                    <p className="text-lg font-black text-white">100% Original</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Garantía directa de laboratorio</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <Wrench className="w-6 h-6 text-amber-400 mb-2" />
+                    <p className="text-lg font-black text-white">Instalación</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Servicio técnico en mostrador</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <CreditCard className="w-6 h-6 text-purple-400 mb-2" />
+                    <p className="text-lg font-black text-white">Facturación</p>
+                    <p className="text-xs text-gray-400 mt-0.5">Precios con IVA incluido</p>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* Main Catalog Body */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
+      <section id="catalogo" className="max-w-7xl mx-auto px-6 py-14">
         <StoreCatalog products={products} />
       </section>
 
-      {/* Trust & Support Section */}
-      <section className="py-16 px-6 bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-              <Truck className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="font-bold text-gray-900 text-base mb-1">Envíos a Todo México</h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Empaque profesional antiestático y seguro para que tus componentes lleguen en perfectas condiciones.
-              </p>
-            </div>
+      {/* Custom Quote Banner */}
+      <section className="max-w-7xl mx-auto px-6 mb-16">
+        <div className="bg-gradient-to-r from-blue-900 via-indigo-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-2xl border border-blue-500/20 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-2 max-w-xl">
+            <span className="text-blue-400 font-bold text-xs uppercase tracking-widest flex items-center gap-1.5">
+              <Zap className="w-4 h-4" /> Cotizaciones Especiales y Empresariales
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-black">¿Buscas un componente específico o compra por volumen?</h3>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Si no encuentras el modelo exacto en el catálogo, nuestros ingenieros te consiguen la pieza o cotizan lotes completos para tu empresa.
+            </p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center text-green-600 shrink-0">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="font-bold text-gray-900 text-base mb-1">Garantía y Facturación</h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Todos nuestros precios incluyen IVA. Emitimos facturas fiscales válidas para tu empresa.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 shrink-0">
-              <Wrench className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="font-bold text-gray-900 text-base mb-1">Instalación y Configuración</h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                ¿Necesitas que instalemos tu refacción? Consulta nuestro servicio técnico especializado en mostrador.
-              </p>
-            </div>
-          </div>
+          <a
+            href="https://wa.me/525513485574?text=Hola%20AXTECH,%20busco%20una%20cotizaci%C3%B3n%20personalizada%20de%20refacciones/equipos"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white font-black px-8 py-4 rounded-2xl text-sm transition-all shadow-xl shadow-emerald-500/25 shrink-0 flex items-center gap-2 hover:scale-105"
+          >
+            <Phone className="w-4 h-4" />
+            Cotizar por WhatsApp
+          </a>
         </div>
       </section>
 
-      {/* Corporate Footer (Exact same as homepage) */}
-      <footer className="bg-[#02040a] pt-20 pb-10 px-6 border-t border-white/10 relative overflow-hidden">
+      {/* Corporate Footer */}
+      <footer className="bg-[#02040a] pt-20 pb-10 px-6 border-t border-white/10 relative overflow-hidden text-gray-300">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 relative z-10">
           
           <div className="space-y-6">
             <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain bg-white px-3 py-1 rounded-full shadow-lg" />
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-400 text-sm leading-relaxed">
               Innovación, ingeniería y tecnología para impulsar el crecimiento de tu empresa.
             </p>
           </div>
 
           <div>
             <h4 className="text-white font-bold mb-6 tracking-wide">Enlaces Rápidos</h4>
-            <ul className="space-y-3 text-sm text-gray-300">
+            <ul className="space-y-3 text-sm text-gray-400">
               <li><Link href="/" className="hover:text-primary transition-colors">Inicio</Link></li>
               <li><Link href="/tienda" className="hover:text-primary transition-colors text-blue-400 font-medium flex items-center gap-1.5"><ShoppingBag className="w-3.5 h-3.5" />Tienda en Línea</Link></li>
               <li><Link href="/estado-reparacion" className="hover:text-primary transition-colors">Seguimiento de Reparación</Link></li>
@@ -173,7 +194,7 @@ export default async function StorePage() {
 
           <div id="contacto">
             <h4 className="text-white font-bold mb-6 tracking-wide">Contacto</h4>
-            <ul className="space-y-3 text-sm text-gray-300">
+            <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-accent" /> 55 1348 5574
               </li>
@@ -197,7 +218,7 @@ export default async function StorePage() {
                 </svg>
               </a>
             </div>
-            <ul className="space-y-3 text-sm text-gray-300">
+            <ul className="space-y-3 text-sm text-gray-400">
               <li><a href="#" className="text-xs underline hover:text-primary transition-colors">Aviso de Privacidad</a></li>
               <li><a href="#" className="text-xs underline hover:text-primary transition-colors">Términos y Condiciones</a></li>
             </ul>
