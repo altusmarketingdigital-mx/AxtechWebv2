@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import prisma from "@/lib/prisma"
-import { PlusCircle, Search, Package } from "lucide-react"
+import { PlusCircle, FileSpreadsheet, Package, Search } from "lucide-react"
 
 export default async function InventoryPage() {
   const products = await prisma.product.findMany({
@@ -12,13 +12,22 @@ export default async function InventoryPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Inventario</h1>
-        <Link 
-          href="/admin/inventario/nuevo"
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition"
-        >
-          <PlusCircle size={20} />
-          <span>Nuevo Producto</span>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link 
+            href="/admin/inventario/importar"
+            className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-gray-50 transition"
+          >
+            <FileSpreadsheet size={20} />
+            <span>Importar Excel/CSV</span>
+          </Link>
+          <Link 
+            href="/admin/inventario/nuevo"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition"
+          >
+            <PlusCircle size={20} />
+            <span>Nuevo Producto</span>
+          </Link>
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
