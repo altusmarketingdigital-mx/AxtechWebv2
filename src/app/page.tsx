@@ -316,10 +316,10 @@ export default function Home() {
               <Image src="/sdpn-logo.jpeg" alt="SDPN INGENIERIA" width={180} height={80} className="object-contain max-h-[80px] w-auto mix-blend-multiply" />
             </div>
             <div className="flex items-center hover:scale-110 transition-transform cursor-default">
-              <Image src="/conceptos-logo.jpeg" alt="CONCEPTOS METROLÓGICOS" width={180} height={80} className="object-contain max-h-[80px] w-auto mix-blend-multiply" />
+              <Image src="/conceptos-logo.png" alt="CONCEPTOS METROLÓGICOS" width={180} height={80} className="object-contain max-h-[80px] w-auto mix-blend-multiply" />
             </div>
             <div className="flex items-center hover:scale-110 transition-transform cursor-default">
-              <Image src="/conocimiento-logo.jpeg" alt="CONOCIMIENTO INTEGRAL" width={180} height={80} className="object-contain max-h-[80px] w-auto mix-blend-multiply" />
+              <Image src="/conocimiento-logo.png" alt="CONOCIMIENTO INTEGRAL" width={180} height={80} className="object-contain max-h-[80px] w-auto mix-blend-multiply" />
             </div>
           </div>
         </div>
