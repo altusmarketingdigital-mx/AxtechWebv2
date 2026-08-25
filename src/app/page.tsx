@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Server, ShieldCheck, Network, Settings, Laptop, ArrowRight, Cpu, ChevronRight, MonitorSmartphone, Wifi, Database, Lock, Video, Phone, Mail, CalendarDays, Star, User, MessageSquarePlus } from 'lucide-react';
+import { Server, ShieldCheck, Network, Settings, Laptop, ArrowRight, Cpu, ChevronRight, MonitorSmartphone, Wifi, Database, Lock, Video, Phone, Mail, CalendarDays, Star, User, MessageSquarePlus, ShoppingBag, ShoppingCart, ArrowUpRight, Truck, ShieldCheck as ShieldCheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -67,9 +67,16 @@ export default function Home() {
         <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
           <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain" priority />
         </div>
-        <div className="hidden md:flex gap-10 font-medium text-sm text-gray-800">
+        <div className="hidden md:flex gap-8 font-medium text-sm text-gray-800 items-center">
           <Link href="#inicio" className="hover:text-primary transition-all">INICIO</Link>
           <Link href="#soluciones" className="hover:text-primary transition-all">SOLUCIONES</Link>
+          <Link href="/tienda" className="text-blue-600 hover:text-blue-700 font-bold transition-all flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-200 shadow-sm">
+            <ShoppingBag className="w-4 h-4 text-blue-600" />
+            TIENDA ONLINE
+          </Link>
+          <Link href="/estado-reparacion" className="hover:text-primary transition-all text-gray-600">
+            ESTADO DE EQUIPO
+          </Link>
           <Link href="#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
           <Link href="#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
         </div>
@@ -81,11 +88,11 @@ export default function Home() {
             Iniciar Sesión
           </Link>
           <Link 
-            href="#cotizacion" 
-            className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
+            href="/tienda" 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2 group shadow-[0_4px_14px_0_rgba(15,98,209,0.39)] hover:shadow-[0_6px_20px_rgba(15,98,209,0.23)] hover:-translate-y-0.5"
           >
-            Iniciar Proyecto
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ShoppingCart className="w-4 h-4" />
+            Ver Tienda
           </Link>
         </div>
       </nav>
@@ -118,10 +125,32 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg md:text-xl text-gray-800 mb-10 font-light max-w-lg leading-relaxed"
+              className="text-lg md:text-xl text-gray-800 mb-8 font-light max-w-lg leading-relaxed"
             >
-              Innovación, ingeniería y tecnología para impulsar el crecimiento de tu empresa.
+              Innovación, ingeniería, refacciones y tecnología para impulsar el crecimiento de tu empresa.
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-4 mb-10"
+            >
+              <Link
+                href="/tienda"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-7 py-4 rounded-2xl font-bold text-base transition-all flex items-center gap-3 shadow-xl hover:scale-105 shadow-blue-500/20"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Explorar Tienda en Línea
+              </Link>
+              <Link
+                href="/estado-reparacion"
+                className="bg-white hover:bg-gray-50 border border-gray-300 text-gray-800 px-6 py-4 rounded-2xl font-bold text-base transition-all flex items-center gap-2 shadow-sm hover:border-gray-400"
+              >
+                Consultar Reparación
+                <ChevronRight className="w-4 h-4 text-gray-500" />
+              </Link>
+            </motion.div>
             
           </div>
 
@@ -231,6 +260,99 @@ export default function Home() {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Tienda en Línea Showcase Section */}
+      <section className="py-20 px-6 bg-gradient-to-br from-blue-900 via-slate-900 to-black text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-300 font-semibold text-xs mb-6 uppercase tracking-wider">
+                <ShoppingBag className="w-4 h-4" />
+                Nueva Tienda en Línea
+              </div>
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
+                Equipos, Componentes y <span className="text-blue-400">Refacciones</span> a un Clic
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                Adquiere hardware empresarial, accesorios para CCTV, routers, discos duros y consumibles tecnológicos garantizados con envío directo y atención personalizada.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                  <Truck className="w-6 h-6 text-blue-400 mb-2" />
+                  <h4 className="font-bold text-sm">Envíos Seguros</h4>
+                  <p className="text-xs text-gray-400 mt-1">Cobertura local y nacional para tus pedidos.</p>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                  <ShieldCheck className="w-6 h-6 text-green-400 mb-2" />
+                  <h4 className="font-bold text-sm">Garantía Directa</h4>
+                  <p className="text-xs text-gray-400 mt-1">Todos los productos con respaldo técnico.</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/tienda"
+                  className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-base transition-all flex items-center gap-2 shadow-lg shadow-blue-600/30 hover:scale-105"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  Ir al Catálogo de Productos
+                </Link>
+                <Link
+                  href="/estado-reparacion"
+                  className="border border-white/20 hover:bg-white/10 text-white px-6 py-4 rounded-xl font-semibold text-base transition-all flex items-center gap-2"
+                >
+                  Rastrear mi Equipo
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 p-8 rounded-3xl border border-white/10 backdrop-blur-xl shadow-2xl space-y-4">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <span className="font-bold text-lg flex items-center gap-2">
+                    <ShoppingBag className="text-blue-400" />
+                    Destacados de la Tienda
+                  </span>
+                  <Link href="/tienda" className="text-xs text-blue-400 hover:underline flex items-center gap-1">
+                    Ver todos <ArrowUpRight className="w-3 h-3" />
+                  </Link>
+                </div>
+                <div className="space-y-3">
+                  <div className="bg-white/10 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-sm">Cámaras y Kits CCTV</p>
+                      <p className="text-xs text-gray-400">Resolución 4K, visión nocturna y DVR</p>
+                    </div>
+                    <span className="text-xs font-bold bg-blue-500/30 text-blue-300 px-2.5 py-1 rounded-md">En Stock</span>
+                  </div>
+                  <div className="bg-white/10 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-sm">Discos SSD y Memorias RAM</p>
+                      <p className="text-xs text-gray-400">Kingston, Adata, Crucial para upgrades</p>
+                    </div>
+                    <span className="text-xs font-bold bg-blue-500/30 text-blue-300 px-2.5 py-1 rounded-md">En Stock</span>
+                  </div>
+                  <div className="bg-white/10 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-sm">Switches y Routers Gigabit</p>
+                      <p className="text-xs text-gray-400">Infraestructura de red de alta velocidad</p>
+                    </div>
+                    <span className="text-xs font-bold bg-blue-500/30 text-blue-300 px-2.5 py-1 rounded-md">En Stock</span>
+                  </div>
+                </div>
+                <div className="pt-2">
+                  <Link
+                    href="/tienda"
+                    className="w-full block text-center bg-white text-gray-900 py-3 rounded-xl font-bold text-sm hover:bg-gray-100 transition shadow-md"
+                  >
+                    Ver Tienda Completa →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -401,6 +523,8 @@ export default function Home() {
             <h4 className="text-white font-bold mb-6 tracking-wide">Enlaces Rápidos</h4>
             <ul className="space-y-3 text-sm text-gray-300">
               <li><Link href="#inicio" className="hover:text-primary transition-colors">Inicio</Link></li>
+              <li><Link href="/tienda" className="hover:text-primary transition-colors text-blue-400 font-medium flex items-center gap-1.5"><ShoppingBag className="w-3.5 h-3.5" />Tienda en Línea</Link></li>
+              <li><Link href="/estado-reparacion" className="hover:text-primary transition-colors">Seguimiento de Reparación</Link></li>
               <li><Link href="#soluciones" className="hover:text-primary transition-colors">Soluciones</Link></li>
               <li><Link href="#nosotros" className="hover:text-primary transition-colors">Nosotros</Link></li>
               <li><Link href="#contacto" className="hover:text-primary transition-colors">Contacto</Link></li>
