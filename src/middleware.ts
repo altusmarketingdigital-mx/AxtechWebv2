@@ -1,26 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { decrypt } from '@/lib/session'
-import { cookies } from 'next/headers'
 
-const protectedRoutes = ['/admin']
-const publicRoutes = ['/login', '/']
+const adminRoutes = ['/admin']
+const customerRoutes = ['/mi-cuenta']
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
-  const isProtectedRoute = protectedRoutes.some(r => path.startsWith(r))
-  const isPublicRoute = publicRoutes.includes(path)
+
+  const isAdminRoute = adminRoutes.some(r => path.startsWith(r))
+  const isCustomerRoute = customerRoutes.some(r => path.startsWith(r))
 
   const cookie = req.cookies.get('session')?.value
   const session = await decrypt(cookie)
 
-  // Redirigir a /login si intenta entrar a ruta protegida sin sesión
-  if (isProtectedRoute && !session) {
+  // Sin sesión → redirigir a login
+  if ((isAdminRoute || isCustomerRoute) && !session) {
     return NextResponse.redirect(new URL('/login', req.nextUrl))
   }
 
-  // Redirigir a /admin si ya tiene sesión e intenta ir al login
-  if (isPublicRoute && session && path === '/login') {
-    return NextResponse.redirect(new URL('/admin', req.nextUrl))
+  // Ruta de admin: solo admin o technician
+  if (isAdminRoute && session) {
+    const role = session.role as string
+    if (role !== 'admin' && role !== 'technician') {
+      return NextResponse.redirect(new URL('/mi-cuenta', req.nextUrl))
+    }
+  }
+
+  // Si ya tiene sesión e intenta ir al login, redirigir según rol
+  if (path === '/login' && session) {
+    const role = session.role as string
+    if (role === 'admin' || role === 'technician') {
+      return NextResponse.redirect(new URL('/admin', req.nextUrl))
+    } else {
+      return NextResponse.redirect(new URL('/mi-cuenta', req.nextUrl))
+    }
   }
 
   return NextResponse.next()

@@ -15,7 +15,7 @@ export async function login(prevState: AuthState, formData: FormData): Promise<A
     return { error: 'Correo y contraseña son requeridos' }
   }
 
-  let userId: string
+  let role: string
 
   try {
     const user = await prisma.user.findUnique({ where: { email } })
@@ -29,13 +29,18 @@ export async function login(prevState: AuthState, formData: FormData): Promise<A
       return { error: 'Credenciales incorrectas' }
     }
 
-    userId = user.id
+    role = user.role
     await createSession(user.id, user.role)
   } catch {
     return { error: 'Error del servidor, intenta más tarde' }
   }
 
-  redirect('/admin')
+  // Redirigir según el rol
+  if (role === 'admin' || role === 'technician') {
+    redirect('/admin')
+  } else {
+    redirect('/mi-cuenta')
+  }
 }
 
 export async function logout() {

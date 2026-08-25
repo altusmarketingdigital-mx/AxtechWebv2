@@ -78,7 +78,7 @@ export default function Home() {
             href="/login"
             className="border border-gray-300 text-gray-700 hover:border-primary hover:text-primary px-5 py-2.5 rounded-full font-bold text-sm transition-all flex items-center gap-2"
           >
-            Acceso Admin
+            Iniciar Sesión
           </Link>
           <Link 
             href="#cotizacion" 
