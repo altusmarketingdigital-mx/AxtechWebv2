@@ -1,6 +1,7 @@
 import React from "react"
 import prisma from "@/lib/prisma"
 import Link from "next/link"
+import Image from "next/image"
 import { 
   Search, 
   Wrench, 
@@ -17,7 +18,12 @@ import {
   AlertCircle,
   Sparkles,
   Layers,
-  Check
+  Check,
+  ChevronRight,
+  ShoppingBag,
+  User,
+  Phone,
+  Mail
 } from "lucide-react"
 
 type OrderStatus = 'RECEIVED' | 'DIAGNOSING' | 'WAITING_APPROVAL' | 'REPAIRING' | 'READY' | 'DELIVERED' | 'CANCELLED'
@@ -26,7 +32,7 @@ const STEPS = [
   { id: 'RECEIVED', label: 'Recibido', desc: 'Equipo en taller' },
   { id: 'DIAGNOSING', label: 'Diagnóstico', desc: 'Revisión técnica' },
   { id: 'WAITING_APPROVAL', label: 'Cotización', desc: 'Esperando aprobación' },
-  { id: 'REPAIRING', label: 'Reparación', desc: 'Mano de obra y refacciones' },
+  { id: 'REPAIRING', label: 'Reparación', desc: 'Mano de obra y piezas' },
   { id: 'READY', label: 'Listo', desc: 'Para entrega o recolección' },
 ]
 
@@ -43,14 +49,14 @@ function getStepIndex(status: string) {
   }
 }
 
-const statusBadge: Record<string, { label: string; bg: string; text: string; ring: string }> = {
-  RECEIVED:         { label: 'Recibido en Taller',      bg: 'bg-blue-500/10',   text: 'text-blue-600',   ring: 'ring-blue-500/30' },
-  DIAGNOSING:       { label: 'En Diagnóstico',         bg: 'bg-yellow-500/10', text: 'text-yellow-700', ring: 'ring-yellow-500/30' },
-  WAITING_APPROVAL: { label: 'Esperando tu Aprobación',bg: 'bg-orange-500/10', text: 'text-orange-700', ring: 'ring-orange-500/30' },
-  REPAIRING:        { label: 'En Reparación',          bg: 'bg-purple-500/10', text: 'text-purple-700', ring: 'ring-purple-500/30' },
-  READY:            { label: 'Listo para Entrega',     bg: 'bg-green-500/10',  text: 'text-green-700',  ring: 'ring-green-500/30' },
-  DELIVERED:        { label: 'Entregado al Cliente',   bg: 'bg-slate-500/10',  text: 'text-slate-700',  ring: 'ring-slate-500/30' },
-  CANCELLED:        { label: 'Servicio Cancelado',     bg: 'bg-red-500/10',    text: 'text-red-700',    ring: 'ring-red-500/30' },
+const statusBadge: Record<string, { label: string; bg: string; text: string; border: string }> = {
+  RECEIVED:         { label: 'Recibido en Taller',      bg: 'bg-blue-50',   text: 'text-blue-700',   border: 'border-blue-200' },
+  DIAGNOSING:       { label: 'En Diagnóstico',         bg: 'bg-amber-50',  text: 'text-amber-800',  border: 'border-amber-200' },
+  WAITING_APPROVAL: { label: 'Esperando tu Aprobación',bg: 'bg-orange-50', text: 'text-orange-800', border: 'border-orange-200' },
+  REPAIRING:        { label: 'En Reparación',          bg: 'bg-purple-50', text: 'text-purple-800', border: 'border-purple-200' },
+  READY:            { label: 'Listo para Entrega',     bg: 'bg-emerald-50',text: 'text-emerald-800',border: 'border-emerald-200' },
+  DELIVERED:        { label: 'Entregado al Cliente',   bg: 'bg-slate-100', text: 'text-slate-800',  border: 'border-slate-300' },
+  CANCELLED:        { label: 'Servicio Cancelado',     bg: 'bg-red-50',    text: 'text-red-700',    border: 'border-red-200' },
 }
 
 export default async function TrackOrderPage({
@@ -80,7 +86,7 @@ export default async function TrackOrderPage({
     })
 
     if (!order) {
-      error = `No se encontró ninguna orden con el folio o dato "${folio}". Por favor verifica el número e intenta nuevamente.`
+      error = `No se encontró ninguna orden registrada con "${folio}". Verifica tu folio o teléfono y vuelve a intentarlo.`
     }
   }
 
@@ -92,130 +98,141 @@ export default async function TrackOrderPage({
   const pendingBalance = order?.costQuote ? Math.max(0, order.costQuote - totalPayments) : null
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-primary/20">
       
-      {/* Header */}
-      <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
+      {/* Exact Brand Navbar */}
+      <nav className="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 z-50 px-6 py-2 flex justify-between items-center transition-all shadow-sm">
+        <Link href="/" className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
+          <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain" priority />
+        </Link>
+        
+        <div className="hidden lg:flex gap-7 font-medium text-sm text-gray-800 items-center">
+          <Link href="/#inicio" className="hover:text-primary transition-all">INICIO</Link>
+          <Link href="/#soluciones" className="hover:text-primary transition-all">SOLUCIONES</Link>
+          <Link href="/#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
+          <Link href="/#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
+          <Link href="/estado-reparacion" className="text-primary font-bold transition-all border-b-2 border-primary pb-0.5">
+            RASTREAR EQUIPO
+          </Link>
+          <Link 
+            href="/tienda" 
+            className="flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200"
+          >
+            <ShoppingBag className="w-4 h-4 text-blue-600" />
+            TIENDA ONLINE
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition border border-slate-700/60"
+            className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-gray-600 hover:text-primary px-3 py-1.5 rounded-lg hover:bg-gray-100 transition"
           >
             <ArrowLeft size={16} />
-            <span>Regresar a Página</span>
+            <span className="hidden sm:inline">Regresar a Página</span>
           </Link>
-
-          <div className="text-center">
-            <Link href="/" className="text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
-              AXTECH <span className="text-blue-500">INGENIERÍA</span>
-            </Link>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-              Seguimiento Técnico en Línea
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 rounded-lg hover:bg-slate-800 transition hidden sm:inline-block"
-            >
-              Portal de Clientes
-            </Link>
-            <a
-              href="https://wa.me/525513485574"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-green-600 hover:bg-green-500 text-white rounded-xl text-xs font-bold transition shadow-sm"
-            >
-              <MessageCircle size={14} />
-              <span className="hidden sm:inline">WhatsApp</span>
-            </a>
-          </div>
+          <Link
+            href="/login"
+            className="border border-gray-300 text-gray-700 hover:border-primary hover:text-primary px-4 py-2 rounded-full font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5"
+          >
+            <User className="w-4 h-4" />
+            Iniciar Sesión
+          </Link>
         </div>
-      </header>
+      </nav>
 
-      {/* Main Content */}
-      <main className="flex-1 max-w-4xl mx-auto px-4 py-12 w-full space-y-10">
-        
-        {/* Title Hero */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider">
-            <Sparkles size={13} className="text-blue-400" />
-            Consulta en Tiempo Real
+      {/* Hero Section Header */}
+      <section className="relative pt-36 pb-12 px-6 bg-gradient-to-b from-white via-blue-50/40 to-slate-50 border-b border-gray-200/80 overflow-hidden">
+        {/* Soft Background Glows */}
+        <div className="absolute top-10 -left-20 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute top-10 -right-20 w-80 h-80 bg-accent/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div className="max-w-4xl mx-auto text-center space-y-4 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-primary text-xs font-bold uppercase tracking-wider">
+            <Sparkles size={14} className="text-accent" />
+            Seguimiento de Servicio Técnico
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-            Rastrea el Estado de tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500">Equipo</span>
+          
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-gray-900 leading-tight">
+            Consulta el Estado de tu <span className="text-gradient-brand">Equipo</span>
           </h1>
-          <p className="text-slate-400 text-sm sm:text-base max-w-lg mx-auto">
-            Ingresa tu número de folio (ej. <strong className="text-slate-200">ORD-0001</strong>) o tu número de teléfono para conocer el diagnóstico, avance y presupuesto de tu reparación.
+          
+          <p className="text-gray-600 text-base sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
+            Ingresa el <strong className="text-gray-900 font-semibold">Folio de Servicio</strong> (ej. ORD-0001) o tu número de teléfono registrado para ver el avance y diagnóstico de tu reparación.
           </p>
-        </div>
 
-        {/* Search Card */}
-        <div className="bg-slate-950/70 border border-slate-800/80 rounded-3xl p-4 sm:p-6 shadow-2xl shadow-blue-950/30 backdrop-blur-xl">
-          <form className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-              <input 
-                type="text" 
-                name="folio"
-                defaultValue={folio || ""}
-                placeholder="Ejemplo: ORD-0001 o tu teléfono..." 
-                className="w-full pl-12 pr-4 py-3.5 bg-slate-900/90 border border-slate-700/70 rounded-2xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-sm sm:text-base"
-                required
-              />
+          {/* Search Box */}
+          <div className="pt-4 max-w-2xl mx-auto">
+            <div className="bg-white p-3 sm:p-4 rounded-3xl shadow-xl shadow-blue-900/5 border border-gray-200">
+              <form className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input 
+                    type="text" 
+                    name="folio"
+                    defaultValue={folio || ""}
+                    placeholder="Escribe tu folio (ej. ORD-0001) o teléfono..." 
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition text-sm sm:text-base font-medium"
+                    required
+                  />
+                </div>
+                <button 
+                  type="submit"
+                  className="bg-primary hover:bg-primary-hover text-white px-8 py-3.5 rounded-2xl font-bold transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 flex items-center justify-center gap-2 shrink-0 text-sm sm:text-base cursor-pointer"
+                >
+                  <Search size={18} />
+                  <span>Rastrear Orden</span>
+                </button>
+              </form>
             </div>
-            <button 
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3.5 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/30 hover:scale-[1.02] flex items-center justify-center gap-2 shrink-0 text-sm sm:text-base"
-            >
-              <Search size={18} />
-              <span>Consultar Estado</span>
-            </button>
-          </form>
+          </div>
         </div>
+      </section>
 
+      {/* Main Results Section */}
+      <main className="flex-1 max-w-4xl mx-auto px-4 py-10 w-full space-y-8">
+        
         {/* Error Alert */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-5 rounded-2xl flex items-start gap-3 text-sm">
-            <AlertCircle size={20} className="shrink-0 mt-0.5 text-red-400" />
+          <div className="bg-red-50 border border-red-200 text-red-700 p-5 rounded-2xl flex items-start gap-3 text-sm shadow-sm animate-in fade-in">
+            <AlertCircle size={20} className="shrink-0 mt-0.5 text-red-600" />
             <div>
-              <p className="font-semibold">No se encontraron resultados</p>
-              <p className="text-red-300/80 text-xs mt-1">{error}</p>
+              <p className="font-bold text-red-900">Orden no encontrada</p>
+              <p className="text-red-700 text-xs mt-1">{error}</p>
             </div>
           </div>
         )}
 
-        {/* Order Details Display */}
+        {/* Order Details Card */}
         {order && (
-          <div className="bg-slate-950/80 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl space-y-8 animate-in fade-in zoom-in-95 duration-300">
+          <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-xl shadow-slate-900/5 space-y-8 animate-in fade-in duration-300">
             
             {/* Order Top Banner */}
-            <div className="p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950 border-b border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+            <div className="p-6 sm:p-8 bg-gradient-to-r from-blue-50/70 via-white to-amber-50/50 border-b border-gray-200 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Orden de Servicio</span>
-                <h2 className="text-3xl font-black text-white font-mono mt-0.5">{order.folio}</h2>
-                <p className="text-xs text-slate-400 mt-1">
-                  Cliente: <strong className="text-slate-200">{order.clientName || order.clientEmail || 'Cliente Axtech'}</strong>
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-500">Orden de Servicio Técnico</span>
+                <h2 className="text-3xl font-extrabold text-primary font-mono mt-0.5">{order.folio}</h2>
+                <p className="text-xs text-gray-600 mt-1">
+                  Cliente: <strong className="text-gray-900">{order.clientName || order.clientEmail || 'Cliente Axtech'}</strong>
                 </p>
               </div>
 
               {(() => {
-                const badge = statusBadge[order.status] || { label: order.status, bg: 'bg-slate-800', text: 'text-white', ring: 'ring-slate-700' }
+                const badge = statusBadge[order.status] || { label: order.status, bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-300' }
                 return (
-                  <div className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold uppercase tracking-wide ring-1 ${badge.bg} ${badge.text} ${badge.ring} self-start sm:self-auto`}>
+                  <div className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold uppercase tracking-wide border ${badge.bg} ${badge.text} ${badge.border} self-start sm:self-auto shadow-sm`}>
                     {badge.label}
                   </div>
                 )
               })()}
             </div>
 
-            {/* Stepper Timeline (Only if not cancelled) */}
+            {/* Stepper Timeline */}
             {!isCancelled && (
               <div className="px-6 sm:px-8">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6 flex items-center gap-2">
-                  <Layers size={14} className="text-blue-400" />
-                  Progreso del Servicio
+                <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6 flex items-center gap-2">
+                  <Layers size={14} className="text-primary" />
+                  Estatus del Proceso
                 </h3>
                 
                 <div className="grid grid-cols-5 gap-2 relative">
@@ -229,7 +246,7 @@ export default async function TrackOrderPage({
                         {idx < STEPS.length - 1 && (
                           <div 
                             className={`absolute top-4 left-1/2 w-full h-1 -z-0 transition-all ${
-                              idx < currentStep ? 'bg-blue-500' : 'bg-slate-800'
+                              idx < currentStep ? 'bg-primary' : 'bg-gray-200'
                             }`}
                           />
                         )}
@@ -238,10 +255,10 @@ export default async function TrackOrderPage({
                         <div 
                           className={`w-8 h-8 sm:w-10 sm:h-10 rounded-2xl flex items-center justify-center font-bold text-xs sm:text-sm z-10 transition-all ${
                             isPassed 
-                              ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/40 ring-4 ring-slate-900' 
+                              ? 'bg-primary text-white shadow-md shadow-primary/30 ring-4 ring-white' 
                               : isCurrent 
-                                ? 'bg-blue-500 text-white ring-4 ring-blue-500/30 animate-pulse' 
-                                : 'bg-slate-800 text-slate-500 ring-4 ring-slate-900'
+                                ? 'bg-accent text-gray-950 ring-4 ring-accent/30 font-black animate-pulse' 
+                                : 'bg-gray-100 text-gray-400 ring-4 ring-white border border-gray-200'
                           }`}
                         >
                           {isPassed ? <Check size={16} /> : idx + 1}
@@ -249,10 +266,10 @@ export default async function TrackOrderPage({
 
                         {/* Step Labels */}
                         <div>
-                          <p className={`text-xs font-bold ${isPassed || isCurrent ? 'text-white' : 'text-slate-500'}`}>
+                          <p className={`text-xs font-bold ${isPassed || isCurrent ? 'text-gray-900' : 'text-gray-400'}`}>
                             {step.label}
                           </p>
-                          <p className="text-[10px] text-slate-500 hidden sm:block mt-0.5">
+                          <p className="text-[10px] text-gray-500 hidden sm:block mt-0.5">
                             {step.desc}
                           </p>
                         </div>
@@ -267,64 +284,64 @@ export default async function TrackOrderPage({
             <div className="px-6 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-6">
               
               {/* Equipo Info */}
-              <div className="bg-slate-900/90 border border-slate-800/80 p-5 rounded-2xl space-y-3">
-                <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-wider">
+              <div className="bg-gray-50/80 border border-gray-200 p-5 rounded-2xl space-y-3">
+                <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider">
                   <Laptop size={16} />
-                  <span>Detalles del Dispositivo</span>
+                  <span>Equipo / Dispositivo</span>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-white">{order.brand} {order.model}</h4>
-                  <p className="text-xs text-slate-400 mt-0.5">Tipo: <span className="text-slate-200 font-medium">{order.deviceType}</span></p>
+                  <h4 className="text-xl font-bold text-gray-900">{order.brand} {order.model}</h4>
+                  <p className="text-xs text-gray-600 mt-0.5">Tipo: <span className="text-gray-900 font-semibold">{order.deviceType}</span></p>
                   {order.serialNum && (
-                    <p className="text-xs text-slate-400 mt-0.5 font-mono">Serie: {order.serialNum}</p>
+                    <p className="text-xs text-gray-500 mt-0.5 font-mono">No. Serie: {order.serialNum}</p>
                   )}
                 </div>
               </div>
 
               {/* Fecha Info */}
-              <div className="bg-slate-900/90 border border-slate-800/80 p-5 rounded-2xl space-y-3">
-                <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-wider">
+              <div className="bg-gray-50/80 border border-gray-200 p-5 rounded-2xl space-y-3">
+                <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider">
                   <Calendar size={16} />
-                  <span>Fechas & Registro</span>
+                  <span>Fechas de Servicio</span>
                 </div>
                 <div className="space-y-1 text-xs">
-                  <p className="text-slate-400">
-                    Fecha de Ingreso: <strong className="text-slate-200">{new Date(order.createdAt).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
+                  <p className="text-gray-600">
+                    Fecha de Ingreso: <strong className="text-gray-900">{new Date(order.createdAt).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
                   </p>
                   {order.serviceDate && (
-                    <p className="text-slate-400">
-                      Fecha Estimada: <strong className="text-blue-400">{new Date(order.serviceDate).toLocaleDateString('es-MX')}</strong>
+                    <p className="text-gray-600">
+                      Fecha Estimada de Entrega: <strong className="text-primary">{new Date(order.serviceDate).toLocaleDateString('es-MX')}</strong>
                     </p>
                   )}
-                  <p className="text-slate-400">
-                    Estatus Actual: <strong className="text-slate-200">{order.status}</strong>
+                  <p className="text-gray-600">
+                    Estatus Actual: <strong className="text-gray-900">{order.status}</strong>
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Problem Report & Technical Diagnosis */}
+            {/* Problem & Diagnosis */}
             <div className="px-6 sm:px-8 space-y-4">
               
-              {/* Problema */}
-              <div className="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                  <FileText size={15} className="text-yellow-400" />
+              {/* Falla reportada */}
+              <div className="bg-white border border-gray-200 p-5 rounded-2xl space-y-2 shadow-sm">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-2">
+                  <FileText size={15} className="text-amber-500" />
                   Problema Reportado por el Cliente
                 </h4>
-                <p className="text-sm text-slate-200 leading-relaxed bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/60">
+                <p className="text-sm text-gray-800 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100">
                   {order.issueDesc}
                 </p>
               </div>
 
               {/* Diagnóstico */}
               {order.diagnosis && (
-                <div className="bg-blue-950/30 border border-blue-800/40 p-5 rounded-2xl space-y-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-2">
-                    <Wrench size={15} className="text-blue-400" />
+                <div className="bg-blue-50/50 border border-blue-200/80 p-5 rounded-2xl space-y-2">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-2">
+                    <Wrench size={15} className="text-primary" />
                     Diagnóstico Técnico Especializado
                   </h4>
-                  <p className="text-sm text-blue-100 leading-relaxed bg-blue-950/50 p-3.5 rounded-xl border border-blue-800/50">
+                  <p className="text-sm text-blue-950 leading-relaxed bg-white p-4 rounded-xl border border-blue-100 shadow-sm">
                     {order.diagnosis}
                   </p>
                 </div>
@@ -332,12 +349,12 @@ export default async function TrackOrderPage({
 
               {/* Notas de reparación */}
               {order.repairNotes && (
-                <div className="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl space-y-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-green-400 flex items-center gap-2">
-                    <CheckCircle2 size={15} className="text-green-400" />
+                <div className="bg-emerald-50/50 border border-emerald-200 p-5 rounded-2xl space-y-2">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-2">
+                    <CheckCircle2 size={15} className="text-emerald-600" />
                     Trabajo y Reparaciones Realizadas
                   </h4>
-                  <p className="text-sm text-slate-200 leading-relaxed bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/60">
+                  <p className="text-sm text-emerald-950 leading-relaxed bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
                     {order.repairNotes}
                   </p>
                 </div>
@@ -347,24 +364,24 @@ export default async function TrackOrderPage({
             {/* Presupuesto & Pagos */}
             {order.costQuote !== null && (
               <div className="px-6 sm:px-8">
-                <div className="bg-gradient-to-br from-slate-900 to-blue-950/50 border border-blue-800/40 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="bg-gradient-to-br from-blue-50 via-white to-blue-50 border border-blue-200 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm">
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-blue-400">Resumen Financiero</span>
-                    <h4 className="text-xl font-bold text-white mt-1">Presupuesto del Servicio</h4>
+                    <span className="text-xs font-bold uppercase tracking-wider text-primary">Resumen Financiero</span>
+                    <h4 className="text-xl font-bold text-gray-900 mt-1">Presupuesto del Servicio</h4>
                     {totalPayments > 0 && (
-                      <p className="text-xs text-green-400 mt-0.5 font-medium">
-                        Anticipo registrado: ${totalPayments.toFixed(2)} MXN
+                      <p className="text-xs text-emerald-700 mt-0.5 font-semibold">
+                        ✓ Anticipo abonado: ${totalPayments.toFixed(2)} MXN
                       </p>
                     )}
                   </div>
                   
                   <div className="text-left md:text-right">
-                    <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
-                      ${order.costQuote.toFixed(2)} <span className="text-sm font-bold text-slate-400">MXN</span>
+                    <p className="text-3xl font-black text-primary">
+                      ${order.costQuote.toFixed(2)} <span className="text-sm font-bold text-gray-500">MXN</span>
                     </p>
                     {pendingBalance !== null && (
-                      <p className="text-xs text-slate-400 mt-1">
-                        Saldo a liquidar al entregar: <strong className="text-white">${pendingBalance.toFixed(2)} MXN</strong>
+                      <p className="text-xs text-gray-600 mt-1">
+                        Saldo a liquidar al entregar: <strong className="text-gray-900 font-bold">${pendingBalance.toFixed(2)} MXN</strong>
                       </p>
                     )}
                   </div>
@@ -372,11 +389,11 @@ export default async function TrackOrderPage({
               </div>
             )}
 
-            {/* Customer Actions & Contact Bar */}
-            <div className="p-6 sm:p-8 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Contact Action Bar */}
+            <div className="p-6 sm:p-8 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-center sm:text-left">
-                <p className="text-sm font-bold text-white">¿Deseas aprobar o consultar sobre tu orden?</p>
-                <p className="text-xs text-slate-400 mt-0.5">Escríbenos directamente indicando tu folio <strong className="text-blue-400">{order.folio}</strong></p>
+                <p className="text-sm font-bold text-gray-900">¿Deseas autorizar la cotización o tienes alguna duda?</p>
+                <p className="text-xs text-gray-500 mt-0.5">Escríbenos directamente indicando tu folio <strong className="text-primary font-bold">{order.folio}</strong></p>
               </div>
 
               <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -384,7 +401,7 @@ export default async function TrackOrderPage({
                   href={`https://wa.me/525513485574?text=Hola,%20quisiera%20consultar%20el%20estatus%20de%20mi%20orden%20${order.folio}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-500 text-white rounded-xl text-sm font-bold transition shadow-lg shadow-green-600/20"
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-6 py-3.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-bold transition shadow-lg shadow-green-600/20 hover:scale-105"
                 >
                   <MessageCircle size={18} />
                   <span>Contactar por WhatsApp</span>
@@ -395,45 +412,95 @@ export default async function TrackOrderPage({
           </div>
         )}
 
-        {/* Bottom Trust Cards */}
+        {/* Trust Badges matching Homepage */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-          <div className="bg-slate-950/50 border border-slate-800/60 p-5 rounded-2xl flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
-              <ShieldCheck size={20} />
+          <div className="bg-white border border-gray-200 p-5 rounded-2xl flex items-center gap-3.5 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-blue-50 text-primary flex items-center justify-center shrink-0 border border-blue-100">
+              <ShieldCheck size={22} />
             </div>
             <div>
-              <h5 className="font-bold text-xs text-white">Garantía en Reparaciones</h5>
-              <p className="text-[11px] text-slate-400">Refacciones originales y mano de obra calificada.</p>
+              <h5 className="font-bold text-sm text-gray-900">Garantía en Reparaciones</h5>
+              <p className="text-xs text-gray-500">Refacciones de alta calidad y mano de obra calificada.</p>
             </div>
           </div>
 
-          <div className="bg-slate-950/50 border border-slate-800/60 p-5 rounded-2xl flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-green-500/10 text-green-400 flex items-center justify-center shrink-0">
-              <CheckCircle2 size={20} />
+          <div className="bg-white border border-gray-200 p-5 rounded-2xl flex items-center gap-3.5 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
+              <CheckCircle2 size={22} />
             </div>
             <div>
-              <h5 className="font-bold text-xs text-white">Diagnóstico Profesional</h5>
-              <p className="text-[11px] text-slate-400">Revisión exhaustiva de hardware y software.</p>
+              <h5 className="font-bold text-sm text-gray-900">Diagnóstico Profesional</h5>
+              <p className="text-xs text-gray-500">Revisión exhaustiva de hardware y software.</p>
             </div>
           </div>
 
-          <div className="bg-slate-950/50 border border-slate-800/60 p-5 rounded-2xl flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0">
-              <PhoneCall size={20} />
+          <div className="bg-white border border-gray-200 p-5 rounded-2xl flex items-center gap-3.5 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 border border-purple-100">
+              <PhoneCall size={22} />
             </div>
             <div>
-              <h5 className="font-bold text-xs text-white">Atención Personalizada</h5>
-              <p className="text-[11px] text-slate-400">Soporte directo vía WhatsApp y telefónica.</p>
+              <h5 className="font-bold text-sm text-gray-900">Atención Personalizada</h5>
+              <p className="text-xs text-gray-500">Soporte directo vía WhatsApp y telefónica.</p>
             </div>
           </div>
         </div>
 
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 px-4 text-center text-xs text-slate-500">
-        <p>© {new Date().getFullYear()} AXTECH INGENIERÍA — Soluciones Tecnológicas Especializadas.</p>
+      {/* Brand Footer */}
+      <footer className="bg-[#02040a] pt-16 pb-10 px-6 border-t border-white/10 relative overflow-hidden mt-16 text-gray-300">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12 relative z-10">
+          
+          <div className="space-y-6">
+            <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain bg-white px-3 py-1 rounded-full shadow-lg" />
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Innovación, ingeniería y tecnología para impulsar el crecimiento de tu empresa.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-6 tracking-wide">Enlaces Rápidos</h4>
+            <ul className="space-y-3 text-sm text-gray-300">
+              <li><Link href="/#inicio" className="hover:text-primary transition-colors">Inicio</Link></li>
+              <li><Link href="/#soluciones" className="hover:text-primary transition-colors">Soluciones</Link></li>
+              <li><Link href="/tienda" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors flex items-center gap-1.5"><ShoppingBag size={14} /> Tienda en Línea</Link></li>
+              <li><Link href="/estado-reparacion" className="hover:text-primary transition-colors">Rastrear mi Equipo</Link></li>
+              <li><Link href="/login" className="hover:text-primary transition-colors">Iniciar Sesión</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-6 tracking-wide">Contacto</h4>
+            <ul className="space-y-3 text-sm text-gray-300">
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-accent" /> 55 1348 5574
+              </li>
+              <li className="flex items-center gap-2 break-all">
+                <Mail className="w-4 h-4 text-accent" /> ventas@axtech-ingenieria.com
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-6 tracking-wide">Portal de Clientes</h4>
+            <p className="text-xs text-gray-400 mb-4 leading-relaxed">
+              Inicia sesión para revisar todas tus órdenes de servicio y compras pasadas.
+            </p>
+            <Link
+              href="/login"
+              className="inline-block bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-full font-bold text-xs transition shadow-md"
+            >
+              Acceso a Clientes →
+            </Link>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto border-t border-white/10 pt-6 text-center text-xs text-gray-500 relative z-10">
+          <p>© {new Date().getFullYear()} AXTECH INGENIERÍA. Todos los derechos reservados.</p>
+        </div>
       </footer>
+
     </div>
   )
 }
