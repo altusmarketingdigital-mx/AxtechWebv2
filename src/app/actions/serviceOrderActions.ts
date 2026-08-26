@@ -40,3 +40,45 @@ export async function createServiceOrder(formData: FormData) {
     return { success: false, error: "No se pudo crear la orden" }
   }
 }
+
+export async function searchServiceOrderByQuery(rawQuery: string) {
+  if (!rawQuery || !rawQuery.trim()) {
+    return { success: false, error: "Ingresa un folio o número de teléfono" }
+  }
+
+  const query = rawQuery.trim()
+  const upperQuery = query.toUpperCase()
+  const lowerQuery = query.toLowerCase()
+
+  try {
+    const order = await prisma.serviceOrder.findFirst({
+      where: {
+        OR: [
+          { folio: upperQuery },
+          { clientPhone: query },
+          { clientEmail: lowerQuery }
+        ]
+      },
+      include: {
+        payments: true
+      }
+    })
+
+    if (!order) {
+      return { success: false, error: `No se encontró ninguna orden registrada con "${query}"` }
+    }
+
+    return { 
+      success: true, 
+      order: {
+        ...order,
+        createdAt: order.createdAt.toISOString(),
+        updatedAt: order.updatedAt.toISOString(),
+        serviceDate: order.serviceDate ? order.serviceDate.toISOString() : null,
+      } 
+    }
+  } catch (error) {
+    console.error("Error searching order:", error)
+    return { success: false, error: "Ocurrió un error al buscar la orden" }
+  }
+}

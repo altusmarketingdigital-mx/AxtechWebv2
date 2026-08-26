@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { logout } from '@/app/actions/authActions'
 import { ClipboardList, Clock, CheckCircle2, Wrench, LogOut, Package } from 'lucide-react'
 import Link from 'next/link'
+import TrackingModal from '@/components/TrackingModal'
 
 const statusLabel: Record<string, { label: string; color: string }> = {
   RECEIVED:         { label: 'Recibido',           color: 'bg-gray-100 text-gray-700' },
@@ -156,19 +157,8 @@ export default async function MiCuentaPage() {
           )}
         </div>
 
-        {/* Quick Link: Public Tracker */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center justify-between">
-          <div>
-            <p className="font-semibold text-gray-800">Seguimiento Público</p>
-            <p className="text-sm text-gray-500">Consulta el estado de tu equipo por folio o teléfono</p>
-          </div>
-          <Link
-            href="/estado-reparacion"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition"
-          >
-            Consultar
-          </Link>
-        </div>
+        {/* Quick Modal: Public Tracker */}
+        <TrackingModal />
 
       </main>
     </div>
