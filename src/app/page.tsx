@@ -67,21 +67,21 @@ export default function Home() {
         <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform shrink-0">
           <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain" priority />
         </div>
-        <div className="hidden lg:flex gap-8 font-medium text-sm text-gray-800 items-center">
+        <div className="hidden lg:flex gap-7 font-medium text-sm text-gray-800 items-center">
           <Link href="#inicio" className="hover:text-primary transition-all">INICIO</Link>
           <Link href="#soluciones" className="hover:text-primary transition-all">SOLUCIONES</Link>
+          <Link href="#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
+          <Link href="#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
+          <Link href="/estado-reparacion" className="hover:text-primary transition-all font-semibold text-gray-700">
+            RASTREAR EQUIPO
+          </Link>
           <Link 
             href="/tienda" 
-            className="flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full hover:bg-blue-100 transition-all border border-blue-200"
+            className="flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200"
           >
             <ShoppingBag className="w-4 h-4 text-blue-600" />
             TIENDA ONLINE
           </Link>
-          <Link href="/estado-reparacion" className="hover:text-primary transition-all text-xs font-semibold text-gray-600">
-            RASTREAR EQUIPO
-          </Link>
-          <Link href="#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
-          <Link href="#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
         </div>
         <div className="flex items-center gap-3">
           <Link
