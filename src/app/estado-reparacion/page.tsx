@@ -106,14 +106,11 @@ export default async function TrackOrderPage({
           <Image src="/logo.png" alt="AXTECH INGENIERÍA" width={160} height={45} className="object-contain" priority />
         </Link>
         
-        <div className="hidden lg:flex gap-7 font-medium text-sm text-gray-800 items-center">
+        <div className="hidden lg:flex gap-8 font-medium text-sm text-gray-800 items-center">
           <Link href="/#inicio" className="hover:text-primary transition-all">INICIO</Link>
           <Link href="/#soluciones" className="hover:text-primary transition-all">SOLUCIONES</Link>
           <Link href="/#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
           <Link href="/#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
-          <Link href="/estado-reparacion" className="text-primary font-bold transition-all border-b-2 border-primary pb-0.5">
-            RASTREAR EQUIPO
-          </Link>
           <Link 
             href="/tienda" 
             className="flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200"
