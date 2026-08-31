@@ -69,7 +69,7 @@ export default function Home() {
       ],
       icon: <div className="p-4 bg-purple-500/10 backdrop-blur-md rounded-2xl inline-block shadow-lg"><Laptop className="w-10 h-10 text-purple-700 drop-shadow-[0_0_15px_rgba(168,85,247,0.3)]" /></div>,
       colSpan: 'col-span-1 md:col-span-2',
-      bg: 'bg-white hover:bg-gray-50 border border-purple-500/30 hover:border-purple-500 shadow-sm',
+      bg: 'bg-[url("/flyer-desarrollo.jpg")] bg-cover bg-center bg-blend-overlay bg-black/70 from-primary hover:shadow-[0_0_40px_rgba(168,85,247,0.3)]',
       slug: 'desarrollo-web'
     }
   ];
