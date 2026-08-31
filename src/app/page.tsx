@@ -54,9 +54,23 @@ export default function Home() {
         'Administración y supervisión de accesos'
       ],
       icon: <div className="p-4 bg-green-500/10 backdrop-blur-md rounded-2xl inline-block shadow-lg"><Video className="w-10 h-10 text-green-700 drop-shadow-[0_0_15px_rgba(34,197,94,0.3)]" /></div>,
-      colSpan: 'col-span-1 md:col-span-2 md:col-start-2',
+      colSpan: 'col-span-1 md:col-span-2',
       bg: 'bg-white hover:bg-gray-50 border border-green-500/30 hover:border-green-500 shadow-sm',
       slug: 'cctv'
+    },
+    {
+      title: 'Desarrollo de Páginas Web y Sistemas a la Medida',
+      features: [
+        'Diseño y desarrollo de sitios web corporativos',
+        'Sistemas personalizados y aplicaciones web',
+        'Tiendas en línea (E-commerce)',
+        'Automatización de procesos operativos',
+        'Gestión de clientes e inventarios'
+      ],
+      icon: <div className="p-4 bg-purple-500/10 backdrop-blur-md rounded-2xl inline-block shadow-lg"><Laptop className="w-10 h-10 text-purple-700 drop-shadow-[0_0_15px_rgba(168,85,247,0.3)]" /></div>,
+      colSpan: 'col-span-1 md:col-span-2',
+      bg: 'bg-white hover:bg-gray-50 border border-purple-500/30 hover:border-purple-500 shadow-sm',
+      slug: 'desarrollo-web'
     }
   ];
 
