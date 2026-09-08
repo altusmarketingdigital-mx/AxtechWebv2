@@ -116,7 +116,7 @@ export default async function TrackOrderPage({
             className="flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200"
           >
             <ShoppingBag className="w-4 h-4 text-blue-600" />
-            TIENDA ONLINE
+            TIENDA EN LÍNEA
           </Link>
         </div>
 

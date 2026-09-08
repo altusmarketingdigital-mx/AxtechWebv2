@@ -91,7 +91,7 @@ export default function Home() {
             className="flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200"
           >
             <ShoppingBag className="w-4 h-4 text-blue-600" />
-            TIENDA ONLINE
+            TIENDA EN LÍNEA
           </Link>
         </div>
         <div className="flex items-center gap-3">
@@ -152,17 +152,10 @@ export default function Home() {
               className="flex flex-wrap gap-4 items-center mb-6"
             >
               <Link
-                href="/tienda"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-2xl font-bold text-base transition-all flex items-center gap-2.5 shadow-lg shadow-blue-500/25 hover:scale-105"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                Explorar Tienda Online
-              </Link>
-              <Link
                 href="#cotizacion"
-                className="border-2 border-gray-300 hover:border-gray-900 text-gray-800 hover:text-black px-6 py-3 rounded-2xl font-bold text-base transition-all hover:bg-gray-100"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-2xl font-bold text-base transition-all shadow-lg shadow-blue-500/25 hover:scale-105"
               >
-                Agendar Consulta
+                Agendar Servicio
               </Link>
             </motion.div>
           </div>
@@ -414,7 +407,7 @@ export default function Home() {
               className="inline-flex items-center justify-center gap-3 px-8 py-5 bg-accent text-black rounded-2xl font-bold text-lg hover:scale-105 hover:shadow-[0_0_30px_rgba(253,182,20,0.4)] transition-all shadow-xl"
             >
               <CalendarDays className="w-7 h-7" />
-              Agendar Consulta
+              Agendar Servicio
             </a>
           </div>
         </div>
