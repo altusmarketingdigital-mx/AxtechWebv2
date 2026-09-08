@@ -5,6 +5,8 @@ import {
   Wrench, 
   ShoppingCart,
   Package,
+  FileText,
+  Settings,
   LogOut 
 } from "lucide-react";
 import { logout } from "@/app/actions/authActions";
@@ -41,6 +43,14 @@ export default async function AdminLayout({
           <Link href="/admin/inventario" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
             <Package size={20} />
             <span>Inventario</span>
+          </Link>
+          <Link href="/admin/cotizaciones" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
+            <FileText size={20} />
+            <span>Cotizaciones</span>
+          </Link>
+          <Link href="/admin/configuracion" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
+            <Settings size={20} />
+            <span>Configuración</span>
           </Link>
         </nav>
         

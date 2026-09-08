@@ -26,6 +26,7 @@ model User {
   serviceOrdersAsTech   ServiceOrder[] @relation("TechOrders")
   sales                 Sale[]
   cart                  Cart?
+  quotes                Quote[]        @relation("ClientQuotes")
 }
 
 // ---------------------------------------------------------
@@ -164,4 +165,83 @@ model SaleItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float // Price at the time of sale
+}
+
+// ---------------------------------------------------------
+// MODULE: QUOTES & SETTINGS
+// ---------------------------------------------------------
+
+model CompanySettings {
+  id               String   @id @default("default") // Singleton pattern
+  logoUrl          String?
+  companyName      String   @default("AXTECH INGENIERÍA")
+  address          String?
+  phones           String?
+  email            String?
+  website          String?
+  
+  // Bank Details
+  bankName         String?
+  accountName      String?
+  accountNumber    String?
+  clabe            String?
+  
+  // Quote Defaults
+  defaultIva       Float    @default(16)
+  defaultIsr       Float    @default(0)
+  defaultNotes     String?
+  termsAndConds    String?
+  dataUsagePolicy  String?
+  privacyNotice    String?
+
+  updatedAt        DateTime @updatedAt
+}
+
+enum QuoteStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+}
+
+model Quote {
+  id          String      @id @default(cuid())
+  folio       String      @unique // e.g. AXT-0147
+  status      QuoteStatus @default(DRAFT)
+  
+  // Client Data (can be linked to User or manual)
+  clientId    String?
+  client      User?       @relation("ClientQuotes", fields: [clientId], references: [id])
+  clientName  String
+  clientRfc   String?
+  clientPhone String?
+  clientEmail String?
+  clientAddr  String?
+  
+  // Financials
+  subtotal    Float       @default(0)
+  ivaAmount   Float       @default(0)
+  isrAmount   Float       @default(0)
+  total       Float       @default(0)
+  
+  // Texts
+  notes       String?
+  terms       String?
+  
+  items       QuoteItem[]
+  
+  date        DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model QuoteItem {
+  id          String   @id @default(cuid())
+  quoteId     String
+  quote       Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  
+  quantity    Int      @default(1)
+  description String
+  unitPrice   Float
+  total       Float
 }
