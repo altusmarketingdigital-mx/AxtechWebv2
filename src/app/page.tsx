@@ -86,6 +86,7 @@ export default function Home() {
           <Link href="#soluciones" className="hover:text-primary transition-all">SOLUCIONES</Link>
           <Link href="#nosotros" className="hover:text-primary transition-all">NOSOTROS</Link>
           <Link href="#contacto" className="hover:text-primary transition-all">CONTACTO</Link>
+          <Link href="/estado-reparacion" className="hover:text-primary transition-all">SEGUIMIENTO DE SERVICIO</Link>
           <Link 
             href="/tienda" 
             className="flex items-center gap-1.5 font-bold text-blue-600 bg-blue-50 px-3.5 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200"
@@ -516,7 +517,7 @@ export default function Home() {
               <li><Link href="#inicio" className="hover:text-primary transition-colors">Inicio</Link></li>
               <li><Link href="#soluciones" className="hover:text-primary transition-colors">Soluciones</Link></li>
               <li><Link href="/tienda" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors flex items-center gap-1.5"><ShoppingBag size={14} /> Tienda en Línea</Link></li>
-              <li><Link href="/estado-reparacion" className="hover:text-primary transition-colors">Rastrear mi Equipo</Link></li>
+              <li><Link href="/estado-reparacion" className="hover:text-primary transition-colors">Seguimiento de Servicio</Link></li>
               <li><Link href="/registro" className="hover:text-primary transition-colors">Crear Cuenta</Link></li>
               <li><Link href="/login" className="hover:text-primary transition-colors">Iniciar Sesión</Link></li>
               <li><Link href="#contacto" className="hover:text-primary transition-colors">Contacto</Link></li>
