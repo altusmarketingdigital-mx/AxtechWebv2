@@ -50,7 +50,7 @@ export default async function StorePage() {
               href="/estado-reparacion"
               className="text-xs font-semibold text-gray-600 hover:text-blue-600 hidden md:block"
             >
-              Rastrear Reparación
+              Seguimiento de Servicio
             </Link>
             <Link
               href="/tienda/carrito"
@@ -111,7 +111,7 @@ export default async function StorePage() {
           <p>© {new Date().getFullYear()} AXTECH STORE — Todos los derechos reservados.</p>
           <div className="flex gap-6 font-medium">
             <Link href="/" className="hover:text-blue-600">Página Principal</Link>
-            <Link href="/estado-reparacion" className="hover:text-blue-600">Rastrear Equipo</Link>
+            <Link href="/estado-reparacion" className="hover:text-blue-600">Seguimiento de Servicio</Link>
             <Link href="/tienda/carrito" className="hover:text-blue-600">Carrito</Link>
           </div>
         </div>
