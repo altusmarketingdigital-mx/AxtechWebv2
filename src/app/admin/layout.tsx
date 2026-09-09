@@ -1,83 +1,42 @@
-import React from "react";
-import Link from "next/link";
-import { 
-  LayoutDashboard, 
-  Wrench, 
-  ShoppingCart,
-  Package,
-  FileText,
-  Settings,
-  LogOut 
-} from "lucide-react";
-import { logout } from "@/app/actions/authActions";
-import { getSession } from "@/lib/session";
+import React from "react"
+import AdminSidebar from "@/components/AdminSidebar"
+import { logout } from "@/app/actions/authActions"
+import { getSession } from "@/lib/session"
+import { LogOut } from "lucide-react"
 
 export default async function AdminLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const session = await getSession();
+  const session = await getSession()
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 text-white flex flex-col">
-        <div className="p-4 flex items-center justify-center h-16 border-b border-slate-700">
-          <h1 className="text-xl font-bold">AXTECH INGENIERIA</h1>
-        </div>
-        
-        <nav className="flex-1 p-4 space-y-2">
-          <Link href="/admin" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
-            <LayoutDashboard size={20} />
-            <span>Dashboard</span>
-          </Link>
-          <Link href="/admin/servicios" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
-            <Wrench size={20} />
-            <span>Servicio T茅cnico</span>
-          </Link>
-          <Link href="/admin/ventas" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
-            <ShoppingCart size={20} />
-            <span>Ventas & POS</span>
-          </Link>
-          <Link href="/admin/inventario" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
-            <Package size={20} />
-            <span>Inventario</span>
-          </Link>
-          <Link href="/admin/cotizaciones" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
-            <FileText size={20} />
-            <span>Cotizaciones</span>
-          </Link>
-          <Link href="/admin/configuracion" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-800 transition-colors">
-            <Settings size={20} />
-            <span>Configuraci贸n</span>
-          </Link>
-        </nav>
-        
-        <div className="p-4 border-t border-slate-700 space-y-3">
-          {session && (
-            <p className="text-xs text-slate-400 px-3 truncate">
-              Sesi贸n: <span className="text-white font-medium">{session.userId}</span>
-            </p>
-          )}
-          <form action={logout}>
-            <button 
-              type="submit"
-              className="flex items-center space-x-3 p-3 w-full rounded-lg hover:bg-red-600 transition-colors text-left"
-            >
-              <LogOut size={20} />
-              <span>Cerrar Sesi贸n</span>
-            </button>
-          </form>
-        </div>
-      </aside>
+      <AdminSidebar />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-16 bg-white border-b flex items-center justify-between px-6">
-          <h2 className="text-xl font-semibold text-gray-800">Panel de Administraci贸n</h2>
-          <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+        <header className="h-16 bg-white border-b flex items-center justify-between px-6 shrink-0">
+          <h2 className="text-lg font-semibold text-gray-800">Panel de Administraci髇</h2>
+          <div className="flex items-center gap-4">
+            {session && (
+              <span className="text-xs text-gray-500 hidden md:block truncate max-w-[180px]">
+                Sesi髇: <span className="font-medium text-gray-700">{session.userId.slice(0, 12)}...</span>
+              </span>
+            )}
+            <form action={logout}>
+              <button
+                type="submit"
+                title="Cerrar Sesi髇"
+                className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-600 transition-colors px-3 py-2 rounded-lg hover:bg-red-50"
+              >
+                <LogOut size={18} />
+                <span className="hidden md:inline">Salir</span>
+              </button>
+            </form>
+            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
               A
             </div>
           </div>
@@ -87,5 +46,5 @@ export default async function AdminLayout({
         </div>
       </main>
     </div>
-  );
+  )
 }
