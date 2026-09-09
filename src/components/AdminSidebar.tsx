@@ -3,10 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { logout } from '@/app/actions/authActions'
 import {
   LayoutDashboard,
   Wrench,
-  ClipboardList,
   Stethoscope,
   FileText,
   PackageCheck,
@@ -15,19 +15,23 @@ import {
   Package,
   ArrowLeftRight,
   Truck,
+  CircleDollarSign,
+  Receipt,
+  Wallet,
   BarChart3,
-  UserCog,
+  UserCheck,
   Settings,
   ChevronDown,
   ChevronRight,
+  LogOut,
+  User
 } from 'lucide-react'
 
 type SubItem = { label: string; href: string }
 type NavModule = {
   icon: React.ReactNode
   label: string
-  href?: string
-  sub?: SubItem[]
+  sub: SubItem[]
 }
 type NavGroup = {
   group: string
@@ -36,26 +40,26 @@ type NavGroup = {
 
 const NAV: NavGroup[] = [
   {
-    group: 'OPERACIÃ“N',
+    group: 'OPERACIÓN',
     items: [
       {
-        icon: <Wrench size={18} />, label: 'Ã“rdenes de Servicio',
+        icon: <Wrench size={17} />,
+        label: 'Órdenes de Servicio',
         sub: [
-          { label: 'Todas las Ã“rdenes', href: '/admin/ordenes' },
-          { label: 'Nueva Orden', href: '/admin/ordenes/nueva' },
-          { label: 'Ã“rdenes Activas', href: '/admin/ordenes/activas' },
-          { label: 'Pend. DiagnÃ³stico', href: '/admin/ordenes/diagnostico' },
-          { label: 'Esp. AutorizaciÃ³n', href: '/admin/ordenes/autorizacion' },
-          { label: 'En ReparaciÃ³n', href: '/admin/ordenes/reparacion' },
+          { label: 'Todas', href: '/admin/ordenes' },
+          { label: 'Activas', href: '/admin/ordenes/activas' },
+          { label: 'Por Autorizar', href: '/admin/ordenes/autorizacion' },
+          { label: 'En Reparación', href: '/admin/ordenes/reparacion' },
           { label: 'Control de Calidad', href: '/admin/ordenes/calidad' },
           { label: 'Listas para Entrega', href: '/admin/ordenes/listas' },
-          { label: 'Entregadas', href: '/admin/ordenes/entregadas' },
-          { label: 'GarantÃ­as / Reingresos', href: '/admin/ordenes/garantias' },
+          { label: 'Finalizadas', href: '/admin/ordenes/entregadas' },
+          { label: 'Garantías', href: '/admin/ordenes/garantias' },
           { label: 'Canceladas', href: '/admin/ordenes/canceladas' },
         ]
       },
       {
-        icon: <Stethoscope size={18} />, label: 'DiagnÃ³sticos',
+        icon: <Stethoscope size={17} />,
+        label: 'Diagnósticos',
         sub: [
           { label: 'Pendientes', href: '/admin/diagnosticos/pendientes' },
           { label: 'En Proceso', href: '/admin/diagnosticos/en-proceso' },
@@ -65,83 +69,79 @@ const NAV: NavGroup[] = [
         ]
       },
       {
-        icon: <FileText size={18} />, label: 'Cotizaciones',
+        icon: <FileText size={17} />,
+        label: 'Cotizaciones',
         sub: [
           { label: 'Todas', href: '/admin/cotizaciones' },
-          { label: 'Nueva CotizaciÃ³n', href: '/admin/cotizaciones/nueva' },
           { label: 'Borradores', href: '/admin/cotizaciones/borradores' },
           { label: 'Enviadas', href: '/admin/cotizaciones/enviadas' },
-          { label: 'Vistas por Cliente', href: '/admin/cotizaciones/vistas' },
-          { label: 'Pend. AutorizaciÃ³n', href: '/admin/cotizaciones/pendientes' },
+          { label: 'Pendientes', href: '/admin/cotizaciones/pendientes' },
           { label: 'Autorizadas', href: '/admin/cotizaciones/autorizadas' },
           { label: 'Rechazadas', href: '/admin/cotizaciones/rechazadas' },
           { label: 'Vencidas', href: '/admin/cotizaciones/vencidas' },
         ]
       },
       {
-        icon: <PackageCheck size={18} />, label: 'Entregas',
+        icon: <PackageCheck size={17} />,
+        label: 'Entregas',
         sub: [
-          { label: 'Pend. de Entrega', href: '/admin/entregas/pendientes' },
+          { label: 'Por Entregar', href: '/admin/entregas/pendientes' },
           { label: 'Programadas', href: '/admin/entregas/programadas' },
-          { label: 'Entregadas', href: '/admin/entregas/entregadas' },
-          { label: 'Comprobantes', href: '/admin/entregas/comprobantes' },
-          { label: 'GarantÃ­as', href: '/admin/entregas/garantias' },
+          { label: 'Historial', href: '/admin/entregas/entregadas' },
         ]
-      },
+      }
     ]
   },
   {
     group: 'COMERCIAL',
     items: [
       {
-        icon: <Users size={18} />, label: 'Clientes',
+        icon: <Users size={17} />,
+        label: 'Clientes',
         sub: [
-          { label: 'Todos los Clientes', href: '/admin/clientes' },
-          { label: 'Nuevo Cliente', href: '/admin/clientes/nuevo' },
+          { label: 'Directorio', href: '/admin/clientes' },
           { label: 'Empresas', href: '/admin/clientes/empresas' },
           { label: 'Particulares', href: '/admin/clientes/particulares' },
-          { label: 'Equipos Registrados', href: '/admin/clientes/equipos' },
-          { label: 'Historial de Servicios', href: '/admin/clientes/historial' },
-          { label: 'Saldos Pendientes', href: '/admin/clientes/saldos' },
+          { label: 'Equipos', href: '/admin/clientes/equipos' },
+          { label: 'Historial', href: '/admin/clientes/historial' },
+          { label: 'Saldos', href: '/admin/clientes/saldos' },
           { label: 'Documentos', href: '/admin/clientes/documentos' },
         ]
       },
       {
-        icon: <ShoppingCart size={18} />, label: 'Ventas / POS',
+        icon: <ShoppingCart size={17} />,
+        label: 'Ventas / POS',
         sub: [
-          { label: 'Nueva Venta', href: '/admin/ventas/nueva' },
           { label: 'Punto de Venta', href: '/admin/ventas/pos' },
-          { label: 'Historial de Ventas', href: '/admin/ventas' },
+          { label: 'Ventas', href: '/admin/ventas' },
           { label: 'Pagos', href: '/admin/ventas/pagos' },
           { label: 'Anticipos', href: '/admin/ventas/anticipos' },
           { label: 'Cuentas por Cobrar', href: '/admin/ventas/cxc' },
           { label: 'Devoluciones', href: '/admin/ventas/devoluciones' },
-          { label: 'Cortes de Caja', href: '/admin/ventas/cortes' },
-          { label: 'MÃ©todos de Pago', href: '/admin/ventas/metodos-pago' },
+          { label: 'Caja', href: '/admin/ventas/cortes' },
         ]
-      },
+      }
     ]
   },
   {
     group: 'INVENTARIO',
     items: [
       {
-        icon: <Package size={18} />, label: 'Inventario',
+        icon: <Package size={17} />,
+        label: 'Inventario',
         sub: [
-          { label: 'Existencias', href: '/admin/inventario' },
           { label: 'Productos', href: '/admin/inventario/productos' },
+          { label: 'Existencias', href: '/admin/inventario' },
           { label: 'Refacciones', href: '/admin/inventario/refacciones' },
-          { label: 'Equipos', href: '/admin/inventario/equipos' },
-          { label: 'CategorÃ­as', href: '/admin/inventario/categorias' },
-          { label: 'Marcas', href: '/admin/inventario/marcas' },
-          { label: 'NÃºmeros de Serie', href: '/admin/inventario/series' },
+          { label: 'Números de Serie', href: '/admin/inventario/series' },
           { label: 'Stock Bajo', href: '/admin/inventario/stock-bajo' },
-          { label: 'Reservado Servicio', href: '/admin/inventario/reservado' },
+          { label: 'Reservados', href: '/admin/inventario/reservado' },
           { label: 'Ubicaciones', href: '/admin/inventario/ubicaciones' },
         ]
       },
       {
-        icon: <ArrowLeftRight size={18} />, label: 'Movimientos',
+        icon: <ArrowLeftRight size={17} />,
+        label: 'Movimientos',
         sub: [
           { label: 'Entradas', href: '/admin/movimientos/entradas' },
           { label: 'Salidas', href: '/admin/movimientos/salidas' },
@@ -153,80 +153,119 @@ const NAV: NavGroup[] = [
         ]
       },
       {
-        icon: <Truck size={18} />, label: 'Proveedores',
+        icon: <Truck size={17} />,
+        label: 'Compras y Proveedores',
         sub: [
-          { label: 'Todos los Proveedores', href: '/admin/proveedores' },
-          { label: 'Nuevo Proveedor', href: '/admin/proveedores/nuevo' },
-          { label: 'Ã“rdenes de Compra', href: '/admin/proveedores/ordenes' },
+          { label: 'Proveedores', href: '/admin/proveedores' },
+          { label: 'Órdenes de Compra', href: '/admin/proveedores/ordenes' },
           { label: 'Compras', href: '/admin/proveedores/compras' },
-          { label: 'RecepciÃ³n MercancÃ­a', href: '/admin/proveedores/recepcion' },
+          { label: 'Recepciones', href: '/admin/proveedores/recepcion' },
           { label: 'Cuentas por Pagar', href: '/admin/proveedores/cxp' },
-          { label: 'Historial', href: '/admin/proveedores/historial' },
         ]
-      },
+      }
     ]
   },
   {
-    group: 'GESTIÃ“N',
+    group: 'FINANZAS',
     items: [
       {
-        icon: <BarChart3 size={18} />, label: 'Reportes',
+        icon: <CircleDollarSign size={17} />,
+        label: 'Cobranza',
         sub: [
-          { label: 'Resumen Ejecutivo', href: '/admin/reportes' },
-          { label: 'Servicios', href: '/admin/reportes/servicios' },
-          { label: 'Ventas', href: '/admin/reportes/ventas' },
-          { label: 'Utilidad', href: '/admin/reportes/utilidad' },
-          { label: 'Inventario', href: '/admin/reportes/inventario' },
-          { label: 'TÃ©cnicos', href: '/admin/reportes/tecnicos' },
-          { label: 'Clientes', href: '/admin/reportes/clientes' },
-          { label: 'Tiempos ReparaciÃ³n', href: '/admin/reportes/tiempos' },
-          { label: 'GarantÃ­as', href: '/admin/reportes/garantias' },
-          { label: 'Exportar', href: '/admin/reportes/exportar' },
+          { label: 'Cuentas por Cobrar', href: '/admin/finanzas/cobranza' },
+          { label: 'Pagos', href: '/admin/finanzas/cobranza/pagos' },
+          { label: 'Anticipos', href: '/admin/finanzas/cobranza/anticipos' },
+          { label: 'Vencidos', href: '/admin/finanzas/cobranza/vencidos' },
+          { label: 'Estados de Cuenta', href: '/admin/finanzas/cobranza/estados-cuenta' },
         ]
       },
       {
-        icon: <UserCog size={18} />, label: 'TÃ©cnicos',
+        icon: <Receipt size={17} />,
+        label: 'Facturación',
         sub: [
-          { label: 'TÃ©cnicos', href: '/admin/tecnicos' },
-          { label: 'Carga de Trabajo', href: '/admin/tecnicos/carga' },
-          { label: 'Ã“rdenes Asignadas', href: '/admin/tecnicos/ordenes' },
-          { label: 'Productividad', href: '/admin/tecnicos/productividad' },
-          { label: 'Tiempos de Servicio', href: '/admin/tecnicos/tiempos' },
-          { label: 'Historial', href: '/admin/tecnicos/historial' },
+          { label: 'Pendientes', href: '/admin/finanzas/facturacion' },
+          { label: 'Facturas', href: '/admin/finanzas/facturacion/facturas' },
+          { label: 'Notas de Crédito', href: '/admin/finanzas/facturacion/notas-credito' },
+          { label: 'Datos Fiscales', href: '/admin/finanzas/facturacion/datos-fiscales' },
         ]
       },
       {
-        icon: <Settings size={18} />, label: 'ConfiguraciÃ³n',
+        icon: <Wallet size={17} />,
+        label: 'Gastos',
         sub: [
-          { label: 'Datos de AxTech', href: '/admin/configuracion' },
-          { label: 'Sucursales', href: '/admin/configuracion/sucursales' },
-          { label: 'Usuarios', href: '/admin/configuracion/usuarios' },
-          { label: 'Roles y Permisos', href: '/admin/configuracion/roles' },
-          { label: 'Folios', href: '/admin/configuracion/folios' },
-          { label: 'Estados de Servicio', href: '/admin/configuracion/estados' },
-          { label: 'CatÃ¡logo de Servicios', href: '/admin/configuracion/catalogo' },
-          { label: 'Impuestos', href: '/admin/configuracion/impuestos' },
-          { label: 'MÃ©todos de Pago', href: '/admin/configuracion/metodos-pago' },
-          { label: 'Plantillas', href: '/admin/configuracion/plantillas' },
-          { label: 'WhatsApp / Correo', href: '/admin/configuracion/mensajeria' },
-          { label: 'Notificaciones', href: '/admin/configuracion/notificaciones' },
-          { label: 'Portal del Cliente', href: '/admin/configuracion/portal' },
-          { label: 'AuditorÃ­a', href: '/admin/configuracion/auditoria' },
-          { label: 'Seguridad', href: '/admin/configuracion/seguridad' },
+          { label: 'Registrar Gasto', href: '/admin/finanzas/gastos/nuevo' },
+          { label: 'Operativos', href: '/admin/finanzas/gastos' },
+          { label: 'Compras', href: '/admin/finanzas/gastos/compras' },
+          { label: 'Historial', href: '/admin/finanzas/gastos/historial' },
         ]
-      },
+      }
     ]
   },
+  {
+    group: 'GESTIÓN',
+    items: [
+      {
+        icon: <BarChart3 size={17} />,
+        label: 'Reportes',
+        sub: [
+          { label: 'Ejecutivo', href: '/admin/reportes' },
+          { label: 'Servicios', href: '/admin/reportes/servicios' },
+          { label: 'Ventas', href: '/admin/reportes/ventas' },
+          { label: 'Rentabilidad', href: '/admin/reportes/utilidad' },
+          { label: 'Inventario', href: '/admin/reportes/inventario' },
+          { label: 'Técnicos', href: '/admin/reportes/tecnicos' },
+          { label: 'Clientes', href: '/admin/reportes/clientes' },
+          { label: 'Garantías', href: '/admin/reportes/garantias' },
+          { label: 'Exportaciones', href: '/admin/reportes/exportar' },
+        ]
+      },
+      {
+        icon: <UserCheck size={17} />,
+        label: 'Personal',
+        sub: [
+          { label: 'Usuarios', href: '/admin/personal' },
+          { label: 'Técnicos', href: '/admin/personal/tecnicos' },
+          { label: 'Carga de Trabajo', href: '/admin/personal/carga' },
+          { label: 'Productividad', href: '/admin/personal/productividad' },
+          { label: 'Historial', href: '/admin/personal/historial' },
+          { label: 'Roles y Permisos', href: '/admin/personal/roles' },
+        ]
+      },
+      {
+        icon: <Settings size={17} />,
+        label: 'Configuración',
+        sub: [
+          { label: 'Empresa', href: '/admin/configuracion' },
+          { label: 'Sucursales', href: '/admin/configuracion/sucursales' },
+          { label: 'Usuarios', href: '/admin/configuracion/usuarios' },
+          { label: 'Roles', href: '/admin/configuracion/roles' },
+          { label: 'Folios', href: '/admin/configuracion/folios' },
+          { label: 'Estados', href: '/admin/configuracion/estados' },
+          { label: 'Servicios', href: '/admin/configuracion/catalogo' },
+          { label: 'Impuestos', href: '/admin/configuracion/impuestos' },
+          { label: 'Métodos de Pago', href: '/admin/configuracion/metodos-pago' },
+          { label: 'Plantillas', href: '/admin/configuracion/plantillas' },
+          { label: 'Notificaciones', href: '/admin/configuracion/notificaciones' },
+          { label: 'WhatsApp', href: '/admin/configuracion/mensajeria' },
+          { label: 'Correo', href: '/admin/configuracion/correo' },
+          { label: 'Portal del Cliente', href: '/admin/configuracion/portal' },
+          { label: 'Integraciones', href: '/admin/configuracion/integraciones' },
+          { label: 'Auditoría', href: '/admin/configuracion/auditoria' },
+          { label: 'Seguridad', href: '/admin/configuracion/seguridad' },
+          { label: 'Respaldos', href: '/admin/configuracion/respaldos' },
+        ]
+      }
+    ]
+  }
 ]
 
 export default function AdminSidebar() {
   const pathname = usePathname()
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({})
   const [openModules, setOpenModules] = useState<Record<string, boolean>>(() => {
-    // Auto-open the module that matches the current path
     const initial: Record<string, boolean> = {}
     NAV.forEach(g => g.items.forEach(item => {
-      if (item.sub?.some(s => pathname.startsWith(s.href))) {
+      if (item.sub.some(s => pathname.startsWith(s.href))) {
         initial[item.label] = true
       }
     }))
@@ -240,84 +279,81 @@ export default function AdminSidebar() {
     setOpenModules(p => ({ ...p, [label]: !p[label] }))
 
   return (
-    <aside className="w-64 bg-slate-900 text-white flex flex-col h-screen overflow-hidden">
-      {/* Logo */}
-      <div className="p-4 flex items-center justify-center h-16 border-b border-slate-700 shrink-0">
-        <h1 className="text-lg font-black tracking-wide">AXTECH INGENIERIA</h1>
+    <aside className="w-64 bg-slate-950 text-white flex flex-col h-screen overflow-hidden border-r border-slate-800">
+      {/* Brand Header */}
+      <div className="p-4 flex flex-col items-center justify-center border-b border-slate-800 shrink-0 bg-slate-900/40">
+        <h1 className="text-sm font-black tracking-widest text-white uppercase">AXTECH</h1>
+        <p className="text-[11px] font-bold text-blue-400 tracking-wider">SERVICE DESK</p>
       </div>
 
-      {/* Dashboard link */}
+      {/* Dashboard (Sin submenús, concentración directa) */}
       <div className="px-3 pt-3 shrink-0">
         <Link
           href="/admin"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-semibold transition-colors text-sm ${
+          className={`flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium text-xs transition-colors ${
             pathname === '/admin'
-              ? 'bg-blue-600 text-white'
-              : 'hover:bg-slate-800 text-slate-300 hover:text-white'
+              ? 'bg-blue-600 text-white shadow-sm'
+              : 'hover:bg-slate-800/80 text-slate-300 hover:text-white'
           }`}
         >
-          <LayoutDashboard size={18} />
-          Dashboard
+          <LayoutDashboard size={16} />
+          <span>Dashboard</span>
         </Link>
       </div>
 
-      {/* Scrollable Nav */}
-      <nav className="flex-1 overflow-y-auto px-3 pb-4 mt-3 space-y-1 scrollbar-thin scrollbar-track-slate-900 scrollbar-thumb-slate-700">
+      {/* Navigation Groups */}
+      <nav className="flex-1 overflow-y-auto px-3 pb-3 mt-2 space-y-3">
         {NAV.map(group => (
           <div key={group.group}>
-            {/* Group Header */}
             <button
               onClick={() => toggleGroup(group.group)}
-              className="flex items-center justify-between w-full px-2 py-1.5 text-[10px] font-bold tracking-widest text-slate-500 hover:text-slate-400 transition-colors uppercase mt-3"
+              className="flex items-center justify-between w-full px-2 py-1 text-[10px] font-bold tracking-widest text-slate-500 hover:text-slate-400 uppercase"
             >
-              {group.group}
-              {collapsedGroups[group.group]
-                ? <ChevronRight size={12} />
-                : <ChevronDown size={12} />
-              }
+              <span>{group.group}</span>
+              {collapsedGroups[group.group] ? (
+                <ChevronRight size={12} />
+              ) : (
+                <ChevronDown size={12} />
+              )}
             </button>
 
-            {/* Group Items */}
             {!collapsedGroups[group.group] && (
-              <div className="space-y-0.5">
+              <div className="mt-1 space-y-0.5">
                 {group.items.map(item => {
                   const isOpen = !!openModules[item.label]
-                  const isActive = item.sub
-                    ? item.sub.some(s => pathname.startsWith(s.href))
-                    : pathname === item.href
+                  const isActive = item.sub.some(s => pathname === s.href)
 
                   return (
                     <div key={item.label}>
                       <button
                         onClick={() => toggleModule(item.label)}
-                        className={`flex items-center justify-between w-full gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
+                        className={`flex items-center justify-between w-full gap-2 px-2.5 py-1.5 rounded-md text-xs transition-colors ${
                           isActive
-                            ? 'text-white bg-slate-700'
-                            : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                            ? 'text-white bg-slate-800'
+                            : 'text-slate-400 hover:text-white hover:bg-slate-900'
                         }`}
                       >
-                        <span className="flex items-center gap-2 font-medium">
+                        <span className="flex items-center gap-2">
                           {item.icon}
-                          {item.label}
+                          <span className="font-medium truncate">{item.label}</span>
                         </span>
-                        {item.sub && (
-                          isOpen
-                            ? <ChevronDown size={14} className="shrink-0" />
-                            : <ChevronRight size={14} className="shrink-0" />
+                        {isOpen ? (
+                          <ChevronDown size={13} className="shrink-0 text-slate-500" />
+                        ) : (
+                          <ChevronRight size={13} className="shrink-0 text-slate-500" />
                         )}
                       </button>
 
-                      {/* Sublinks */}
-                      {item.sub && isOpen && (
-                        <div className="ml-7 mt-0.5 space-y-0.5 border-l border-slate-700 pl-3">
+                      {isOpen && (
+                        <div className="ml-5 mt-0.5 space-y-0.5 border-l border-slate-800 pl-2.5">
                           {item.sub.map(sub => (
                             <Link
                               key={sub.href}
                               href={sub.href}
-                              className={`block px-2 py-1.5 rounded text-xs transition-colors ${
+                              className={`block px-2 py-1 rounded text-[11px] transition-colors ${
                                 pathname === sub.href
-                                  ? 'text-blue-400 font-semibold bg-slate-800'
-                                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                                  ? 'text-blue-400 font-semibold bg-slate-900'
+                                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'
                               }`}
                             >
                               {sub.label}
@@ -333,6 +369,28 @@ export default function AdminSidebar() {
           </div>
         ))}
       </nav>
+
+      {/* User Profile / Footer */}
+      <div className="p-3 border-t border-slate-800 bg-slate-900/60 shrink-0">
+        <div className="flex items-center gap-2.5 px-2 py-1.5">
+          <div className="w-8 h-8 rounded-full bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0 border border-blue-500/30">
+            <User size={15} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold text-white truncate leading-tight">Administrador</p>
+            <p className="text-[10px] text-slate-400 truncate leading-tight">AxTech Ingeniería</p>
+          </div>
+        </div>
+        <form action={logout} className="mt-1">
+          <button
+            type="submit"
+            className="flex items-center justify-center gap-2 w-full px-2 py-1.5 rounded-md text-[11px] text-slate-400 hover:text-red-400 hover:bg-red-950/20 transition-colors"
+          >
+            <LogOut size={13} />
+            <span>Cerrar sesión</span>
+          </button>
+        </form>
+      </div>
     </aside>
   )
 }

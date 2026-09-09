@@ -3,18 +3,21 @@ import { requireAdmin } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
-// Get next folio
+// Get next folio COT-YYYY-000001
 async function getNextFolio() {
+  const year = new Date().getFullYear()
+  const prefix = `COT-${year}-`
   const lastQuote = await prisma.quote.findFirst({
+    where: { folio: { startsWith: prefix } },
     orderBy: { createdAt: 'desc' },
   })
-  if (!lastQuote) return 'AXT-COT-01'
+  if (!lastQuote) return `${prefix}000001`
   
-  const lastNumber = parseInt(lastQuote.folio.replace('AXT-COT-', ''), 10)
-  if (isNaN(lastNumber)) return 'AXT-COT-01'
+  const lastNumber = parseInt(lastQuote.folio.replace(prefix, ''), 10)
+  if (isNaN(lastNumber)) return `${prefix}000001`
   
   const nextNumber = lastNumber + 1
-  return `AXT-COT-${nextNumber.toString().padStart(2, '0')}`
+  return `${prefix}${nextNumber.toString().padStart(6, '0')}`
 }
 
 export async function createQuote(data: any) {

@@ -15,16 +15,19 @@ export async function createServiceOrder(formData: FormData) {
     const serialNum = formData.get("serialNum") as string
     const issueDesc = formData.get("issueDesc") as string
 
-    // Generate consecutive folio AXT-OSEC-XX
+    // Generate consecutive folio OS-YYYY-000001
+    const year = new Date().getFullYear()
+    const prefix = `OS-${year}-`
     const lastOrder = await prisma.serviceOrder.findFirst({
+      where: { folio: { startsWith: prefix } },
       orderBy: { createdAt: 'desc' }
     })
     let nextNumber = 1
     if (lastOrder) {
-      const lastNum = parseInt(lastOrder.folio.replace('AXT-OSEC-', ''), 10)
+      const lastNum = parseInt(lastOrder.folio.replace(prefix, ''), 10)
       if (!isNaN(lastNum)) nextNumber = lastNum + 1
     }
-    const folio = `AXT-OSEC-${nextNumber.toString().padStart(2, '0')}`
+    const folio = `${prefix}${nextNumber.toString().padStart(6, '0')}`
 
     const order = await prisma.serviceOrder.create({
       data: {
