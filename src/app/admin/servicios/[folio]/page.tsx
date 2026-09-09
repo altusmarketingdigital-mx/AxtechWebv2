@@ -75,7 +75,7 @@ export default async function OrderDetail({ params }: { params: { folio: string 
             
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center space-x-2">
-                <Settings size={18} /> <span>Diagnóstico y Estado</span>
+                <Settings size={18} /> <span>DiagnÃ³stico y Estado</span>
               </h2>
             </div>
             
@@ -89,8 +89,8 @@ export default async function OrderDetail({ params }: { params: { folio: string 
                 >
                   <option value="RECEIVED">Recibido</option>
                   <option value="DIAGNOSING">Diagnosticando</option>
-                  <option value="WAITING_APPROVAL">Esperando Aprobación</option>
-                  <option value="REPAIRING">En Reparación</option>
+                  <option value="WAITING_APPROVAL">Esperando AprobaciÃ³n</option>
+                  <option value="REPAIRING">En ReparaciÃ³n</option>
                   <option value="READY">Listo para Entrega</option>
                   <option value="DELIVERED">Entregado</option>
                   <option value="CANCELLED">Cancelado</option>
@@ -98,7 +98,7 @@ export default async function OrderDetail({ params }: { params: { folio: string 
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Diagnóstico Técnico</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">DiagnÃ³stico TÃ©cnico</label>
                 <textarea 
                   name="diagnosis" 
                   rows={3} 
@@ -109,18 +109,18 @@ export default async function OrderDetail({ params }: { params: { folio: string 
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Notas de Reparación / Procedimiento</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Notas de ReparaciÃ³n / Procedimiento</label>
                 <textarea 
                   name="repairNotes" 
                   rows={3} 
                   defaultValue={order.repairNotes || ""}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                  placeholder="Qué se le hizo al equipo..."
+                  placeholder="QuÃ© se le hizo al equipo..."
                 ></textarea>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Cotización (MXN)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">CotizaciÃ³n (MXN)</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                   <input 

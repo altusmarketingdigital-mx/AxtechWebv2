@@ -46,11 +46,11 @@ export default function ImportarProductosPage() {
         const raw: any[] = XLSX.utils.sheet_to_json(sheet, { defval: "" })
 
         if (raw.length === 0) {
-          setError("El archivo está vacío o no tiene datos.")
+          setError("El archivo estÃ¡ vacÃ­o o no tiene datos.")
           return
         }
 
-        // Normalizar columnas (minúsculas, sin espacios)
+        // Normalizar columnas (minÃºsculas, sin espacios)
         const normalized = raw.map(row => {
           const clean: any = {}
           for (const key of Object.keys(row)) {
@@ -78,7 +78,7 @@ export default function ImportarProductosPage() {
 
         setPreview(rows)
       } catch {
-        setError("No se pudo leer el archivo. Asegúrate de que sea un Excel (.xlsx) o CSV válido.")
+        setError("No se pudo leer el archivo. AsegÃºrate de que sea un Excel (.xlsx) o CSV vÃ¡lido.")
       }
     }
     reader.readAsArrayBuffer(file)
@@ -112,7 +112,7 @@ export default function ImportarProductosPage() {
   const downloadTemplate = () => {
     const template = [
       { sku: "PROD-001", name: "Laptop Dell Inspiron", description: "Laptop 15 pulgadas 8GB RAM", price: 12999.00, stock: 5, category: "Laptops" },
-      { sku: "PROD-002", name: "Mouse Inalámbrico", description: "Mouse ergonómico USB", price: 299.00, stock: 20, category: "Periféricos" },
+      { sku: "PROD-002", name: "Mouse InalÃ¡mbrico", description: "Mouse ergonÃ³mico USB", price: 299.00, stock: 20, category: "PerifÃ©ricos" },
     ]
     const ws = XLSX.utils.json_to_sheet(template)
     const wb = XLSX.utils.book_new()
@@ -125,7 +125,7 @@ export default function ImportarProductosPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Importar Catálogo de Productos</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Importar CatÃ¡logo de Productos</h1>
           <p className="text-gray-500 text-sm mt-1">Carga tu archivo Excel o CSV para subir productos en masa.</p>
         </div>
         <button
@@ -139,7 +139,7 @@ export default function ImportarProductosPage() {
 
       {/* Format Info */}
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
-        <p className="font-semibold mb-2">📋 Columnas del archivo:</p>
+        <p className="font-semibold mb-2">ðŸ“‹ Columnas del archivo:</p>
         <div className="flex flex-wrap gap-2">
           {REQUIRED_COLUMNS.map(c => (
             <span key={c} className="bg-blue-600 text-white px-2 py-0.5 rounded-full text-xs font-mono">{c} *</span>
@@ -148,7 +148,7 @@ export default function ImportarProductosPage() {
             <span key={c} className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-mono">{c}</span>
           ))}
         </div>
-        <p className="mt-2 text-xs text-blue-600">* Obligatorias. Los SKU duplicados se actualizarán automáticamente.</p>
+        <p className="mt-2 text-xs text-blue-600">* Obligatorias. Los SKU duplicados se actualizarÃ¡n automÃ¡ticamente.</p>
       </div>
 
       {/* Result */}
@@ -156,11 +156,11 @@ export default function ImportarProductosPage() {
         <div className={`rounded-xl p-5 border ${result.errors.length > 0 ? 'bg-yellow-50 border-yellow-200' : 'bg-green-50 border-green-200'}`}>
           <div className="flex items-center gap-2 mb-3">
             <CheckCircle2 className="text-green-600" size={22} />
-            <h3 className="font-bold text-gray-900">Importación completada</h3>
+            <h3 className="font-bold text-gray-900">ImportaciÃ³n completada</h3>
           </div>
           <div className="flex gap-6 text-sm mb-3">
-            <span className="text-green-700 font-medium">✅ {result.created} productos importados</span>
-            {result.skipped > 0 && <span className="text-yellow-700 font-medium">⚠️ {result.skipped} omitidos</span>}
+            <span className="text-green-700 font-medium">âœ… {result.created} productos importados</span>
+            {result.skipped > 0 && <span className="text-yellow-700 font-medium">âš ï¸ {result.skipped} omitidos</span>}
           </div>
           {result.errors.length > 0 && (
             <ul className="text-xs text-yellow-800 space-y-1 list-disc ml-4">
@@ -182,7 +182,7 @@ export default function ImportarProductosPage() {
           className="border-2 border-dashed border-gray-300 hover:border-blue-400 rounded-2xl p-12 text-center cursor-pointer transition-colors bg-white hover:bg-blue-50"
         >
           <FileSpreadsheet className="mx-auto mb-4 text-gray-400" size={52} />
-          <p className="text-gray-700 font-semibold text-lg">Arrastra tu archivo aquí</p>
+          <p className="text-gray-700 font-semibold text-lg">Arrastra tu archivo aquÃ­</p>
           <p className="text-gray-400 text-sm mt-1">o haz clic para seleccionar</p>
           <p className="text-xs text-gray-400 mt-3">Formatos soportados: .xlsx, .xls, .csv</p>
           <input
@@ -225,10 +225,10 @@ export default function ImportarProductosPage() {
                 <tr>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">SKU</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Nombre</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Descripción</th>
+                  <th className="text-left px-4 py-3 font-semibold text-gray-600">DescripciÃ³n</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Precio</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Stock</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Categoría</th>
+                  <th className="text-left px-4 py-3 font-semibold text-gray-600">CategorÃ­a</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -236,21 +236,21 @@ export default function ImportarProductosPage() {
                   <tr key={i} className="hover:bg-gray-50">
                     <td className="px-4 py-3 font-mono text-xs text-blue-600">{row.sku}</td>
                     <td className="px-4 py-3 font-medium text-gray-900 max-w-[200px] truncate">{row.name}</td>
-                    <td className="px-4 py-3 text-gray-500 max-w-[180px] truncate">{row.description || "—"}</td>
+                    <td className="px-4 py-3 text-gray-500 max-w-[180px] truncate">{row.description || "â€”"}</td>
                     <td className="px-4 py-3 font-semibold text-gray-900">${Number(row.price).toFixed(2)}</td>
                     <td className="px-4 py-3">
                       <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${row.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                         {row.stock}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-gray-500">{row.category || "—"}</td>
+                    <td className="px-4 py-3 text-gray-500">{row.category || "â€”"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
             {preview.length > 50 && (
               <p className="text-center text-xs text-gray-400 py-3">
-                Mostrando 50 de {preview.length} filas. Todos se importarán.
+                Mostrando 50 de {preview.length} filas. Todos se importarÃ¡n.
               </p>
             )}
           </div>

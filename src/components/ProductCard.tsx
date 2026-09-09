@@ -52,7 +52,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
         <p className="text-sm text-gray-500 mb-4 line-clamp-2 flex-1">
-          {product.description || "Sin descripción adicional."}
+          {product.description || "Sin descripciÃ³n adicional."}
         </p>
         
         <button 
@@ -67,7 +67,7 @@ export default function ProductCard({ product }: { product: Product }) {
           }`}
         >
           <ShoppingCart size={18} />
-          <span>{product.stock <= 0 ? "Agotado" : added ? "¡Agregado!" : "Agregar al Carrito"}</span>
+          <span>{product.stock <= 0 ? "Agotado" : added ? "Â¡Agregado!" : "Agregar al Carrito"}</span>
         </button>
       </div>
     </div>

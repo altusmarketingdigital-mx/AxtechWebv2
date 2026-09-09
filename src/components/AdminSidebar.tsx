@@ -36,26 +36,26 @@ type NavGroup = {
 
 const NAV: NavGroup[] = [
   {
-    group: 'OPERACIÓN',
+    group: 'OPERACIÃ“N',
     items: [
       {
-        icon: <Wrench size={18} />, label: 'Órdenes de Servicio',
+        icon: <Wrench size={18} />, label: 'Ã“rdenes de Servicio',
         sub: [
-          { label: 'Todas las Órdenes', href: '/admin/ordenes' },
+          { label: 'Todas las Ã“rdenes', href: '/admin/ordenes' },
           { label: 'Nueva Orden', href: '/admin/ordenes/nueva' },
-          { label: 'Órdenes Activas', href: '/admin/ordenes/activas' },
-          { label: 'Pend. Diagnóstico', href: '/admin/ordenes/diagnostico' },
-          { label: 'Esp. Autorización', href: '/admin/ordenes/autorizacion' },
-          { label: 'En Reparación', href: '/admin/ordenes/reparacion' },
+          { label: 'Ã“rdenes Activas', href: '/admin/ordenes/activas' },
+          { label: 'Pend. DiagnÃ³stico', href: '/admin/ordenes/diagnostico' },
+          { label: 'Esp. AutorizaciÃ³n', href: '/admin/ordenes/autorizacion' },
+          { label: 'En ReparaciÃ³n', href: '/admin/ordenes/reparacion' },
           { label: 'Control de Calidad', href: '/admin/ordenes/calidad' },
           { label: 'Listas para Entrega', href: '/admin/ordenes/listas' },
           { label: 'Entregadas', href: '/admin/ordenes/entregadas' },
-          { label: 'Garantías / Reingresos', href: '/admin/ordenes/garantias' },
+          { label: 'GarantÃ­as / Reingresos', href: '/admin/ordenes/garantias' },
           { label: 'Canceladas', href: '/admin/ordenes/canceladas' },
         ]
       },
       {
-        icon: <Stethoscope size={18} />, label: 'Diagnósticos',
+        icon: <Stethoscope size={18} />, label: 'DiagnÃ³sticos',
         sub: [
           { label: 'Pendientes', href: '/admin/diagnosticos/pendientes' },
           { label: 'En Proceso', href: '/admin/diagnosticos/en-proceso' },
@@ -68,11 +68,11 @@ const NAV: NavGroup[] = [
         icon: <FileText size={18} />, label: 'Cotizaciones',
         sub: [
           { label: 'Todas', href: '/admin/cotizaciones' },
-          { label: 'Nueva Cotización', href: '/admin/cotizaciones/nueva' },
+          { label: 'Nueva CotizaciÃ³n', href: '/admin/cotizaciones/nueva' },
           { label: 'Borradores', href: '/admin/cotizaciones/borradores' },
           { label: 'Enviadas', href: '/admin/cotizaciones/enviadas' },
           { label: 'Vistas por Cliente', href: '/admin/cotizaciones/vistas' },
-          { label: 'Pend. Autorización', href: '/admin/cotizaciones/pendientes' },
+          { label: 'Pend. AutorizaciÃ³n', href: '/admin/cotizaciones/pendientes' },
           { label: 'Autorizadas', href: '/admin/cotizaciones/autorizadas' },
           { label: 'Rechazadas', href: '/admin/cotizaciones/rechazadas' },
           { label: 'Vencidas', href: '/admin/cotizaciones/vencidas' },
@@ -85,7 +85,7 @@ const NAV: NavGroup[] = [
           { label: 'Programadas', href: '/admin/entregas/programadas' },
           { label: 'Entregadas', href: '/admin/entregas/entregadas' },
           { label: 'Comprobantes', href: '/admin/entregas/comprobantes' },
-          { label: 'Garantías', href: '/admin/entregas/garantias' },
+          { label: 'GarantÃ­as', href: '/admin/entregas/garantias' },
         ]
       },
     ]
@@ -117,7 +117,7 @@ const NAV: NavGroup[] = [
           { label: 'Cuentas por Cobrar', href: '/admin/ventas/cxc' },
           { label: 'Devoluciones', href: '/admin/ventas/devoluciones' },
           { label: 'Cortes de Caja', href: '/admin/ventas/cortes' },
-          { label: 'Métodos de Pago', href: '/admin/ventas/metodos-pago' },
+          { label: 'MÃ©todos de Pago', href: '/admin/ventas/metodos-pago' },
         ]
       },
     ]
@@ -132,9 +132,9 @@ const NAV: NavGroup[] = [
           { label: 'Productos', href: '/admin/inventario/productos' },
           { label: 'Refacciones', href: '/admin/inventario/refacciones' },
           { label: 'Equipos', href: '/admin/inventario/equipos' },
-          { label: 'Categorías', href: '/admin/inventario/categorias' },
+          { label: 'CategorÃ­as', href: '/admin/inventario/categorias' },
           { label: 'Marcas', href: '/admin/inventario/marcas' },
-          { label: 'Números de Serie', href: '/admin/inventario/series' },
+          { label: 'NÃºmeros de Serie', href: '/admin/inventario/series' },
           { label: 'Stock Bajo', href: '/admin/inventario/stock-bajo' },
           { label: 'Reservado Servicio', href: '/admin/inventario/reservado' },
           { label: 'Ubicaciones', href: '/admin/inventario/ubicaciones' },
@@ -157,9 +157,9 @@ const NAV: NavGroup[] = [
         sub: [
           { label: 'Todos los Proveedores', href: '/admin/proveedores' },
           { label: 'Nuevo Proveedor', href: '/admin/proveedores/nuevo' },
-          { label: 'Órdenes de Compra', href: '/admin/proveedores/ordenes' },
+          { label: 'Ã“rdenes de Compra', href: '/admin/proveedores/ordenes' },
           { label: 'Compras', href: '/admin/proveedores/compras' },
-          { label: 'Recepción Mercancía', href: '/admin/proveedores/recepcion' },
+          { label: 'RecepciÃ³n MercancÃ­a', href: '/admin/proveedores/recepcion' },
           { label: 'Cuentas por Pagar', href: '/admin/proveedores/cxp' },
           { label: 'Historial', href: '/admin/proveedores/historial' },
         ]
@@ -167,7 +167,7 @@ const NAV: NavGroup[] = [
     ]
   },
   {
-    group: 'GESTIÓN',
+    group: 'GESTIÃ“N',
     items: [
       {
         icon: <BarChart3 size={18} />, label: 'Reportes',
@@ -177,26 +177,26 @@ const NAV: NavGroup[] = [
           { label: 'Ventas', href: '/admin/reportes/ventas' },
           { label: 'Utilidad', href: '/admin/reportes/utilidad' },
           { label: 'Inventario', href: '/admin/reportes/inventario' },
-          { label: 'Técnicos', href: '/admin/reportes/tecnicos' },
+          { label: 'TÃ©cnicos', href: '/admin/reportes/tecnicos' },
           { label: 'Clientes', href: '/admin/reportes/clientes' },
-          { label: 'Tiempos Reparación', href: '/admin/reportes/tiempos' },
-          { label: 'Garantías', href: '/admin/reportes/garantias' },
+          { label: 'Tiempos ReparaciÃ³n', href: '/admin/reportes/tiempos' },
+          { label: 'GarantÃ­as', href: '/admin/reportes/garantias' },
           { label: 'Exportar', href: '/admin/reportes/exportar' },
         ]
       },
       {
-        icon: <UserCog size={18} />, label: 'Técnicos',
+        icon: <UserCog size={18} />, label: 'TÃ©cnicos',
         sub: [
-          { label: 'Técnicos', href: '/admin/tecnicos' },
+          { label: 'TÃ©cnicos', href: '/admin/tecnicos' },
           { label: 'Carga de Trabajo', href: '/admin/tecnicos/carga' },
-          { label: 'Órdenes Asignadas', href: '/admin/tecnicos/ordenes' },
+          { label: 'Ã“rdenes Asignadas', href: '/admin/tecnicos/ordenes' },
           { label: 'Productividad', href: '/admin/tecnicos/productividad' },
           { label: 'Tiempos de Servicio', href: '/admin/tecnicos/tiempos' },
           { label: 'Historial', href: '/admin/tecnicos/historial' },
         ]
       },
       {
-        icon: <Settings size={18} />, label: 'Configuración',
+        icon: <Settings size={18} />, label: 'ConfiguraciÃ³n',
         sub: [
           { label: 'Datos de AxTech', href: '/admin/configuracion' },
           { label: 'Sucursales', href: '/admin/configuracion/sucursales' },
@@ -204,14 +204,14 @@ const NAV: NavGroup[] = [
           { label: 'Roles y Permisos', href: '/admin/configuracion/roles' },
           { label: 'Folios', href: '/admin/configuracion/folios' },
           { label: 'Estados de Servicio', href: '/admin/configuracion/estados' },
-          { label: 'Catálogo de Servicios', href: '/admin/configuracion/catalogo' },
+          { label: 'CatÃ¡logo de Servicios', href: '/admin/configuracion/catalogo' },
           { label: 'Impuestos', href: '/admin/configuracion/impuestos' },
-          { label: 'Métodos de Pago', href: '/admin/configuracion/metodos-pago' },
+          { label: 'MÃ©todos de Pago', href: '/admin/configuracion/metodos-pago' },
           { label: 'Plantillas', href: '/admin/configuracion/plantillas' },
           { label: 'WhatsApp / Correo', href: '/admin/configuracion/mensajeria' },
           { label: 'Notificaciones', href: '/admin/configuracion/notificaciones' },
           { label: 'Portal del Cliente', href: '/admin/configuracion/portal' },
-          { label: 'Auditoría', href: '/admin/configuracion/auditoria' },
+          { label: 'AuditorÃ­a', href: '/admin/configuracion/auditoria' },
           { label: 'Seguridad', href: '/admin/configuracion/seguridad' },
         ]
       },

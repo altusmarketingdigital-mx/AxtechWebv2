@@ -82,8 +82,8 @@ export default function StoreCatalog({ products, categories }: { products: Produ
       {/* Grid */}
       {filtered.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300 p-8">
-          <p className="text-gray-600 font-semibold text-lg">No encontramos productos con tu búsqueda.</p>
-          <p className="text-gray-400 text-sm mt-1">Intenta con otro término o limpia los filtros.</p>
+          <p className="text-gray-600 font-semibold text-lg">No encontramos productos con tu bÃºsqueda.</p>
+          <p className="text-gray-400 text-sm mt-1">Intenta con otro tÃ©rmino o limpia los filtros.</p>
           <button
             onClick={() => { setSearch(""); setSelectedCategory("TODOS") }}
             className="mt-4 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-bold hover:bg-blue-100 transition"

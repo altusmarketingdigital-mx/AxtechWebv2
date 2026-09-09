@@ -20,9 +20,9 @@ import { searchServiceOrderByQuery } from "@/app/actions/serviceOrderActions"
 
 const STEPS = [
   { id: 'RECEIVED', label: 'Recibido', desc: 'En taller' },
-  { id: 'DIAGNOSING', label: 'Diagnóstico', desc: 'Revisión' },
-  { id: 'WAITING_APPROVAL', label: 'Cotización', desc: 'Por aprobar' },
-  { id: 'REPAIRING', label: 'Reparación', desc: 'En proceso' },
+  { id: 'DIAGNOSING', label: 'DiagnÃ³stico', desc: 'RevisiÃ³n' },
+  { id: 'WAITING_APPROVAL', label: 'CotizaciÃ³n', desc: 'Por aprobar' },
+  { id: 'REPAIRING', label: 'ReparaciÃ³n', desc: 'En proceso' },
   { id: 'READY', label: 'Listo', desc: 'Entrega' },
 ]
 
@@ -41,9 +41,9 @@ function getStepIndex(status: string) {
 
 const statusBadge: Record<string, { label: string; bg: string; text: string; border: string }> = {
   RECEIVED:         { label: 'Recibido en Taller',      bg: 'bg-blue-50',   text: 'text-blue-700',   border: 'border-blue-200' },
-  DIAGNOSING:       { label: 'En Diagnóstico',         bg: 'bg-amber-50',  text: 'text-amber-800',  border: 'border-amber-200' },
-  WAITING_APPROVAL: { label: 'Esperando tu Aprobación',bg: 'bg-orange-50', text: 'text-orange-800', border: 'border-orange-200' },
-  REPAIRING:        { label: 'En Reparación',          bg: 'bg-purple-50', text: 'text-purple-800', border: 'border-purple-200' },
+  DIAGNOSING:       { label: 'En DiagnÃ³stico',         bg: 'bg-amber-50',  text: 'text-amber-800',  border: 'border-amber-200' },
+  WAITING_APPROVAL: { label: 'Esperando tu AprobaciÃ³n',bg: 'bg-orange-50', text: 'text-orange-800', border: 'border-orange-200' },
+  REPAIRING:        { label: 'En ReparaciÃ³n',          bg: 'bg-purple-50', text: 'text-purple-800', border: 'border-purple-200' },
   READY:            { label: 'Listo para Entrega',     bg: 'bg-emerald-50',text: 'text-emerald-800',border: 'border-emerald-200' },
   DELIVERED:        { label: 'Entregado al Cliente',   bg: 'bg-slate-100', text: 'text-slate-800',  border: 'border-slate-300' },
   CANCELLED:        { label: 'Servicio Cancelado',     bg: 'bg-red-50',    text: 'text-red-700',    border: 'border-red-200' },
@@ -68,7 +68,7 @@ export default function TrackingModal() {
     if (res.success && res.order) {
       setOrder(res.order)
     } else {
-      setError(res.error || "No se encontró la orden")
+      setError(res.error || "No se encontrÃ³ la orden")
     }
     setLoading(false)
   }
@@ -91,8 +91,8 @@ export default function TrackingModal() {
       {/* Trigger Card Button */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center justify-between">
         <div>
-          <p className="font-semibold text-gray-800">Seguimiento Público</p>
-          <p className="text-sm text-gray-500">Consulta el estado de tu equipo por folio o teléfono</p>
+          <p className="font-semibold text-gray-800">Seguimiento PÃºblico</p>
+          <p className="text-sm text-gray-500">Consulta el estado de tu equipo por folio o telÃ©fono</p>
         </div>
         <button
           onClick={() => setIsOpen(true)}
@@ -119,7 +119,7 @@ export default function TrackingModal() {
                   Rastreo de Orden de Servicio
                 </h3>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  Ingresa tu número de folio o teléfono registrado
+                  Ingresa tu nÃºmero de folio o telÃ©fono registrado
                 </p>
               </div>
               <button
@@ -162,7 +162,7 @@ export default function TrackingModal() {
                 <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl flex items-start gap-2.5 text-xs animate-in fade-in">
                   <AlertCircle size={16} className="shrink-0 mt-0.5 text-red-600" />
                   <div>
-                    <p className="font-bold">No se encontró la orden</p>
+                    <p className="font-bold">No se encontrÃ³ la orden</p>
                     <p className="text-red-600 mt-0.5">{error}</p>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ export default function TrackingModal() {
                   {/* Order Banner */}
                   <div className="p-4 sm:p-5 bg-gradient-to-r from-blue-50 to-indigo-50/50 rounded-2xl border border-blue-100 flex items-center justify-between flex-wrap gap-3">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">Folio Técnico</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">Folio TÃ©cnico</span>
                       <h4 className="text-2xl font-black text-blue-600 font-mono">{order.folio}</h4>
                       <p className="text-xs text-gray-600 mt-0.5">
                         Cliente: <strong>{order.clientName || order.clientEmail || 'Cliente Axtech'}</strong>
@@ -197,7 +197,7 @@ export default function TrackingModal() {
                     <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
                       <h5 className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-1.5">
                         <Layers size={13} className="text-blue-600" />
-                        Progreso de la Reparación
+                        Progreso de la ReparaciÃ³n
                       </h5>
                       <div className="grid grid-cols-5 gap-1 relative">
                         {STEPS.map((step, idx) => {
@@ -270,7 +270,7 @@ export default function TrackingModal() {
                     {order.diagnosis && (
                       <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100">
                         <p className="font-bold text-blue-700 mb-1 flex items-center gap-1">
-                          <Wrench size={13} /> Diagnóstico Técnico:
+                          <Wrench size={13} /> DiagnÃ³stico TÃ©cnico:
                         </p>
                         <p className="text-blue-950">{order.diagnosis}</p>
                       </div>

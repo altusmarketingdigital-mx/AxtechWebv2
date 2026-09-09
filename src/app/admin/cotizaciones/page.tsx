@@ -1,4 +1,4 @@
-﻿import { prisma } from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { requireAdmin } from '@/lib/session'
 import Link from 'next/link'
 import { Plus, FileText, Trash2, Search } from 'lucide-react'
@@ -23,7 +23,7 @@ export default async function QuotesPage() {
           href="/admin/cotizaciones/nueva"
           className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-colors"
         >
-          <Plus size={18} /> Nueva Cotización
+          <Plus size={18} /> Nueva CotizaciÃ³n
         </Link>
       </div>
       
@@ -66,7 +66,7 @@ export default async function QuotesPage() {
                     </td>
                     <td className="px-6 py-4 flex items-center justify-center gap-3">
                       <Link 
-                        href={/admin/cotizaciones/ + quote.id + /pdf}
+                        href={`/admin/cotizaciones/${quote.id}/pdf`}
                         target="_blank"
                         className="text-blue-600 hover:text-blue-800 transition-colors"
                         title="Ver PDF"

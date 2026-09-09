@@ -6,7 +6,7 @@ export default function ProductosPage() {
       <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-10 max-w-md">
         <Construction size={48} className="mx-auto text-yellow-500 mb-4" />
         <h1 className="text-xl font-bold text-gray-800 mb-2">Productos</h1>
-        <p className="text-gray-500 text-sm">Esta secciÛn est· en desarrollo. Estar· disponible prÛximamente.</p>
+        <p className="text-gray-500 text-sm">Esta secci√≥n est√° en desarrollo. Estar√° disponible pr√≥ximamente.</p>
       </div>
     </div>
   )

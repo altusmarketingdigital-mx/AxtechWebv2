@@ -18,7 +18,7 @@ export default function AdminDashboard() {
             <Wrench size={24} />
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Órdenes Activas</p>
+            <p className="text-sm text-gray-500 font-medium">Ã“rdenes Activas</p>
             <p className="text-2xl font-bold text-gray-900">12</p>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function AdminDashboard() {
       {/* Recent Activity */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-6 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-900">Órdenes Recientes</h2>
+          <h2 className="text-lg font-bold text-gray-900">Ã“rdenes Recientes</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
               {/* Mock Data */}
               <tr className="hover:bg-gray-50">
                 <td className="p-4 border-b font-medium text-blue-600">ORD-001</td>
-                <td className="p-4 border-b">Juan Pérez</td>
+                <td className="p-4 border-b">Juan PÃ©rez</td>
                 <td className="p-4 border-b">iPhone 13 Pro</td>
                 <td className="p-4 border-b">
                   <span className="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800 font-medium">
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
               </tr>
               <tr className="hover:bg-gray-50">
                 <td className="p-4 border-b font-medium text-blue-600">ORD-002</td>
-                <td className="p-4 border-b">María López</td>
+                <td className="p-4 border-b">MarÃ­a LÃ³pez</td>
                 <td className="p-4 border-b">MacBook Air M1</td>
                 <td className="p-4 border-b">
                   <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 font-medium">

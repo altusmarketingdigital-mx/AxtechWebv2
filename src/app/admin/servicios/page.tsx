@@ -11,7 +11,7 @@ export default async function ServicesPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Órdenes de Servicio</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Ã“rdenes de Servicio</h1>
         <Link 
           href="/admin/servicios/nuevo"
           className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition"
@@ -49,7 +49,7 @@ export default async function ServicesPage() {
               {orders.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="p-8 text-center text-gray-500">
-                    No hay órdenes registradas.
+                    No hay Ã³rdenes registradas.
                   </td>
                 </tr>
               ) : (

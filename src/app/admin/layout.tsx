@@ -19,17 +19,17 @@ export default async function AdminLayout({
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
         <header className="h-16 bg-white border-b flex items-center justify-between px-6 shrink-0">
-          <h2 className="text-lg font-semibold text-gray-800">Panel de Administración</h2>
+          <h2 className="text-lg font-semibold text-gray-800">Panel de AdministraciÃ³n</h2>
           <div className="flex items-center gap-4">
             {session && (
               <span className="text-xs text-gray-500 hidden md:block truncate max-w-[180px]">
-                Sesión: <span className="font-medium text-gray-700">{session.userId.slice(0, 12)}...</span>
+                SesiÃ³n: <span className="font-medium text-gray-700">{session.userId.slice(0, 12)}...</span>
               </span>
             )}
             <form action={logout}>
               <button
                 type="submit"
-                title="Cerrar Sesión"
+                title="Cerrar SesiÃ³n"
                 className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-600 transition-colors px-3 py-2 rounded-lg hover:bg-red-50"
               >
                 <LogOut size={18} />

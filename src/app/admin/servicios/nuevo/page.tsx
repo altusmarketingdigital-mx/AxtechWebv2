@@ -53,11 +53,11 @@ export default function NewServiceOrderPage() {
               <input type="text" name="clientName" required className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">TelÃ©fono</label>
               <input type="tel" name="clientPhone" required className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico (Opcional)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Correo ElectrÃ³nico (Opcional)</label>
               <input type="email" name="clientEmail" className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function NewServiceOrderPage() {
               <input type="text" name="model" required className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
             <div className="md:col-span-3">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Número de Serie (Opcional)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">NÃºmero de Serie (Opcional)</label>
               <input type="text" name="serialNum" className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
             </div>
           </div>
@@ -98,13 +98,13 @@ export default function NewServiceOrderPage() {
         <div className="p-6 border-b border-gray-100">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">Problema Reportado</h2>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Descripción del fallo (Según el cliente)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">DescripciÃ³n del fallo (SegÃºn el cliente)</label>
             <textarea 
               name="issueDesc" 
               rows={4} 
               required
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-              placeholder="Ej. La pantalla no enciende, hace un ruido extraño, etc."
+              placeholder="Ej. La pantalla no enciende, hace un ruido extraÃ±o, etc."
             ></textarea>
           </div>
         </div>

@@ -80,7 +80,7 @@ export default function POSPage() {
       {/* Products Section */}
       <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col overflow-hidden">
         <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-          <h2 className="font-bold text-gray-800">Catálogo de Productos</h2>
+          <h2 className="font-bold text-gray-800">CatÃ¡logo de Productos</h2>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input 
@@ -96,7 +96,7 @@ export default function POSPage() {
         <div className="flex-1 p-4 overflow-y-auto">
            {/* Placeholder for products - ideally fetched via SWR or similar */}
            <div className="text-center text-gray-500 p-8 border-2 border-dashed rounded-xl">
-             <p>Nota: Para que el POS funcione en tiempo real, se requiere conectar la API de búsqueda.</p>
+             <p>Nota: Para que el POS funcione en tiempo real, se requiere conectar la API de bÃºsqueda.</p>
              <p className="text-sm mt-2">Puedes buscar productos registrados previamente.</p>
            </div>
         </div>
@@ -123,7 +123,7 @@ export default function POSPage() {
           {cart.length === 0 ? (
             <div className="text-center text-gray-400 mt-10">
               <ShoppingCart size={48} className="mx-auto mb-2 opacity-20" />
-              <p>El carrito está vacío</p>
+              <p>El carrito estÃ¡ vacÃ­o</p>
             </div>
           ) : (
             cart.map(item => (
