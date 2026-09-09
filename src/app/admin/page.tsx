@@ -19,46 +19,58 @@ import {
 export const dynamic = 'force-dynamic'
 
 export default async function AdminDashboardPage() {
-  // Query live metrics from database
-  const [
-    totalActiveOrders,
-    diagnosingOrders,
-    waitingApprovalOrders,
-    repairingOrders,
-    readyOrders,
-    recentOrders,
-    recentQuotes,
-    lowStockProducts
-  ] = await Promise.all([
-    prisma.serviceOrder.count({
-      where: { status: { notIn: ['DELIVERED', 'CANCELLED'] } }
-    }),
-    prisma.serviceOrder.count({
-      where: { status: 'DIAGNOSING' }
-    }),
-    prisma.serviceOrder.count({
-      where: { status: 'WAITING_APPROVAL' }
-    }),
-    prisma.serviceOrder.count({
-      where: { status: 'REPAIRING' }
-    }),
-    prisma.serviceOrder.count({
-      where: { status: 'READY' }
-    }),
-    prisma.serviceOrder.findMany({
-      take: 6,
-      orderBy: { createdAt: 'desc' },
-      include: { client: true }
-    }),
-    prisma.quote.findMany({
-      take: 4,
-      orderBy: { createdAt: 'desc' }
-    }),
-    prisma.product.findMany({
-      where: { stock: { lte: 3 } },
-      take: 5
-    })
-  ])
+  let totalActiveOrders = 0
+  let diagnosingOrders = 0
+  let waitingApprovalOrders = 0
+  let repairingOrders = 0
+  let readyOrders = 0
+  let recentOrders: any[] = []
+  let recentQuotes: any[] = []
+  let lowStockProducts: any[] = []
+
+  try {
+    const results = await Promise.allSettled([
+      prisma.serviceOrder.count({
+        where: { status: { notIn: ['DELIVERED', 'CANCELLED'] } }
+      }),
+      prisma.serviceOrder.count({
+        where: { status: 'DIAGNOSING' }
+      }),
+      prisma.serviceOrder.count({
+        where: { status: 'WAITING_APPROVAL' }
+      }),
+      prisma.serviceOrder.count({
+        where: { status: 'REPAIRING' }
+      }),
+      prisma.serviceOrder.count({
+        where: { status: 'READY' }
+      }),
+      prisma.serviceOrder.findMany({
+        take: 6,
+        orderBy: { createdAt: 'desc' },
+        include: { client: true }
+      }),
+      prisma.quote.findMany({
+        take: 4,
+        orderBy: { createdAt: 'desc' }
+      }),
+      prisma.product.findMany({
+        where: { stock: { lte: 3 } },
+        take: 5
+      })
+    ])
+
+    if (results[0].status === 'fulfilled') totalActiveOrders = results[0].value
+    if (results[1].status === 'fulfilled') diagnosingOrders = results[1].value
+    if (results[2].status === 'fulfilled') waitingApprovalOrders = results[2].value
+    if (results[3].status === 'fulfilled') repairingOrders = results[3].value
+    if (results[4].status === 'fulfilled') readyOrders = results[4].value
+    if (results[5].status === 'fulfilled') recentOrders = results[5].value
+    if (results[6].status === 'fulfilled') recentQuotes = results[6].value
+    if (results[7].status === 'fulfilled') lowStockProducts = results[7].value
+  } catch (error) {
+    console.error('Error fetching dashboard metrics:', error)
+  }
 
   return (
     <div className="space-y-6">
@@ -260,7 +272,7 @@ export default async function AdminDashboardPage() {
                     </td>
                   </tr>
                 ) : (
-                  recentOrders.map((ord) => (
+                  recentOrders.map((ord: any) => (
                     <tr key={ord.id} className="hover:bg-gray-50/50 transition">
                       <td className="py-3 px-3 font-bold text-blue-600">
                         <Link href={`/admin/servicios/${ord.folio}`}>{ord.folio}</Link>
@@ -305,7 +317,7 @@ export default async function AdminDashboardPage() {
               <p className="text-xs text-gray-400 py-3 text-center">Sin alertas de stock bajo</p>
             ) : (
               <div className="space-y-2">
-                {lowStockProducts.map((p) => (
+                {lowStockProducts.map((p: any) => (
                   <div key={p.id} className="flex items-center justify-between text-xs py-1.5 border-b border-gray-50">
                     <div className="min-w-0 flex-1 pr-2">
                       <p className="font-semibold text-gray-800 truncate">{p.name}</p>
@@ -333,7 +345,7 @@ export default async function AdminDashboardPage() {
               <p className="text-xs text-gray-400 py-3 text-center">No hay cotizaciones registradas</p>
             ) : (
               <div className="space-y-2">
-                {recentQuotes.map((q) => (
+                {recentQuotes.map((q: any) => (
                   <div key={q.id} className="flex items-center justify-between text-xs py-1.5 border-b border-gray-50">
                     <div>
                       <p className="font-bold text-gray-900">{q.folio}</p>
