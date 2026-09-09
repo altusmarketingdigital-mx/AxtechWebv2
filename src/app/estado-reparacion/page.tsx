@@ -156,7 +156,7 @@ export default async function TrackOrderPage({
           </h1>
           
           <p className="text-gray-600 text-base sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
-            Ingresa el <strong className="text-gray-900 font-semibold">Folio de Servicio</strong> (ej. ORD-0001) o tu número de teléfono registrado para ver el avance y diagnóstico de tu reparación.
+            Ingresa el <strong className="text-gray-900 font-semibold">Folio de Servicio</strong> (ej. AXT-OSEC-01) o tu número de teléfono registrado para ver el avance y diagnóstico de tu reparación.
           </p>
 
           {/* Search Box */}
@@ -169,7 +169,7 @@ export default async function TrackOrderPage({
                     type="text" 
                     name="folio"
                     defaultValue={folio || ""}
-                    placeholder="Escribe tu folio (ej. ORD-0001) o teléfono..." 
+                    placeholder="Escribe tu folio (ej. AXT-OSEC-01) o teléfono..." 
                     className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition text-sm sm:text-base font-medium"
                     required
                   />

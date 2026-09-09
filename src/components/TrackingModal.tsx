@@ -141,7 +141,7 @@ export default function TrackingModal() {
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Ej. ORD-0001 o 55 1234 5678..."
+                    placeholder="Ej. AXT-OSEC-01 o 55 1234 5678..."
                     className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
                     required
                     autoFocus
