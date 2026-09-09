@@ -8,13 +8,13 @@ async function getNextFolio() {
   const lastQuote = await prisma.quote.findFirst({
     orderBy: { createdAt: 'desc' },
   })
-  if (!lastQuote) return 'AXT-0001'
+  if (!lastQuote) return 'AXT-COT-01'
   
-  const lastNumber = parseInt(lastQuote.folio.replace('AXT-', ''), 10)
-  if (isNaN(lastNumber)) return 'AXT-0001'
+  const lastNumber = parseInt(lastQuote.folio.replace('AXT-COT-', ''), 10)
+  if (isNaN(lastNumber)) return 'AXT-COT-01'
   
   const nextNumber = lastNumber + 1
-  return `AXT-${nextNumber.toString().padStart(4, '0')}`
+  return `AXT-COT-${nextNumber.toString().padStart(2, '0')}`
 }
 
 export async function createQuote(data: any) {
