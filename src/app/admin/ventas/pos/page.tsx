@@ -1,13 +1,22 @@
-import { Construction } from 'lucide-react'
+import React from "react"
+import prisma from "@/lib/prisma"
+import POSClient from "./POSClient"
 
-export default function POSPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function POSPage() {
+  const products = await prisma.product.findMany({
+    orderBy: { name: "asc" }
+  })
+
   return (
-    <div className="flex flex-col items-center justify-center h-full min-h-[60vh] text-center">
-      <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-10 max-w-md">
-        <Construction size={48} className="mx-auto text-yellow-500 mb-4" />
-        <h1 className="text-xl font-bold text-gray-800 mb-2">Punto de Venta (POS)</h1>
-        <p className="text-gray-500 text-sm">Esta sección está en desarrollo. Estará disponible próximamente.</p>
+    <div className="space-y-4">
+      <div>
+        <h1 className="text-2xl font-black text-gray-900 tracking-tight">Punto de Venta (POS)</h1>
+        <p className="text-xs text-gray-500 mt-0.5">Terminal de venta rápida de mostrador, refacciones y accesorios</p>
       </div>
+
+      <POSClient products={JSON.parse(JSON.stringify(products))} />
     </div>
   )
 }

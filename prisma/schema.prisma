@@ -16,10 +16,15 @@ model User {
   email     String   @unique
   name      String?
   phone     String?
-  password  String?
-  role      String   @default("customer") // admin | technician | customer
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  password      String?
+  role          String   @default("customer") // admin | technician | customer
+  customerType  String?  @default("PARTICULAR") // PARTICULAR | EMPRESA
+  rfc           String?
+  whatsapp      String?
+  address       String?
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Relations
   serviceOrdersAsClient ServiceOrder[] @relation("ClientOrders")
@@ -173,7 +178,10 @@ model Sale {
   user   User?   @relation(fields: [userId], references: [id])
 
   // For anonymous POS sales
-  clientName String?
+  clientName    String?
+  paymentMethod String?  @default("EFECTIVO") // EFECTIVO, TARJETA, TRANSFERENCIA
+  amountPaid    Float?
+  change        Float?
 
   items     SaleItem[]
   createdAt DateTime   @default(now())
