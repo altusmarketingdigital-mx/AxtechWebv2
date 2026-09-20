@@ -1,4 +1,39 @@
-import React from "react"
+const fs = require('fs');
+const path = require('path');
+
+const personalViews = [
+  {
+    dir: 'src/app/admin/personal',
+    title: 'Personal y Técnicos',
+    subtitle: 'Directorio de colaboradores, técnicos asignados y roles'
+  },
+  {
+    dir: 'src/app/admin/personal/tecnicos',
+    title: 'Equipo Técnico',
+    subtitle: 'Especialistas de hardware, software y diagnóstico'
+  },
+  {
+    dir: 'src/app/admin/personal/carga',
+    title: 'Carga de Trabajo de Técnicos',
+    subtitle: 'Balance de órdenes activas y pendientes asignadas por técnico'
+  },
+  {
+    dir: 'src/app/admin/personal/productividad',
+    title: 'Productividad y Rendimiento',
+    subtitle: 'Tasa de cierre de órdenes y tiempos promedio de reparación'
+  },
+  {
+    dir: 'src/app/admin/personal/roles',
+    title: 'Roles y Permisos del Sistema',
+    subtitle: 'Matriz de control de acceso (Administrador, Recepción, Técnico, Ventas)'
+  }
+];
+
+personalViews.forEach(v => {
+  const fullDir = path.resolve(v.dir);
+  if (!fs.existsSync(fullDir)) fs.mkdirSync(fullDir, { recursive: true });
+  
+  const content = `import React from "react"
 import prisma from "@/lib/prisma"
 import { UserCheck, Shield, Clock, Award } from "lucide-react"
 
@@ -14,8 +49,8 @@ export default async function PersonalViewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-black text-gray-900 tracking-tight">Equipo Técnico</h1>
-        <p className="text-xs text-gray-500 mt-0.5">Especialistas de hardware, software y diagnóstico</p>
+        <h1 className="text-2xl font-black text-gray-900 tracking-tight">${v.title}</h1>
+        <p className="text-xs text-gray-500 mt-0.5">${v.subtitle}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -46,3 +81,9 @@ export default async function PersonalViewPage() {
     </div>
   )
 }
+`;
+
+  fs.writeFileSync(path.join(fullDir, 'page.tsx'), content, 'utf8');
+});
+
+console.log('Successfully generated live pages for Personal sub-routes!');

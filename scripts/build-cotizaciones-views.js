@@ -1,4 +1,56 @@
-import React from "react"
+const fs = require('fs');
+const path = require('path');
+
+const quotesViews = [
+  {
+    dir: 'src/app/admin/cotizaciones/borradores',
+    title: 'Cotizaciones en Borrador',
+    subtitle: 'Presupuestos en edición no enviados al cliente aún',
+    status: 'DRAFT'
+  },
+  {
+    dir: 'src/app/admin/cotizaciones/enviadas',
+    title: 'Cotizaciones Enviadas',
+    subtitle: 'Presupuestos emitidos y compartidos con el cliente',
+    status: 'SENT'
+  },
+  {
+    dir: 'src/app/admin/cotizaciones/pendientes',
+    title: 'Cotizaciones Pendientes de Autorización',
+    subtitle: 'Presupuestos esperando respuesta o aprobación',
+    status: 'SENT'
+  },
+  {
+    dir: 'src/app/admin/cotizaciones/autorizadas',
+    title: 'Cotizaciones Autorizadas',
+    subtitle: 'Presupuestos aceptados por el cliente listos para taller',
+    status: 'ACCEPTED'
+  },
+  {
+    dir: 'src/app/admin/cotizaciones/rechazadas',
+    title: 'Cotizaciones Declinadas / Rechazadas',
+    subtitle: 'Presupuestos no aprobados por el cliente',
+    status: 'REJECTED'
+  },
+  {
+    dir: 'src/app/admin/cotizaciones/vencidas',
+    title: 'Cotizaciones Vencidas',
+    subtitle: 'Presupuestos que superaron el periodo de validez',
+    status: 'REJECTED'
+  },
+  {
+    dir: 'src/app/admin/cotizaciones/vistas',
+    title: 'Cotizaciones Consultadas por el Cliente',
+    subtitle: 'Presupuestos vistos a través del portal de seguimiento',
+    status: 'SENT'
+  }
+];
+
+quotesViews.forEach(v => {
+  const fullDir = path.resolve(v.dir);
+  if (!fs.existsSync(fullDir)) fs.mkdirSync(fullDir, { recursive: true });
+  
+  const content = `import React from "react"
 import Link from "next/link"
 import prisma from "@/lib/prisma"
 import { FileText, Plus, ArrowRight, Printer } from "lucide-react"
@@ -7,7 +59,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function FilteredQuotesPage() {
   const quotes = await prisma.quote.findMany({
-    where: { status: 'REJECTED' },
+    where: { status: '${v.status}' },
     orderBy: { createdAt: 'desc' }
   })
 
@@ -15,8 +67,8 @@ export default async function FilteredQuotesPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Cotizaciones Declinadas / Rechazadas</h1>
-          <p className="text-xs text-gray-500 mt-0.5">Presupuestos no aprobados por el cliente</p>
+          <h1 className="text-2xl font-black text-gray-900 tracking-tight">${v.title}</h1>
+          <p className="text-xs text-gray-500 mt-0.5">${v.subtitle}</p>
         </div>
         <Link
           href="/admin/cotizaciones/nueva"
@@ -67,14 +119,14 @@ export default async function FilteredQuotesPage() {
                       </span>
                     </td>
                     <td className="py-3.5 px-4 text-right text-gray-600">
-                      ${q.subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                      \${q.subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-3.5 px-4 text-right font-black text-gray-900">
-                      ${q.total.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                      \${q.total.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-3.5 px-4 text-center">
                       <Link
-                        href={`/admin/cotizaciones/${q.id}/pdf`}
+                        href={\`/admin/cotizaciones/\${q.id}/pdf\`}
                         target="_blank"
                         className="inline-flex items-center gap-1 bg-gray-100 hover:bg-blue-50 hover:text-blue-600 text-gray-700 font-bold px-3 py-1.5 rounded-xl text-[11px] transition"
                       >
@@ -92,3 +144,9 @@ export default async function FilteredQuotesPage() {
     </div>
   )
 }
+`;
+
+  fs.writeFileSync(path.join(fullDir, 'page.tsx'), content, 'utf8');
+});
+
+console.log('Successfully generated live filtered pages for Cotizaciones sub-routes!');

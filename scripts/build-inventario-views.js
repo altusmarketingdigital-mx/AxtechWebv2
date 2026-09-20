@@ -1,4 +1,50 @@
-import React from "react"
+const fs = require('fs');
+const path = require('path');
+
+const inventarioViews = [
+  {
+    dir: 'src/app/admin/inventario/productos',
+    title: 'Catálogo de Productos',
+    subtitle: 'Equipos terminados, periféricos y accesorios listos para venta',
+    filter: ''
+  },
+  {
+    dir: 'src/app/admin/inventario/refacciones',
+    title: 'Refacciones y Componentes Internos',
+    subtitle: 'Pantallas, baterías, discos SSD, memorias RAM y teclados para taller',
+    filter: ''
+  },
+  {
+    dir: 'src/app/admin/inventario/stock-bajo',
+    title: 'Alertas de Stock Bajo',
+    subtitle: 'Artículos con inventario menor o igual a 3 piezas para reposición urgente',
+    filter: 'where: { stock: { lte: 3 } },'
+  },
+  {
+    dir: 'src/app/admin/inventario/series',
+    title: 'Control de Números de Serie',
+    subtitle: 'Trazabilidad y control individual de equipos y componentes',
+    filter: ''
+  },
+  {
+    dir: 'src/app/admin/inventario/reservado',
+    title: 'Artículos Reservados',
+    subtitle: 'Piezas asignadas a órdenes de servicio activas en reparación',
+    filter: ''
+  },
+  {
+    dir: 'src/app/admin/inventario/ubicaciones',
+    title: 'Ubicaciones de Almacén',
+    subtitle: 'Distribución por sucursal, anaquel, nivel y gaveta',
+    filter: ''
+  }
+];
+
+inventarioViews.forEach(v => {
+  const fullDir = path.resolve(v.dir);
+  if (!fs.existsSync(fullDir)) fs.mkdirSync(fullDir, { recursive: true });
+  
+  const content = `import React from "react"
 import Link from "next/link"
 import prisma from "@/lib/prisma"
 import { Package, Plus, Search, FileSpreadsheet } from "lucide-react"
@@ -7,7 +53,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function FilteredInventoryPage() {
   const products = await prisma.product.findMany({
-    
+    ${v.filter}
     orderBy: { name: 'asc' }
   })
 
@@ -15,8 +61,8 @@ export default async function FilteredInventoryPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Control de Números de Serie</h1>
-          <p className="text-xs text-gray-500 mt-0.5">Trazabilidad y control individual de equipos y componentes</p>
+          <h1 className="text-2xl font-black text-gray-900 tracking-tight">${v.title}</h1>
+          <p className="text-xs text-gray-500 mt-0.5">${v.subtitle}</p>
         </div>
         <div className="flex gap-2">
           <Link
@@ -69,19 +115,19 @@ export default async function FilteredInventoryPage() {
                       {p.description || '-'}
                     </td>
                     <td className="py-3.5 px-4 text-right font-black text-gray-900">
-                      ${p.price.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                      \${p.price.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-3.5 px-4 text-center font-bold">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] ${
+                      <span className={\`px-2.5 py-0.5 rounded-full text-[10px] \${
                         p.stock > 3 ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700 font-black"
-                      }`}>
+                      }\`}>
                         {p.stock} pzas
                       </span>
                     </td>
                     <td className="py-3.5 px-4 text-center">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                      <span className={\`text-[10px] font-bold px-2 py-0.5 rounded \${
                         p.stock > 0 ? "text-emerald-700 bg-emerald-50" : "text-red-700 bg-red-50"
-                      }`}>
+                      }\`}>
                         {p.stock > 0 ? "Disponible" : "Agotado"}
                       </span>
                     </td>
@@ -95,3 +141,9 @@ export default async function FilteredInventoryPage() {
     </div>
   )
 }
+`;
+
+  fs.writeFileSync(path.join(fullDir, 'page.tsx'), content, 'utf8');
+});
+
+console.log('Successfully generated live filtered pages for Inventario sub-routes!');

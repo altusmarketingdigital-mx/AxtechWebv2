@@ -1,4 +1,44 @@
-import React from "react"
+const fs = require('fs');
+const path = require('path');
+
+const reportesViews = [
+  {
+    dir: 'src/app/admin/reportes',
+    title: 'Reporte Ejecutivo General',
+    subtitle: 'Consolidado de ingresos, rentabilidad, volumen de órdenes y tickets promedio'
+  },
+  {
+    dir: 'src/app/admin/reportes/servicios',
+    title: 'Reporte de Servicios Técnicos',
+    subtitle: 'Métricas de ingreso, diagnóstico, tiempos de ciclo y efectividad de reparación'
+  },
+  {
+    dir: 'src/app/admin/reportes/ventas',
+    title: 'Reporte de Ventas Mostrador y POS',
+    subtitle: 'Volumen de transacciones, métodos de pago y productos más vendidos'
+  },
+  {
+    dir: 'src/app/admin/reportes/utilidad',
+    title: 'Reporte de Rentabilidad y Margen',
+    subtitle: 'Comparativo de ingresos vs gastos operativos y costos de refacciones'
+  },
+  {
+    dir: 'src/app/admin/reportes/inventario',
+    title: 'Reporte de Rotación de Inventario',
+    subtitle: 'Valor total de inventario en almacén y artículos de baja rotación'
+  },
+  {
+    dir: 'src/app/admin/reportes/garantias',
+    title: 'Reporte de Garantías y Reingresos',
+    subtitle: 'Tasa de fallas post-reparación y efectividad de componentes instalados'
+  }
+];
+
+reportesViews.forEach(v => {
+  const fullDir = path.resolve(v.dir);
+  if (!fs.existsSync(fullDir)) fs.mkdirSync(fullDir, { recursive: true });
+  
+  const content = `import React from "react"
 import prisma from "@/lib/prisma"
 import { BarChart3, TrendingUp, DollarSign, Wrench, Package, ShieldCheck } from "lucide-react"
 
@@ -17,8 +57,8 @@ export default async function ReportesViewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-black text-gray-900 tracking-tight">Reporte de Rentabilidad y Margen</h1>
-        <p className="text-xs text-gray-500 mt-0.5">Comparativo de ingresos vs gastos operativos y costos de refacciones</p>
+        <h1 className="text-2xl font-black text-gray-900 tracking-tight">${v.title}</h1>
+        <p className="text-xs text-gray-500 mt-0.5">${v.subtitle}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -55,7 +95,7 @@ export default async function ReportesViewPage() {
             <DollarSign size={18} className="text-red-500" />
           </div>
           <p className="text-3xl font-black text-red-600">
-            ${totalExpenseSum.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+            \${totalExpenseSum.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
           </p>
           <p className="text-[11px] text-gray-400 mt-1">Egresos operativos</p>
         </div>
@@ -63,3 +103,9 @@ export default async function ReportesViewPage() {
     </div>
   )
 }
+`;
+
+  fs.writeFileSync(path.join(fullDir, 'page.tsx'), content, 'utf8');
+});
+
+console.log('Successfully generated live pages for Reportes sub-routes!');

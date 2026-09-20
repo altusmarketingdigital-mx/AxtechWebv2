@@ -1,4 +1,49 @@
-import React from "react"
+const fs = require('fs');
+const path = require('path');
+
+const configViews = [
+  {
+    dir: 'src/app/admin/configuracion/sucursales',
+    title: 'Sucursales y Talleres',
+    subtitle: 'Administración de puntos de atención física y centros de diagnóstico'
+  },
+  {
+    dir: 'src/app/admin/configuracion/folios',
+    title: 'Configuración de Folios y Consecutivos',
+    subtitle: 'Estructura oficial de folios (OS-YYYY-XXXXXX, COT-YYYY-XXXXXX, VTA-YYYY-XXXXXX)'
+  },
+  {
+    dir: 'src/app/admin/configuracion/estados',
+    title: 'Flujo y Estados Maestros de Servicio',
+    subtitle: 'Recibido, Diagnóstico, Cotización, Autorizado, Reparación, Calidad y Entrega'
+  },
+  {
+    dir: 'src/app/admin/configuracion/impuestos',
+    title: 'Tasas de Impuestos y Retenciones',
+    subtitle: 'Configuración de IVA (16%) y retención de ISR aplicables a servicios y ventas'
+  },
+  {
+    dir: 'src/app/admin/configuracion/metodos-pago',
+    title: 'Métodos de Pago y Cuentas Bancarias',
+    subtitle: 'Habilitación de Efectivo, Tarjeta y Transferencia bancaria SPEI'
+  },
+  {
+    dir: 'src/app/admin/configuracion/notificaciones',
+    title: 'Notificaciones y Alertas Automáticas',
+    subtitle: 'Canales de aviso al cliente (WhatsApp y Correo Electrónico)'
+  },
+  {
+    dir: 'src/app/admin/configuracion/portal',
+    title: 'Portal del Cliente (Service Desk)',
+    subtitle: 'Parámetros del botón público de Seguimiento de Servicio'
+  }
+];
+
+configViews.forEach(v => {
+  const fullDir = path.resolve(v.dir);
+  if (!fs.existsSync(fullDir)) fs.mkdirSync(fullDir, { recursive: true });
+  
+  const content = `import React from "react"
 import prisma from "@/lib/prisma"
 import Link from "next/link"
 import { Settings, ShieldCheck, ArrowLeft } from "lucide-react"
@@ -17,8 +62,8 @@ export default async function ConfigSubViewPage() {
           <ArrowLeft size={20} className="text-gray-600" />
         </Link>
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Configuración de Folios y Consecutivos</h1>
-          <p className="text-xs text-gray-500 mt-0.5">Estructura oficial de folios (OS-YYYY-XXXXXX, COT-YYYY-XXXXXX, VTA-YYYY-XXXXXX)</p>
+          <h1 className="text-2xl font-black text-gray-900 tracking-tight">${v.title}</h1>
+          <p className="text-xs text-gray-500 mt-0.5">${v.subtitle}</p>
         </div>
       </div>
 
@@ -51,3 +96,9 @@ export default async function ConfigSubViewPage() {
     </div>
   )
 }
+`;
+
+  fs.writeFileSync(path.join(fullDir, 'page.tsx'), content, 'utf8');
+});
+
+console.log('Successfully generated live pages for Configuracion sub-routes!');

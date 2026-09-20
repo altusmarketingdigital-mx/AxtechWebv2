@@ -1,4 +1,69 @@
-import React from "react"
+const fs = require('fs');
+const path = require('path');
+
+const groups = [
+  // 1. ÓRDENES SUB-PAGES
+  {
+    dir: 'src/app/admin/ordenes/activas',
+    title: 'Órdenes Activas en Taller',
+    subtitle: 'Servicios en curso (recepción, diagnóstico y reparación)',
+    statusFilter: "where: { status: { notIn: ['DELIVERED', 'CANCELLED'] } }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/autorizacion',
+    title: 'Órdenes Esperando Autorización',
+    subtitle: 'Equipos presupuestados pendientes de aprobación por el cliente',
+    statusFilter: "where: { status: 'WAITING_APPROVAL' }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/reparacion',
+    title: 'Órdenes en Reparación',
+    subtitle: 'Equipos autorizados con trabajo técnico y reemplazo de refacciones en proceso',
+    statusFilter: "where: { status: 'REPAIRING' }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/calidad',
+    title: 'Control de Calidad (QA)',
+    subtitle: 'Equipos terminados en pruebas de estrés y validación final',
+    statusFilter: "where: { status: 'REPAIRING' }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/listas',
+    title: 'Órdenes Listas para Entrega',
+    subtitle: 'Equipos aprobados listos para entrega al cliente y liquidación',
+    statusFilter: "where: { status: 'READY' }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/entregadas',
+    title: 'Órdenes Entregadas y Finalizadas',
+    subtitle: 'Histórico de equipos entregados con póliza de garantía',
+    statusFilter: "where: { status: 'DELIVERED' }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/garantias',
+    title: 'Reingresos y Garantías',
+    subtitle: 'Equipos reingresados para validación técnica de garantía',
+    statusFilter: "where: { status: 'RECEIVED' }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/canceladas',
+    title: 'Órdenes Canceladas',
+    subtitle: 'Servicios declinados por presupuesto o sin reparación',
+    statusFilter: "where: { status: 'CANCELLED' }"
+  },
+  {
+    dir: 'src/app/admin/ordenes/diagnostico',
+    title: 'Órdenes en Diagnóstico',
+    subtitle: 'Equipos en revisión física y lógica por el personal técnico',
+    statusFilter: "where: { status: 'DIAGNOSING' }"
+  }
+];
+
+groups.forEach(g => {
+  const fullDir = path.resolve(g.dir);
+  if (!fs.existsSync(fullDir)) fs.mkdirSync(fullDir, { recursive: true });
+  
+  const content = `import React from "react"
 import Link from "next/link"
 import prisma from "@/lib/prisma"
 import { Wrench, Plus, ArrowRight, Laptop, User } from "lucide-react"
@@ -7,7 +72,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function FilteredOrdersPage() {
   const orders = await prisma.serviceOrder.findMany({
-    where: { status: 'RECEIVED' },
+    ${g.statusFilter},
     orderBy: { createdAt: 'desc' }
   })
 
@@ -15,8 +80,8 @@ export default async function FilteredOrdersPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Reingresos y Garantías</h1>
-          <p className="text-xs text-gray-500 mt-0.5">Equipos reingresados para validación técnica de garantía</p>
+          <h1 className="text-2xl font-black text-gray-900 tracking-tight">${g.title}</h1>
+          <p className="text-xs text-gray-500 mt-0.5">${g.subtitle}</p>
         </div>
         <Link
           href="/admin/ordenes/nueva"
@@ -52,7 +117,7 @@ export default async function FilteredOrdersPage() {
                 orders.map((ord) => (
                   <tr key={ord.id} className="hover:bg-gray-50/50 transition">
                     <td className="py-3.5 px-4 font-bold text-blue-600">
-                      <Link href={`/admin/servicios/${ord.folio}`}>{ord.folio}</Link>
+                      <Link href={\`/admin/servicios/\${ord.folio}\`}>{ord.folio}</Link>
                     </td>
                     <td className="py-3.5 px-4 font-semibold text-gray-900">
                       <div>{ord.clientName}</div>
@@ -70,11 +135,11 @@ export default async function FilteredOrdersPage() {
                       </span>
                     </td>
                     <td className="py-3.5 px-4 text-right font-black text-gray-900">
-                      ${(ord.costQuote || 0).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                      \${(ord.costQuote || 0).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-3.5 px-4 text-center">
                       <Link
-                        href={`/admin/servicios/${ord.folio}`}
+                        href={\`/admin/servicios/\${ord.folio}\`}
                         className="inline-flex items-center gap-1 bg-gray-100 hover:bg-blue-50 hover:text-blue-600 text-gray-700 font-bold px-3 py-1.5 rounded-xl text-[11px] transition"
                       >
                         <span>Detalle</span>
@@ -91,3 +156,9 @@ export default async function FilteredOrdersPage() {
     </div>
   )
 }
+`;
+
+  fs.writeFileSync(path.join(fullDir, 'page.tsx'), content, 'utf8');
+});
+
+console.log('Successfully generated live filtered pages for all Ordenes sub-routes!');
