@@ -3,6 +3,8 @@ import Link from "next/link"
 import prisma from "@/lib/prisma"
 import { PlusCircle, Search, FileText } from "lucide-react"
 
+export const dynamic = 'force-dynamic'
+
 export default async function ServicesPage() {
   const orders = await prisma.serviceOrder.findMany({
     orderBy: { createdAt: "desc" }
@@ -11,7 +13,7 @@ export default async function ServicesPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Ã“rdenes de Servicio</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Órdenes de Servicio</h1>
         <Link 
           href="/admin/servicios/nuevo"
           className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition"
@@ -49,36 +51,48 @@ export default async function ServicesPage() {
               {orders.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="p-8 text-center text-gray-500">
-                    No hay Ã³rdenes registradas.
+                    No hay órdenes de servicio registradas.
                   </td>
                 </tr>
               ) : (
-                orders.map(order => (
-                  <tr key={order.id} className="hover:bg-gray-50">
-                    <td className="p-4 border-b font-medium text-blue-600">{order.folio}</td>
-                    <td className="p-4 border-b">
+                orders.map((order) => (
+                  <tr key={order.id} className="hover:bg-gray-50 border-b border-gray-100">
+                    <td className="p-4 font-bold text-blue-600">
+                      <Link href={`/admin/servicios/${order.folio}`}>
+                        {order.folio}
+                      </Link>
+                    </td>
+                    <td className="p-4">
                       <div className="font-medium text-gray-800">{order.clientName}</div>
                       <div className="text-sm text-gray-500">{order.clientPhone}</div>
                     </td>
-                    <td className="p-4 border-b">
-                      <div className="font-medium text-gray-800">{order.brand} {order.model}</div>
-                      <div className="text-sm text-gray-500">{order.deviceType}</div>
+                    <td className="p-4">
+                      <div className="font-medium text-gray-800">{order.deviceType}</div>
+                      <div className="text-sm text-gray-500">{order.brand} {order.model}</div>
                     </td>
-                    <td className="p-4 border-b max-w-xs truncate" title={order.issueDesc}>
+                    <td className="p-4 text-sm text-gray-600 max-w-xs truncate">
                       {order.issueDesc}
                     </td>
-                    <td className="p-4 border-b">
-                      <span className="px-2 py-1 text-xs rounded-full bg-slate-100 text-slate-800 font-medium">
+                    <td className="p-4">
+                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold
+                        ${order.status === 'RECEIVED' ? 'bg-blue-100 text-blue-800' : ''}
+                        ${order.status === 'DIAGNOSING' ? 'bg-yellow-100 text-yellow-800' : ''}
+                        ${order.status === 'WAITING_APPROVAL' ? 'bg-orange-100 text-orange-800' : ''}
+                        ${order.status === 'REPAIRING' ? 'bg-purple-100 text-purple-800' : ''}
+                        ${order.status === 'READY' ? 'bg-green-100 text-green-800' : ''}
+                        ${order.status === 'DELIVERED' ? 'bg-gray-100 text-gray-800' : ''}
+                        ${order.status === 'CANCELLED' ? 'bg-red-100 text-red-800' : ''}
+                      `}>
                         {order.status}
                       </span>
                     </td>
-                    <td className="p-4 border-b">
+                    <td className="p-4">
                       <Link 
                         href={`/admin/servicios/${order.folio}`}
-                        className="text-blue-600 hover:text-blue-800 flex items-center space-x-1"
+                        className="text-gray-500 hover:text-blue-600 p-2 inline-block"
+                        title="Ver detalle"
                       >
-                        <FileText size={16} />
-                        <span>Detalles</span>
+                        <FileText size={18} />
                       </Link>
                     </td>
                   </tr>

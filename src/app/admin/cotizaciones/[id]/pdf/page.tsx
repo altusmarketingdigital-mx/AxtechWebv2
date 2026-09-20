@@ -3,11 +3,18 @@ import { requireAdmin } from '@/lib/session'
 import { notFound } from 'next/navigation'
 import { Phone, Mail, Globe, MapPin, Printer } from 'lucide-react'
 
-export default async function QuotePdfPage({ params }: { params: { id: string } }) {
+export default async function QuotePdfPage({
+  params
+}: {
+  params: Promise<{ id: string }> | { id: string }
+}) {
   await requireAdmin()
   
+  const resolvedParams = await Promise.resolve(params)
+  const id = resolvedParams.id
+  
   const quote = await prisma.quote.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { items: true }
   })
   
@@ -17,11 +24,10 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
     where: { id: 'default' }
   })
 
-  // We add a script to auto-print when loaded if desired, or just a button.
   return (
     <div className="bg-gray-100 min-h-screen font-sans print:bg-white text-sm sm:text-base">
       
-      {/* Floating Print Button (hidden when printing) */}
+      {/* Botón flotante para imprimir */}
       <div className="fixed bottom-8 right-8 print:hidden z-50">
         <button 
           id="print-btn"
@@ -34,13 +40,13 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
         </button>
       </div>
 
-      {/* A4 Canvas */}
+      {/* Hoja Formato A4 */}
       <div className="max-w-[210mm] mx-auto bg-white min-h-[297mm] p-[10mm] sm:p-[15mm] md:p-[20mm] print:p-[10mm] shadow-xl print:shadow-none print:max-w-none">
         
-        {/* HEADER */}
+        {/* ENCABEZADO */}
         <header className="flex justify-between items-start mb-8 pb-6 border-b-2 border-gray-100">
           <div className="max-w-[50%]">
-            <h1 className="text-3xl font-black text-gray-900 tracking-tight">{settings?.companyName || 'AXTECH INGENIERÃA'}</h1>
+            <h1 className="text-3xl font-black text-gray-900 tracking-tight">{settings?.companyName || 'AXTECH INGENIERÍA'}</h1>
             {settings?.address && (
               <p className="text-gray-500 text-xs mt-2 flex items-start gap-1">
                 <MapPin size={14} className="mt-0.5 shrink-0" />
@@ -55,7 +61,7 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
           </div>
           
           <div className="text-right">
-            <div className="text-2xl sm:text-4xl font-black text-blue-600 tracking-widest uppercase mb-2">COTIZACIÃ“N</div>
+            <div className="text-2xl sm:text-4xl font-black text-blue-600 tracking-widest uppercase mb-2">COTIZACIÓN</div>
             <div className="inline-block bg-gray-100 px-4 py-2 rounded-lg">
               <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Folio</p>
               <p className="text-lg font-bold text-gray-900">{quote.folio}</p>
@@ -64,12 +70,12 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
           </div>
         </header>
 
-        {/* CLIENT DATA */}
+        {/* DATOS DEL CLIENTE */}
         <section className="mb-8 bg-gray-50 p-5 rounded-xl border border-gray-100">
           <h2 className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">Datos del Cliente</h2>
           <div className="grid grid-cols-2 gap-y-3 gap-x-6 text-sm">
             <div>
-              <p className="text-xs text-gray-500 mb-0.5">Nombre / RazÃ³n Social</p>
+              <p className="text-xs text-gray-500 mb-0.5">Nombre / Razón Social</p>
               <p className="font-bold text-gray-900">{quote.clientName}</p>
             </div>
             {quote.clientRfc && (
@@ -80,32 +86,32 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
             )}
             {quote.clientEmail && (
               <div>
-                <p className="text-xs text-gray-500 mb-0.5">Correo ElectrÃ³nico</p>
+                <p className="text-xs text-gray-500 mb-0.5">Correo Electrónico</p>
                 <p className="font-medium text-gray-800">{quote.clientEmail}</p>
               </div>
             )}
             {quote.clientPhone && (
               <div>
-                <p className="text-xs text-gray-500 mb-0.5">TelÃ©fono</p>
+                <p className="text-xs text-gray-500 mb-0.5">Teléfono</p>
                 <p className="font-medium text-gray-800">{quote.clientPhone}</p>
               </div>
             )}
             {quote.clientAddr && (
               <div className="col-span-2">
-                <p className="text-xs text-gray-500 mb-0.5">DirecciÃ³n</p>
+                <p className="text-xs text-gray-500 mb-0.5">Dirección</p>
                 <p className="font-medium text-gray-800">{quote.clientAddr}</p>
               </div>
             )}
           </div>
         </section>
 
-        {/* ITEMS TABLE */}
+        {/* TABLA DE CONCEPTOS */}
         <section className="mb-8">
           <table className="w-full text-left text-sm">
             <thead className="bg-gray-900 text-white print:bg-gray-200 print:text-black">
               <tr>
                 <th className="py-3 px-4 font-semibold text-center w-16 rounded-tl-lg">Cant.</th>
-                <th className="py-3 px-4 font-semibold">DescripciÃ³n</th>
+                <th className="py-3 px-4 font-semibold">Descripción</th>
                 <th className="py-3 px-4 font-semibold text-right w-28">P. Unitario</th>
                 <th className="py-3 px-4 font-semibold text-right w-32 rounded-tr-lg">Total</th>
               </tr>
@@ -123,7 +129,7 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
           </table>
         </section>
 
-        {/* TOTALS */}
+        {/* TOTALES */}
         <section className="flex justify-end mb-10 print:break-inside-avoid">
           <div className="w-64 space-y-2">
             <div className="flex justify-between text-sm text-gray-600">
@@ -138,7 +144,7 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
             )}
             {quote.isrAmount > 0 && (
               <div className="flex justify-between text-sm text-gray-600">
-                <span>RetenciÃ³n ISR:</span>
+                <span>Retención ISR:</span>
                 <span className="font-semibold text-red-600">-${quote.isrAmount.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
               </div>
             )}
@@ -149,27 +155,24 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
           </div>
         </section>
 
-        {/* NOTES & BANK INFO */}
+        {/* NOTAS Y DATOS BANCARIOS */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 print:break-inside-avoid text-sm">
-          {/* Notes */}
           <div>
             {quote.notes && (
               <div className="mb-6">
-                <h3 className="font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">Notas y GarantÃ­a</h3>
+                <h3 className="font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">Notas y Garantía</h3>
                 <p className="text-gray-600 whitespace-pre-wrap leading-relaxed text-xs">{quote.notes}</p>
               </div>
             )}
             
-            {/* Terms */}
             {(quote.terms || settings?.termsAndConds) && (
               <div>
-                <h3 className="font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">TÃ©rminos y Condiciones</h3>
+                <h3 className="font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">Términos y Condiciones</h3>
                 <p className="text-gray-600 whitespace-pre-wrap leading-relaxed text-xs">{quote.terms || settings?.termsAndConds}</p>
               </div>
             )}
           </div>
           
-          {/* Bank */}
           {(settings?.bankName || settings?.accountName) && (
             <div className="bg-blue-50 p-5 rounded-xl border border-blue-100">
               <h3 className="font-bold text-blue-900 mb-3 flex items-center gap-2">
@@ -185,7 +188,7 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
           )}
         </div>
 
-        {/* LEGAL (AVISOS) */}
+        {/* AVISOS LEGALES */}
         <section className="pt-6 mt-10 border-t border-gray-200 text-[10px] text-gray-400 text-justify leading-tight space-y-4 print:break-inside-avoid">
           {settings?.dataUsagePolicy && (
             <div>
@@ -201,7 +204,7 @@ export default async function QuotePdfPage({ params }: { params: { id: string } 
 
       </div>
       
-      {/* Script for window print */}
+      {/* Script de impresión nativa */}
       <script dangerouslySetInnerHTML={{__html: `
         function printDoc() { window.print() }
         document.getElementById('print-btn')?.addEventListener('click', printDoc)

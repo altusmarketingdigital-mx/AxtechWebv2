@@ -5,8 +5,14 @@ import Link from "next/link"
 import { ArrowLeft, Save, User, Laptop, Settings } from "lucide-react"
 import { updateServiceOrder } from "@/app/actions/updateOrderActions"
 
-export default async function OrderDetail({ params }: { params: { folio: string } }) {
-  const folio = params.folio
+export default async function OrderDetail({
+  params
+}: {
+  params: Promise<{ folio: string }> | { folio: string }
+}) {
+  const resolvedParams = await Promise.resolve(params)
+  const folio = resolvedParams.folio
+  
   const order = await prisma.serviceOrder.findUnique({
     where: { folio }
   })
@@ -60,82 +66,81 @@ export default async function OrderDetail({ params }: { params: { folio: string 
                 </div>
               )}
             </div>
-            
-            <div className="mt-4 pt-4 border-t">
-              <h4 className="text-sm font-semibold text-gray-700 mb-1">Problema Reportado</h4>
-              <p className="text-sm text-gray-600">{order.issueDesc}</p>
-            </div>
           </div>
         </div>
 
         {/* Action Col */}
-        <div className="lg:col-span-2">
-          <form action={updateServiceOrder} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="lg:col-span-2 space-y-6">
+          <form action={updateServiceOrder} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-6">
             <input type="hidden" name="id" value={order.id} />
             
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-              <h2 className="text-lg font-semibold text-gray-800 flex items-center space-x-2">
-                <Settings size={18} /> <span>DiagnÃ³stico y Estado</span>
-              </h2>
-            </div>
-            
-            <div className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Estado de la Orden</label>
-                <select 
-                  name="status" 
-                  defaultValue={order.status}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white"
-                >
-                  <option value="RECEIVED">Recibido</option>
-                  <option value="DIAGNOSING">Diagnosticando</option>
-                  <option value="WAITING_APPROVAL">Esperando AprobaciÃ³n</option>
-                  <option value="REPAIRING">En ReparaciÃ³n</option>
-                  <option value="READY">Listo para Entrega</option>
-                  <option value="DELIVERED">Entregado</option>
-                  <option value="CANCELLED">Cancelado</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">DiagnÃ³stico TÃ©cnico</label>
-                <textarea 
-                  name="diagnosis" 
-                  rows={3} 
-                  defaultValue={order.diagnosis || ""}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                  placeholder="Detalles del problema encontrado..."
-                ></textarea>
-              </div>
+            <div>
+              <h3 className="flex items-center space-x-2 text-lg font-semibold mb-4 border-b pb-2">
+                <Settings size={18} /> <span>Gestión y Diagnóstico</span>
+              </h3>
               
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Notas de ReparaciÃ³n / Procedimiento</label>
-                <textarea 
-                  name="repairNotes" 
-                  rows={3} 
-                  defaultValue={order.repairNotes || ""}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                  placeholder="QuÃ© se le hizo al equipo..."
-                ></textarea>
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Estado del Servicio</label>
+                  <select 
+                    name="status" 
+                    defaultValue={order.status}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white font-medium"
+                  >
+                    <option value="RECEIVED">Recibido</option>
+                    <option value="DIAGNOSING">En Diagnóstico</option>
+                    <option value="WAITING_APPROVAL">Esperando Aprobación</option>
+                    <option value="REPAIRING">En Reparación</option>
+                    <option value="READY">Listo para Entrega</option>
+                    <option value="DELIVERED">Entregado</option>
+                    <option value="CANCELLED">Cancelado</option>
+                  </select>
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">CotizaciÃ³n (MXN)</label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Costo Estimado / Cotización ($)</label>
                   <input 
                     type="number" 
-                    step="0.01"
-                    name="costQuote"
-                    defaultValue={order.costQuote || ""}
-                    className="w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
+                    step="0.01" 
+                    name="costQuote" 
+                    defaultValue={order.costQuote || ""} 
                     placeholder="0.00"
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
                   />
                 </div>
               </div>
             </div>
 
-            <div className="p-6 bg-gray-50 flex justify-end">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Fallo Reportado (Cliente)</label>
+              <div className="p-3 bg-gray-50 rounded-lg text-gray-700 text-sm border">
+                {order.issueDesc}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Diagnóstico Técnico</label>
+              <textarea 
+                name="diagnosis" 
+                rows={3} 
+                defaultValue={order.diagnosis || ""} 
+                placeholder="Detalla lo encontrado durante la revisión..."
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              ></textarea>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Notas de Reparación / Acciones Realizadas</label>
+              <textarea 
+                name="repairNotes" 
+                rows={3} 
+                defaultValue={order.repairNotes || ""} 
+                placeholder="Piezas cambiadas, pruebas realizadas..."
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              ></textarea>
+            </div>
+
+            <div className="flex justify-end pt-4 border-t">
               <button 
                 type="submit" 
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition"
