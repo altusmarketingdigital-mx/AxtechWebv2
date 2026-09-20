@@ -47,17 +47,39 @@ model ServiceOrder {
   folio  String      @unique // e.g. ORD-0001
   status OrderStatus @default(RECEIVED)
 
+  // Extended Client Info
+  clientType      String?  @default("PARTICULAR") // PARTICULAR | EMPRESA
+  clientRfc       String?
+  clientWhatsapp  String?
+  clientAddress   String?
+  
   // Device info
-  deviceType String
-  brand      String
-  model      String
-  serialNum  String?
-  issueDesc  String // Reported by client
+  deviceType      String
+  brand           String
+  model           String
+  serialNum       String?
+  equipFolio      String?  // e.g. EQ-000001
+  serviceTag      String?
+  color           String?
+  os              String?
+  devicePassword  String?
+  
+  // Physical reception & Accessories
+  issueDesc          String   // Reported by client
+  physicalCondition  String?  // Daños visibles / rayones
+  accessories        String?  // JSON string: ["Cargador", "Cable", ...]
+  priority           String?  @default("NORMAL") // NORMAL | ALTA | URGENTE
 
-  // Diagnosis & Repair
-  diagnosis   String?
-  repairNotes String?
-  costQuote   Float? // Estimated cost
+  // Detailed Technical Diagnosis
+  diagnosis           String?  // Diagnóstico general
+  hardwareCheck       String?  // JSON string: { cpu: "CORRECTO", ram: "FALLA", ... }
+  softwareCheck       String?  // JSON string: { so: "CORRECTO", malware: "OBSERVACION", ... }
+  rootCause           String?  // Causa raíz encontrada
+  recommendedSolution String?  // Solución técnica sugerida
+  requiredParts       String?  // Refacciones o piezas sugeridas
+  estimatedTime       String?  // Tiempo de entrega estimado
+  repairNotes         String?
+  costQuote           Float?   // Estimated cost
 
   // Client & Tech relations
   clientId String?

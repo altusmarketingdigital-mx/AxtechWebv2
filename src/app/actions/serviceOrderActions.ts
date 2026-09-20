@@ -9,11 +9,24 @@ export async function createServiceOrder(formData: FormData) {
     const clientPhone = formData.get("clientPhone") as string
     const clientEmail = formData.get("clientEmail") as string
     
+    const clientType = (formData.get("clientType") as string) || "PARTICULAR"
+    const clientRfc = formData.get("clientRfc") as string
+    const clientWhatsapp = formData.get("clientWhatsapp") as string
+    const clientAddress = formData.get("clientAddress") as string
+    
     const deviceType = formData.get("deviceType") as string
     const brand = formData.get("brand") as string
     const model = formData.get("model") as string
     const serialNum = formData.get("serialNum") as string
+    const serviceTag = formData.get("serviceTag") as string
+    const color = formData.get("color") as string
+    const os = formData.get("os") as string
+    const devicePassword = formData.get("devicePassword") as string
+    
     const issueDesc = formData.get("issueDesc") as string
+    const physicalCondition = formData.get("physicalCondition") as string
+    const accessoriesRaw = formData.get("accessories") as string
+    const priority = (formData.get("priority") as string) || "NORMAL"
 
     // Generate consecutive folio OS-YYYY-000001
     const year = new Date().getFullYear()
@@ -29,23 +42,48 @@ export async function createServiceOrder(formData: FormData) {
     }
     const folio = `${prefix}${nextNumber.toString().padStart(6, '0')}`
 
+    // Generate consecutive equipment folio EQ-000001
+    const lastEquip = await prisma.serviceOrder.findFirst({
+      where: { equipFolio: { startsWith: 'EQ-' } },
+      orderBy: { createdAt: 'desc' }
+    })
+    let nextEquipNum = 1
+    if (lastEquip && lastEquip.equipFolio) {
+      const lastEq = parseInt(lastEquip.equipFolio.replace('EQ-', ''), 10)
+      if (!isNaN(lastEq)) nextEquipNum = lastEq + 1
+    }
+    const equipFolio = `EQ-${nextEquipNum.toString().padStart(6, '0')}`
+
     const order = await prisma.serviceOrder.create({
       data: {
         folio,
+        equipFolio,
+        clientType,
         clientName,
         clientPhone,
         clientEmail,
+        clientWhatsapp,
+        clientRfc,
+        clientAddress,
         deviceType,
         brand,
         model,
         serialNum,
+        serviceTag,
+        color,
+        os,
+        devicePassword,
         issueDesc,
+        physicalCondition,
+        accessories: accessoriesRaw,
+        priority,
         status: "RECEIVED"
       }
     })
 
     revalidatePath("/admin/servicios")
-    return { success: true, folio: order.folio }
+    revalidatePath("/admin/ordenes")
+    return { success: true, folio: order.folio, id: order.id }
   } catch (error) {
     console.error("Error creating order:", error)
     return { success: false, error: "No se pudo crear la orden" }

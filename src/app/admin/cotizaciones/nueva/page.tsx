@@ -2,23 +2,24 @@
 import { useState, useEffect } from 'react'
 import { createQuote } from '../actions'
 import { getCompanySettings } from '../../configuracion/actions'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Plus, Trash2, FilePlus, ChevronLeft, Save } from 'lucide-react'
 import Link from 'next/link'
 
 export default function NuevaCotizacionPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [settings, setSettings] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   
   const [formData, setFormData] = useState({
-    clientName: '',
-    clientRfc: '',
-    clientPhone: '',
-    clientEmail: '',
-    clientAddr: '',
+    clientName: searchParams.get('clientName') || '',
+    clientRfc: searchParams.get('clientRfc') || '',
+    clientPhone: searchParams.get('clientPhone') || '',
+    clientEmail: searchParams.get('clientEmail') || '',
+    clientAddr: searchParams.get('clientAddr') || '',
     date: new Date().toISOString().split('T')[0],
-    notes: '',
+    notes: searchParams.get('notes') || '',
     terms: ''
   })
 
@@ -31,8 +32,8 @@ export default function NuevaCotizacionPage() {
       setSettings(data)
       setFormData(prev => ({
         ...prev,
-        notes: data?.defaultNotes || '',
-        terms: data?.termsAndConds || ''
+        notes: prev.notes || data?.defaultNotes || '',
+        terms: prev.terms || data?.termsAndConds || ''
       }))
     })
   }, [])
