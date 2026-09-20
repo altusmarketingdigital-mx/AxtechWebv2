@@ -100,6 +100,15 @@ model ServiceOrder {
 
   serviceDate DateTime? // Expected delivery or service date
 
+  // Delivery & Warranty Data
+  deliveredAt          DateTime?
+  receivedBy           String?   // Persona que recibe el equipo
+  receiverIdDoc        String?   // INE / Identificación oficial
+  deliveryNotes        String?   // Observaciones de entrega
+  warrantyDays         Int?      @default(30) // Días de garantía otorgados
+  warrantyValidUntil   DateTime? // Fecha límite de garantía
+  deliveryChecks       String?   // JSON string: checklist de entrega
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
