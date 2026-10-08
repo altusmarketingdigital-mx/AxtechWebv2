@@ -47,16 +47,14 @@ export default async function QuotePdfPage({
         <header className="flex justify-between items-start mb-8 pb-6 border-b-2 border-gray-100">
           <div className="max-w-[50%]">
             <h1 className="text-3xl font-black text-gray-900 tracking-tight">{settings?.companyName || 'AXTECH INGENIERÍA'}</h1>
-            {settings?.address && (
-              <p className="text-gray-500 text-xs mt-2 flex items-start gap-1">
-                <MapPin size={14} className="mt-0.5 shrink-0" />
-                <span>{settings.address}</span>
-              </p>
-            )}
+            <p className="text-gray-500 text-xs mt-2 flex items-start gap-1">
+              <MapPin size={14} className="mt-0.5 shrink-0" />
+              <span>{settings?.address || 'Av. Acueducto 739, San Pedro Zacatenco, Gustavo A. Madero, C.P. 07360, CDMX'}</span>
+            </p>
             <div className="mt-2 text-xs text-gray-500 space-y-1">
-              {settings?.phones && <p className="flex items-center gap-1"><Phone size={12}/> {settings.phones}</p>}
-              {settings?.email && <p className="flex items-center gap-1"><Mail size={12}/> {settings.email}</p>}
-              {settings?.website && <p className="flex items-center gap-1"><Globe size={12}/> {settings.website}</p>}
+              <p className="flex items-center gap-1"><Phone size={12}/> {settings?.phones || '(56) 6585 0766 | (55) 1348 5574'}</p>
+              <p className="flex items-center gap-1"><Mail size={12}/> {settings?.email || 'ventas@axtech-ingenieria.com'}</p>
+              <p className="flex items-center gap-1"><Globe size={12}/> {settings?.website || 'www.axtech-ingenieria.com'}</p>
             </div>
           </div>
           
@@ -173,34 +171,38 @@ export default async function QuotePdfPage({
             )}
           </div>
           
-          {(settings?.bankName || settings?.accountName) && (
-            <div className="bg-blue-50 p-5 rounded-xl border border-blue-100">
-              <h3 className="font-bold text-blue-900 mb-3 flex items-center gap-2">
-                Datos Bancarios
-              </h3>
-              <div className="space-y-2 text-xs text-blue-800">
-                {settings.bankName && <p><span className="font-semibold">Banco:</span> {settings.bankName}</p>}
-                {settings.accountName && <p><span className="font-semibold">Titular:</span> {settings.accountName}</p>}
-                {settings.accountNumber && <p><span className="font-semibold">Cuenta:</span> {settings.accountNumber}</p>}
-                {settings.clabe && <p><span className="font-semibold">CLABE:</span> {settings.clabe}</p>}
-              </div>
+          {/* DATOS BANCARIOS */}
+          <div className="bg-blue-50 p-5 rounded-xl border border-blue-100">
+            <h3 className="font-bold text-blue-900 mb-3 flex items-center gap-2">
+              Datos Bancarios
+            </h3>
+            <div className="space-y-2 text-xs text-blue-800">
+              <p><span className="font-semibold">Banco:</span> {settings?.bankName || 'BANAMEX'}</p>
+              <p><span className="font-semibold">Titular:</span> {settings?.accountName || 'HECTOR AXANI HERRERA MONRROY'}</p>
+              <p><span className="font-semibold">Cuenta:</span> {settings?.accountNumber || '6226879'}</p>
+              <p><span className="font-semibold">CLABE:</span> {settings?.clabe || '002180702062268792'}</p>
             </div>
-          )}
+          </div>
         </div>
 
         {/* AVISOS LEGALES */}
         <section className="pt-6 mt-10 border-t border-gray-200 text-[10px] text-gray-400 text-justify leading-tight space-y-4 print:break-inside-avoid">
-          {settings?.dataUsagePolicy && (
+          {(settings?.dataUsagePolicy || 'Sus datos personales serán tratados conforme a los principios de licitud, consentimiento, información, calidad, finalidad, lealtad, proporcionalidad y responsabilidad establecidos en la LFPDPPP. Al aceptar esta cotización, usted otorga su consentimiento para el tratamiento de sus datos con las finalidades descritas. Puede revocar su consentimiento en cualquier momento mediante solicitud escrita a nuestro correo electrónico.') && (
             <div>
-              <strong className="text-gray-500 uppercase">Uso de Datos Personales:</strong> {settings.dataUsagePolicy}
+              <strong className="text-gray-500 uppercase">Uso de Datos Personales:</strong> {settings?.dataUsagePolicy || 'Sus datos personales serán tratados conforme a los principios de licitud, consentimiento, información, calidad, finalidad, lealtad, proporcionalidad y responsabilidad establecidos en la LFPDPPP. Al aceptar esta cotización, usted otorga su consentimiento para el tratamiento de sus datos con las finalidades descritas. Puede revocar su consentimiento en cualquier momento mediante solicitud escrita a nuestro correo electrónico.'}
             </div>
           )}
-          {settings?.privacyNotice && (
+          {(settings?.privacyNotice || 'En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), AxTech Ingeniería, con domicilio en Av. Acueducto 739, San Pedro Zacatenco, Gustavo A. Madero, C.P. 07360, CDMX, es responsable del tratamiento de sus datos personales. Los datos recabados serán utilizados exclusivamente para la elaboración de cotizaciones, facturación y prestación de servicios contratados. No se compartirán con terceros sin su consentimiento, salvo en los casos previstos por la ley. Usted tiene derecho a ejercer sus derechos ARCO (Acceso, Rectificación, Cancelación y Oposición) enviando una solicitud a ventas@axtech-ingenieria.com') && (
             <div>
-              <strong className="text-gray-500 uppercase">Aviso de Privacidad:</strong> {settings.privacyNotice}
+              <strong className="text-gray-500 uppercase">Aviso de Privacidad:</strong> {settings?.privacyNotice || 'En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), AxTech Ingeniería, con domicilio en Av. Acueducto 739, San Pedro Zacatenco, Gustavo A. Madero, C.P. 07360, CDMX, es responsable del tratamiento de sus datos personales. Los datos recabados serán utilizados exclusivamente para la elaboración de cotizaciones, facturación y prestación de servicios contratados. No se compartirán con terceros sin su consentimiento, salvo en los casos previstos por la ley. Usted tiene derecho a ejercer sus derechos ARCO (Acceso, Rectificación, Cancelación y Oposición) enviando una solicitud a ventas@axtech-ingenieria.com'}
             </div>
           )}
         </section>
+
+        {/* PIE DE PÁGINA INSTITUCIONAL AZUL OSCURO */}
+        <footer className="mt-8 bg-[#0B1528] text-white py-3 px-4 rounded-lg text-center text-xs font-medium tracking-wide print:break-inside-avoid">
+          {settings?.companyName || 'AXTECH INGENIERIA'} | {settings?.phones || '(56) 6585 0766 | (55) 1348 5574'} | {settings?.email || 'ventas@axtech-ingenieria.com'} | {settings?.website || 'www.axtech-ingenieria.com'}
+        </footer>
 
       </div>
       

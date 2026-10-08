@@ -19,8 +19,8 @@ export default function NuevaCotizacionPage() {
     clientEmail: searchParams.get('clientEmail') || '',
     clientAddr: searchParams.get('clientAddr') || '',
     date: new Date().toISOString().split('T')[0],
-    notes: searchParams.get('notes') || '',
-    terms: ''
+    notes: searchParams.get('notes') || 'Garantía fija de 30 días naturales a partir de la entrega del equipo o servicio.',
+    terms: '1. Los precios incluidos en esta cotización tienen una vigencia de 15 días naturales a partir de la fecha de emisión. 2. El servicio se realizará una vez confirmado el pago total o el anticipo acordado. 3. La garantía cubre únicamente defectos relacionados con el servicio prestado, no daños por mal uso o causas externas. 4. AXTECH INGENIERIA no se hace responsable por pérdida de información; se recomienda respaldar datos previamente. 5. Cualquier servicio adicional no contemplado en esta cotización será presupuestado por separado.'
   })
 
   const [items, setItems] = useState([
