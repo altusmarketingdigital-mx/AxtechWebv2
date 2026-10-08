@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { requireAdmin } from '@/lib/session'
 import Link from 'next/link'
-import { Plus, FileText, Trash2, Search } from 'lucide-react'
+import { Plus, FileText, Trash2, Search, MessageCircle } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -65,6 +65,17 @@ export default async function QuotesPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 flex items-center justify-center gap-3">
+                      {quote.clientPhone && (
+                        <a
+                          href={`https://wa.me/${quote.clientPhone.replace(/\D/g, '').length === 10 ? '52' + quote.clientPhone.replace(/\D/g, '') : quote.clientPhone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola ${quote.clientName}, le compartimos su cotización con folio *${quote.folio}* de AXTECH INGENIERÍA.\nTotal: *$${quote.total.toLocaleString('es-MX', { minimumFractionDigits: 2 })} MXN*`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-600 hover:text-emerald-800 transition-colors"
+                          title="Enviar WhatsApp"
+                        >
+                          <MessageCircle size={18} />
+                        </a>
+                      )}
                       <Link 
                         href={`/admin/cotizaciones/${quote.id}/pdf`}
                         target="_blank"

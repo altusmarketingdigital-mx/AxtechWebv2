@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { createQuote } from '../actions'
 import { getCompanySettings } from '../../configuracion/actions'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Plus, Trash2, FilePlus, ChevronLeft, Save } from 'lucide-react'
+import { Plus, Trash2, FilePlus, ChevronLeft, Save, CheckCircle2, MessageCircle, Mail, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 export default function NuevaCotizacionPage() {
@@ -60,6 +60,15 @@ export default function NuevaCotizacionPage() {
   const isrAmount = subtotal * (isrPercent / 100)
   const total = subtotal + ivaAmount - isrAmount
 
+  const [createdQuote, setCreatedQuote] = useState<{
+    id: string
+    folio: string
+    whatsappUrl: string | null
+    clientPhone?: string | null
+    clientEmail?: string | null
+    adminEmail?: string | null
+  } | null>(null)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -80,8 +89,18 @@ export default function NuevaCotizacionPage() {
       
       const res = await createQuote(payload)
       if (res.success) {
-        alert('Cotización creada con éxito')
-        router.push('/admin/cotizaciones')
+        // Si hay link de WhatsApp, podemos abrirlo o presentarlo en la confirmación
+        if (res.whatsappUrl) {
+          window.open(res.whatsappUrl, '_blank')
+        }
+        setCreatedQuote({
+          id: res.id,
+          folio: res.folio,
+          whatsappUrl: res.whatsappUrl,
+          clientPhone: res.clientPhone,
+          clientEmail: res.clientEmail,
+          adminEmail: res.adminEmail
+        })
       }
     } catch (error) {
       alert('Error al crear la cotización')
@@ -220,6 +239,89 @@ export default function NuevaCotizacionPage() {
         </div>
 
       </form>
+
+      {/* Modal de confirmación y envíos */}
+      {createdQuote && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-gray-100 space-y-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                <CheckCircle2 size={36} />
+              </div>
+              <h3 className="text-2xl font-black text-gray-900">¡Cotización Creada!</h3>
+              <p className="text-gray-500 text-sm mt-1">
+                Folio: <strong className="text-blue-600 font-mono text-base">{createdQuote.folio}</strong>
+              </p>
+            </div>
+
+            <div className="space-y-3 bg-gray-50 p-4 rounded-xl border border-gray-100 text-sm">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-blue-100 text-blue-700 rounded-lg shrink-0">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-800">Notificación por Correo</h4>
+                  <p className="text-xs text-gray-600 mt-0.5">
+                    Se envió la cotización a: <strong className="text-gray-800">{createdQuote.adminEmail || 'tu correo de administrador'}</strong>
+                    {createdQuote.clientEmail && (
+                      <span> y al cliente (<strong className="text-gray-800">{createdQuote.clientEmail}</strong>).</span>
+                    )}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 pt-2 border-t border-gray-200">
+                <div className="p-2 bg-emerald-100 text-emerald-700 rounded-lg shrink-0">
+                  <MessageCircle size={18} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-800">Notificación por WhatsApp</h4>
+                  {createdQuote.clientPhone ? (
+                    <p className="text-xs text-gray-600 mt-0.5">
+                      Se preparó el mensaje para el número <strong className="text-gray-800">{createdQuote.clientPhone}</strong> con el enlace y desglose de la cotización.
+                    </p>
+                  ) : (
+                    <p className="text-xs text-amber-700 mt-0.5">
+                      No se especificó teléfono del cliente en el formulario.
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              {createdQuote.whatsappUrl && (
+                <a
+                  href={createdQuote.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-transform hover:scale-[1.02]"
+                >
+                  <MessageCircle size={20} />
+                  Abrir WhatsApp del Cliente
+                </a>
+              )}
+
+              <Link
+                href={`/admin/cotizaciones/${createdQuote.id}/pdf`}
+                target="_blank"
+                className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors"
+              >
+                <ExternalLink size={18} />
+                Ver / Imprimir PDF
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => router.push('/admin/cotizaciones')}
+                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl font-semibold transition-colors"
+              >
+                Ir a Lista de Cotizaciones
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
