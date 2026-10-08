@@ -282,8 +282,8 @@ export default function AdminSidebar() {
     <aside className="w-64 bg-slate-950 text-white flex flex-col h-screen overflow-hidden border-r border-slate-800">
       {/* Brand Header */}
       <div className="p-4 flex flex-col items-center justify-center border-b border-slate-800 shrink-0 bg-slate-900/40">
-        <h1 className="text-sm font-black tracking-widest text-white uppercase">AXTECH</h1>
-        <p className="text-[11px] font-bold text-blue-400 tracking-wider">SERVICE DESK</p>
+        <h1 className="text-sm font-black tracking-widest text-white uppercase">AXTECH 360</h1>
+        <p className="text-[11px] font-bold text-blue-400 tracking-wider">GESTIÓN EMPRESARIAL</p>
       </div>
 
       {/* Dashboard (Sin submenús, concentración directa) */}
