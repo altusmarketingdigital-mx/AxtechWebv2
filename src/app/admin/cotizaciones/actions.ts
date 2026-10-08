@@ -77,6 +77,7 @@ export async function createQuote(data: any) {
       total: quote.total,
       subtotal: quote.subtotal,
       ivaAmount: quote.ivaAmount,
+      isrAmount: quote.isrAmount,
       notes: quote.notes,
       items: quote.items.map(item => ({
         description: item.description,

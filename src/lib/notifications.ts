@@ -53,6 +53,7 @@ export interface QuoteNotificationData {
   total: number
   subtotal?: number
   ivaAmount?: number
+  isrAmount?: number
   notes?: string | null
   items: Array<{
     description: string
@@ -123,8 +124,14 @@ export async function sendQuoteNotification(data: QuoteNotificationData, adminEm
             ` : ''}
             ${data.ivaAmount !== undefined && data.ivaAmount > 0 ? `
               <tr>
-                <td colspan="3" style="padding: 8px 12px; text-align: right; font-size: 13px; color: #6b7280;">IVA (16%):</td>
+                <td colspan="3" style="padding: 8px 12px; text-align: right; font-size: 13px; color: #6b7280;">IVA:</td>
                 <td style="padding: 8px 12px; text-align: right; font-size: 14px; color: #374151;">$${data.ivaAmount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
+              </tr>
+            ` : ''}
+            ${data.isrAmount !== undefined && data.isrAmount > 0 ? `
+              <tr>
+                <td colspan="3" style="padding: 8px 12px; text-align: right; font-size: 13px; color: #dc2626;">Retención ISR:</td>
+                <td style="padding: 8px 12px; text-align: right; font-size: 14px; color: #dc2626; font-weight: 600;">-$${data.isrAmount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
               </tr>
             ` : ''}
             <tr style="border-top: 2px solid #e5e7eb;">

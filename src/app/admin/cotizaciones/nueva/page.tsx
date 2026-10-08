@@ -27,9 +27,23 @@ export default function NuevaCotizacionPage() {
     { quantity: 1, description: '', unitPrice: 0 }
   ])
 
+  const [ivaPercent, setIvaPercent] = useState<number>(16)
+  const [isrPercent, setIsrPercent] = useState<number>(0)
+  const [applyIsr, setApplyIsr] = useState<boolean>(false)
+
   useEffect(() => {
     getCompanySettings().then(data => {
       setSettings(data)
+      if (data?.defaultIva !== undefined && data?.defaultIva !== null) {
+        setIvaPercent(Number(data.defaultIva))
+      }
+      if (data?.defaultIsr !== undefined && data?.defaultIsr !== null) {
+        const defaultIsrVal = Number(data.defaultIsr)
+        setIsrPercent(defaultIsrVal)
+        if (defaultIsrVal > 0) {
+          setApplyIsr(true)
+        }
+      }
       setFormData(prev => ({
         ...prev,
         notes: prev.notes || data?.defaultNotes || '',
@@ -54,10 +68,9 @@ export default function NuevaCotizacionPage() {
 
   // Cálculos
   const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0)
-  const ivaPercent = settings?.defaultIva || 16
-  const isrPercent = settings?.defaultIsr || 0
+  const activeIsrPercent = applyIsr ? isrPercent : 0
   const ivaAmount = subtotal * (ivaPercent / 100)
-  const isrAmount = subtotal * (isrPercent / 100)
+  const isrAmount = subtotal * (activeIsrPercent / 100)
   const total = subtotal + ivaAmount - isrAmount
 
   const [createdQuote, setCreatedQuote] = useState<{
@@ -193,24 +206,67 @@ export default function NuevaCotizacionPage() {
           </div>
 
           <div className="mt-8 flex justify-end">
-            <div className="w-full md:w-72 bg-gray-50 p-4 rounded-xl space-y-3">
-              <div className="flex justify-between text-gray-600 text-sm">
+            <div className="w-full md:w-80 bg-gray-50 p-5 rounded-2xl border border-gray-200 space-y-3 shadow-sm">
+              <div className="flex justify-between items-center text-gray-700 text-sm">
                 <span>Subtotal:</span>
-                <span className="font-semibold">${subtotal.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
+                <span className="font-semibold text-gray-900">${subtotal.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
               </div>
-              <div className="flex justify-between text-gray-600 text-sm">
-                <span>IVA ({ivaPercent}%):</span>
-                <span className="font-semibold">${ivaAmount.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
-              </div>
-              {isrPercent > 0 && (
-                <div className="flex justify-between text-gray-600 text-sm">
-                  <span>Ret. ISR ({isrPercent}%):</span>
-                  <span className="font-semibold text-red-600">-${isrAmount.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
+              
+              <div className="flex justify-between items-center text-gray-700 text-sm">
+                <div className="flex items-center gap-1.5">
+                  <span>IVA</span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.5"
+                    value={ivaPercent}
+                    onChange={e => setIvaPercent(parseFloat(e.target.value) || 0)}
+                    className="w-14 text-center border-gray-300 rounded px-1 py-0.5 text-xs border bg-white"
+                  />
+                  <span>%:</span>
                 </div>
-              )}
-              <div className="flex justify-between text-gray-900 text-lg font-bold border-t border-gray-200 pt-3">
+                <span className="font-semibold text-gray-900">${ivaAmount.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
+              </div>
+
+              {/* Control de Retención de ISR */}
+              <div className="border-t border-gray-200/60 pt-2 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium text-xs select-none">
+                    <input 
+                      type="checkbox" 
+                      checked={applyIsr} 
+                      onChange={e => setApplyIsr(e.target.checked)}
+                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" 
+                    />
+                    <span>Retención ISR (Personas Morales / RESICO)</span>
+                  </label>
+                </div>
+
+                {applyIsr && (
+                  <div className="flex justify-between items-center text-xs text-red-600 bg-red-50 p-2 rounded-lg border border-red-100">
+                    <div className="flex items-center gap-1">
+                      <span>Tasa ISR:</span>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        value={isrPercent}
+                        onChange={e => setIsrPercent(parseFloat(e.target.value) || 0)}
+                        placeholder="1.25 ó 10"
+                        className="w-16 text-center border-red-200 rounded px-1.5 py-0.5 text-xs border bg-white font-bold text-red-700"
+                      />
+                      <span>%:</span>
+                    </div>
+                    <span className="font-bold text-red-700">-${isrAmount.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-between items-center text-gray-900 text-lg font-black border-t-2 border-gray-300 pt-3">
                 <span>Total:</span>
-                <span>${total.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
+                <span className="text-blue-700">${total.toLocaleString('es-MX', {minimumFractionDigits:2})}</span>
               </div>
             </div>
           </div>
