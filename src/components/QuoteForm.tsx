@@ -19,7 +19,7 @@ export default function QuoteForm() {
         body: JSON.stringify(formData)
       });
       
-      if (!response.ok) throw new Error('Error al generar la cotizaciÃ³n');
+      if (!response.ok) throw new Error('Error al generar la cotización');
       
       // Descargar el PDF devuelto por la API
       const blob = await response.blob();
@@ -36,7 +36,7 @@ export default function QuoteForm() {
       setFormData({ name: '', email: '', service: '', message: '' }); // Reset
     } catch (error) {
       console.error(error);
-      alert("Hubo un error al generar la cotizaciÃ³n. IntÃ©ntelo de nuevo.");
+      alert("Hubo un error al generar la cotización. IntÃ©ntelo de nuevo.");
       setStatus('idle');
     }
   };
@@ -55,7 +55,7 @@ export default function QuoteForm() {
         <div className="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mb-6">
           <CheckCircle className="w-10 h-10 text-accent" />
         </div>
-        <h3 className="text-3xl font-bold mb-4">Â¡CotizaciÃ³n Descargada!</h3>
+        <h3 className="text-3xl font-bold mb-4">Â¡Cotización Descargada!</h3>
         <p className="text-gray-300 max-w-md mx-auto mb-8">
           Hemos recibido tu solicitud y tu PDF se ha descargado automÃ¡ticamente. Nuestro equipo tÃ©cnico evaluarÃ¡ tus requerimientos y se pondrÃ¡ en contacto pronto.
         </p>
@@ -78,7 +78,7 @@ export default function QuoteForm() {
           <FileText className="w-6 h-6 text-primary" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold">Solicitar CotizaciÃ³n</h2>
+          <h2 className="text-2xl font-bold">Solicitar Cotización</h2>
           <p className="text-sm text-gray-300">Completa los datos y recibirÃ¡s un PDF formal al instante.</p>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function QuoteForm() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Correo ElectrÃ³nico *</label>
+            <label className="text-sm font-medium text-gray-700">Correo Electrónico *</label>
             <input 
               required 
               name="email"

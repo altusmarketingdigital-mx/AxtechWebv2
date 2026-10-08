@@ -21,7 +21,7 @@ import { searchServiceOrderByQuery } from "@/app/actions/serviceOrderActions"
 const STEPS = [
   { id: 'RECEIVED', label: 'Recibido', desc: 'En taller' },
   { id: 'DIAGNOSING', label: 'DiagnÃ³stico', desc: 'RevisiÃ³n' },
-  { id: 'WAITING_APPROVAL', label: 'CotizaciÃ³n', desc: 'Por aprobar' },
+  { id: 'WAITING_APPROVAL', label: 'Cotización', desc: 'Por aprobar' },
   { id: 'REPAIRING', label: 'ReparaciÃ³n', desc: 'En proceso' },
   { id: 'READY', label: 'Listo', desc: 'Entrega' },
 ]
@@ -92,7 +92,7 @@ export default function TrackingModal() {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center justify-between">
         <div>
           <p className="font-semibold text-gray-800">Seguimiento PÃºblico</p>
-          <p className="text-sm text-gray-500">Consulta el estado de tu equipo por folio o telÃ©fono</p>
+          <p className="text-sm text-gray-500">Consulta el estado de tu equipo por folio o teléfono</p>
         </div>
         <button
           onClick={() => setIsOpen(true)}
@@ -119,7 +119,7 @@ export default function TrackingModal() {
                   Rastreo de Orden de Servicio
                 </h3>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  Ingresa tu nÃºmero de folio o telÃ©fono registrado
+                  Ingresa tu número de folio o teléfono registrado
                 </p>
               </div>
               <button

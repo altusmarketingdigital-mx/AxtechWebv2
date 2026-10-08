@@ -225,10 +225,10 @@ export default function ImportarProductosPage() {
                 <tr>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">SKU</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Nombre</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">DescripciÃ³n</th>
+                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Descripción</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Precio</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Stock</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">CategorÃ­a</th>
+                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Categoría</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">

@@ -23,7 +23,7 @@ export default async function QuotesPage() {
           href="/admin/cotizaciones/nueva"
           className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-colors"
         >
-          <Plus size={18} /> Nueva CotizaciÃ³n
+          <Plus size={18} /> Nueva Cotización
         </Link>
       </div>
       
